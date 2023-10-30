@@ -1,7 +1,7 @@
 body {
     font-family: Koulen;
     margin: 0;
-    overflow-x: hidden;
+    overflow-x: hidden;  
 }
 
 #navbar {
@@ -57,6 +57,16 @@ body {
 #links a:hover {
     color: #E2AD5C;
 }
+#goiburua{
+    color: white;
+    background-color: black;
+    padding: 2px;
+    text-align: center;
+    margin: 0;
+    font-size: 1.5em;
+}
+
+
 
 #footer {
     display: flex;
@@ -64,7 +74,6 @@ body {
     align-items: center;
     background-color: #333;
     color: white;
-    position: absolute;
     bottom: 0;
     width: 100%;
     text-align: left;
@@ -106,15 +115,4 @@ body {
 
 #Logo img {
     max-width: 35%;
-}
-
-#copy {
-
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    background-color: #E2AD5C;
-    text-align: center;
 }
