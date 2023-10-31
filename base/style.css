@@ -68,8 +68,15 @@ body {
     padding: 2px;
     text-align: center;
     margin: 0;
-    font-size: 1.5em;
 }
+
+#goiburua h3 {
+    font-size: 100px; /* Tamaño de fuente deseado */
+    line-height: 1; /* Ajusta la altura de línea según tus preferencias */
+    margin: 0; /* Asegura que no haya márgenes externos */
+}
+
+
 
 #footer {
     display: flex;
