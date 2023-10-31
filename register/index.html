@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Koulen"> <!-- KoulenFont -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> <!-- bootstrap -->
+    <link rel="stylesheet" href="./style.css">
+    <title>Hozkada register</title>
+</head>
+<body>
+    <div class="container">
+        <div class="container" id="container-avatar">
+            <div id="avatar">
+                <p id="erregistratup">erregistratu</p>
+            </div>
+            <div id="subavatar">
+                <img id="avatarimg" src="./wander.png" alt="">
+            </div>
+        </div>
+    </div>
+    <br><br><br><br><br><br><br><br><br><br>
+
+    <div class="container">
+        <form action="#" class="needs-validation" novalidate>
+          <div class="row mt-3">
+            <div class="col">
+                <label for="">Izena:</label>
+                <input type="text" class="form-control custom-shadow" id="izena" placeholder="Sartu izena" name="izena" required>
+                <div class="valid-feedback">Onartuta</div>
+                <div class="invalid-feedback">Mesedez, zure izena jarri.</div>
+            </div>
+            <div class="col">
+                <label for="">Abizena:</label>
+                <input type="text" class="form-control custom-shadow" id="abizena" placeholder="Sartu abizena" name="abizena" required>
+                <div class="valid-feedback">Onartuta</div>
+                <div class="invalid-feedback">Mesedez, zure abizena jarri.</div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+                <label for="">Abizena 2: </label>
+                <input type="text" class="form-control custom-shadow" id="abizena2" placeholder="Sartu bigarren abizena" name="abizena2" required>
+                <div class="valid-feedback">Onartuta</div>
+                <div class="invalid-feedback">Mesedez, zure abizena jarri.</div>
+            </div>
+            <div class="col">
+                <label for="">DNI:</label>
+                <input type="text" class="form-control custom-shadow" id="nan" placeholder="Sartu NAN-a" name="nan" required>
+                <div class="valid-feedback">Onartuta</div>
+                <div class="invalid-feedback">Mesedez, zure DNIa jarri.</div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+                <label for="">Telefonoa:</label>
+                <input type="text" class="form-control custom-shadow" id="telefonoa" placeholder="Sartu telefonoa" name="telefonoa" required>
+                <div class="valid-feedback">Onartuta</div>
+                <div class="invalid-feedback">Mesedez, zure telefonoa jarri.</div>
+            </div>
+            <div class="col">
+
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+                <label for="">Email:</label>
+                <input type="text" class="form-control custom-shadow" id="email" placeholder="Sartu email-a" name="email" required>
+                <div class="valid-feedback">Onartuta</div>
+                <div class="invalid-feedback">Mesedez, zure emaila jarri.</div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+                <label for="">Pasahitza:</label>
+                <input type="password" class="form-control custom-shadow" id="pasahitza" placeholder="Sartu pasahitza" name="pasahitza" required>
+                <div class="valid-feedback">Onartuta</div>
+                <div class="invalid-feedback">Mesedez, pasahitza jarri.</div>
+            </div>
+            <div class="col">
+                <label for="">Errepikatu pasahitza:</label>
+                <input type="password" class="form-control custom-shadow" id="pasahitza2" placeholder="Errepikatu pasahitza" name="pasahitza2" required>
+                <div class="valid-feedback">Onartuta</div>
+                <div class="invalid-feedback">Mesedez, pasahitza jarri.</div>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+                <label for="">Helbidea: </label>
+                <input type="text" class="form-control custom-shadow" id="helbidea" placeholder="Sartu helbidea" name="helbidea" required>
+                <div class="valid-feedback">Onartuta</div>
+                <div class="invalid-feedback">Mesedez, zure helbidea jarri.</div>
+            </div>
+            <div class="col">
+                <label for="">PK:</label>
+                <input type="text" class="form-control custom-shadow" id="pk" placeholder="Sartu posta kodea" name="pk" required>
+                <div class="valid-feedback">Onartuta</div>
+                <div class="invalid-feedback">Mesedez, zure posta kodea jarri.</div>
+            </div>
+          </div><br>
+            <div class="col text-center"> <!-- Agrega la clase "text-center" para centrar horizontalmente -->
+                <button type="submit" class="btn btn-lg mt-3 btn-reset">Erregistratu</button>
+                <button type="reset" class="btn btn-dark btn-lg mt-3">Ezabatu</button>
+            </div>
+            <br>
+        </form>
+    </div>
+    <script>
+        // Disable form submissions if there are invalid fields
+        (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Get the forms we want to add validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                if (form.checkValidity() === false) {
+                event.preventDefault();
+                event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+            });
+        }, false);
+        })();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            
+            var izena = document.getElementById('izena');
+            var abizena = document.getElementById('abizena');
+            var abizena2 = document.getElementById('abizena2');
+            var nan = document.getElementById('nan');
+            var telefonoa = document.getElementById('telefonoa');
+            var email = document.getElementById('email');
+            var pasahitza = document.getElementById('pasahitza');
+            var pasahitza2 = document.getElementById('pasahitza2');
+            var helbidea = document.getElementById('helbidea');
+            var pk = document.getElementById('pk');
+
+            //REGEX
+            var izenabizenFormat = /^[A-Za-z]{3,}$/;
+            var nanFormat = /^[0-9]{8}[A-Za-z]$/;
+            var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
+            var pasahitzaFormat = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+            var pkFormat = /^\d{5}[A-Z]?$|^(\d{4}[A-Z]{2}|\d{4}|\d{2}[A-Z]{2} \d{2})$/;
+
+            function validatePassword() {
+                if (pasahitza.value !== pasahitza2.value) {
+                    pasahitza2.setCustomValidity("Las contraseñas no coinciden");
+                } else {
+                    pasahitza2.setCustomValidity('');
+                }
+            }
+
+            pasahitza.addEventListener('change', validatePassword);
+            pasahitza2.addEventListener('change', validatePassword);
+        });
+    </script>
+</body>
+</html>
