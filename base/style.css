@@ -32,6 +32,7 @@ body {
     width: 500px;
     position: absolute;
     z-index: 2;
+    border-radius: 20px;
 }
 
 #links {
