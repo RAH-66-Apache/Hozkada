@@ -25,6 +25,15 @@ body {
     position: absolute;
 }
 
+#eskaera {
+    margin-top: 400px;
+    margin-left: 75px;
+    height: 250px;
+    width: 500px;
+    position: absolute;
+    z-index: 2;
+}
+
 #links {
     font-size: xx-large;
     margin-top: 25px;
