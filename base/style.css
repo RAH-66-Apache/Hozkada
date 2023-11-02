@@ -232,3 +232,30 @@ body {
     border: 4px solid #E2AD5C;
     margin-top: 15px;   
 }
+.social-icon {
+    font-size: 24px; /* Tamaño del icono */
+    color: #0073e6; /* Color del icono, puedes personalizarlo */
+    margin-right: 10px; /* Espaciado horizontal entre los íconos */
+    margin-top: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    
+}
+
+ul li {
+    display: flex;
+    align-items: center; /* Alineación vertical al centro */
+    margin-bottom: 10px; /* Espaciado vertical entre los elementos de la lista */
+}
+
+ul li a {
+    text-decoration: none; /* Quita la subrayado de los enlaces */
+}
+
+a:visited {
+    color: inherit; /* Hereda el color del texto del padre */
+    text-decoration: none; /* Quita cualquier decoración de enlace visitado */
+}
