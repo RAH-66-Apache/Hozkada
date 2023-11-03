@@ -1,0 +1,172 @@
+body {
+    font-family: Koulen;
+    margin: 0;
+}
+
+#filtromenu {
+    width: 100%;
+    background-color: #333;
+    height: 80px;
+}
+
+#filtrocontent {
+    display: flex;
+    margin-left: 150px;
+}
+
+input[type="checkbox"] {
+    width: 16px; /* Ancho personalizado */
+    height: 16px; /* Alto personalizado */
+}
+
+/* input[type="checkbox"]:checked {
+    background-color: #333;  Color de fondo personalizado cuando está seleccionado
+} */
+
+#filtrocontent p {
+    font-size: xx-large;
+    margin-top: 15px;
+    margin-left: 80px;
+    color: white;
+    cursor: default;
+}
+
+.ico_motak {
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+.ico_alergiak {
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+
+#filtrocontent p:hover {
+    color: #E2AD5C;
+    cursor: default;
+}
+
+.dropdown-content {
+    margin-left: 40px;
+    font-size: x-large;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #E2AD5C;
+    display: none;
+    position: absolute; /* Establece una posición absoluta para evitar el desplazamiento de otros elementos */
+
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+#content {
+    width: 90%;
+    margin: auto;
+    display: flex;
+}
+
+#bokatacontent {
+    margin-top: 50px;
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.bokata {
+    background-color: white;
+    border-radius: 20px 20px 0 0;
+    border-bottom: 5px solid #E2AD5C;
+    height: 100%;
+    width: 48%;
+    margin: auto;
+    margin-top: 20px;
+    transition: transform 0.5s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Agregar una sombra */
+}
+
+.bokata:hover {
+    transform: scale(1.12);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9); /* Cambiar la sombra en el hover */
+    position: relative;
+    z-index: 2;
+}
+
+#carritocontent {
+    padding: 10px;
+    border-radius: 20px 20px 0 0;
+    margin-left: 30px;
+    margin-top: 70px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Agregar una sombra */
+    border-bottom: 5px solid #E2AD5C;
+    width: 30%;
+    height: 600px;
+    position: sticky;
+    top: 40px;
+}
+
+.bokataimg {
+    text-align: center;
+}
+
+.bokataimg img{
+    margin-top: 20px;
+    width: 90%;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 5px  solid #E2AD5C;
+}
+
+.bokatainfo {
+    text-align: center;
+    padding: 0px 10px 0px 10px;
+}
+
+.prezioa {
+    color: rgb(52, 167, 96);
+}
+
+.bokatatitulo {
+    border-bottom: 2px solid #E2AD5C;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+p {
+    margin-top: 0; /* Elimina el margen superior del párrafo p */
+}
+
+.alergiak {
+    float: right;
+    margin-top: 5px;
+}
+.alergiak img {
+    height: 30px;
+    margin-left: 5px;
+}
+
+input[type="button"] {
+    border: none;
+    font-family: Koulen;
+    font-size: large;
+}
+
+.karritoragehituinp {
+    cursor: pointer;
+    padding: 1% 5% 1% 5%;
+    background-color: #E2AD5C;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+.karritoragehituinp:hover {
+    background-color: #E2AD5C;
+    transform: scale(1.05);
+}
