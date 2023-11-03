@@ -54,6 +54,12 @@ body {
     border-radius: 12%; /* Hace que la foto de perfil tenga forma circular */
     width: 60px; /* Ajusta el ancho según tus preferencias */
     height: 60px; /* Ajusta el alto según tus preferencias */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+#profile-picture img:hover {
+    transform: scale(1.2); /* Escala la imagen al 120% de su tamaño original */
+    box-shadow: 0 0 10px rgba(226, 173, 92, 0.5); /* Aplica una sombra cuando se pasa el mouse */
 }
 
 #username-txt {
@@ -61,6 +67,15 @@ body {
     margin-top: 30px;
     font-size: 30px;
     margin-right: 20px;
+}
+#carrito {
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+#carrito:hover {
+    transform: scale(1.2); /* Escalar el icono al 120% del tamaño original */
+    color: #E2AD5C; /* Cambiar el color del icono cuando se pasa el mouse */
+    
 }
 
 #carrito-picture {
