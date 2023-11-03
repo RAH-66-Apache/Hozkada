@@ -56,6 +56,13 @@ body {
     height: 60px; /* Ajusta el alto según tus preferencias */
 }
 
+#username-txt {
+    margin-left: auto; /* Coloca la foto de perfil al final del "navbar" */
+    margin-top: 30px;
+    font-size: 30px;
+    margin-right: 20px;
+}
+
 #carrito-picture {
     margin-left: auto; /* Coloca la foto de perfil al final del "navbar" */
     margin-top: 20px;
@@ -211,4 +218,47 @@ ul li a {
 a:visited {
     color: inherit; /* Hereda el color del texto del padre */
     text-decoration: none; /* Quita cualquier decoración de enlace visitado */
+}
+
+
+/* Estilo para el contenedor del menú desplegable */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Estilo para el texto de username */
+#username-txt p {
+    margin: 0;
+}
+
+/* Estilo para el menú desplegable */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #E2AD5C;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: #333 1px solid;
+}
+
+/* Estilo para los enlaces del menú desplegable */
+.dropdown-content a {
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+}
+
+/* Cambia el color al pasar el mouse sobre los enlaces del menú */
+.dropdown-content a:hover {
+    background-color: grey;
+}
+
+/* Muestra el menú desplegable al pasar el mouse sobre el contenedor */
+.dropdown:hover .dropdown-content {
+    display: block;
 }
