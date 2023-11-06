@@ -62,6 +62,18 @@
 
     <div id="content">
         <div id="bokatacontent">
+            {%for bokatak in bokatak%}
+            <div class="bokata">
+                <div class="bokataimg">
+                    <img src="{{bokatak.img.url}}" alt="{{bokatak.izena}}">
+                </div>
+                <div class="bokatainfo">
+                    <h2 class="bokatatitulo">{{bokatak.izena}} - <span class="prezioa">{{bokatak.prezioa}}€</span></h2>
+                    <p>{{bokatak.deskribapena}}</p>
+                    <input class="karritoragehituinp" type="button" value="karritora gehitu">
+                </div>
+            </div>
+            {%endfor%}
             <div class="bokata">
                 <div class="bokataimg">
                     <img src="../static/media/bokatak_img/bokatak/bokataBase.jpg" alt="">

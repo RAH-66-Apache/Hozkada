@@ -3,7 +3,6 @@ from django.db import models
 # Create your models here.
 
 class Bezeroa(models.Model):
-    id = models.OneToOneField()#egiteko
     NAN = models.CharField(max_length=10)
     izena = models.CharField(max_length=20)
     abizena = models.CharField(max_length=20)
@@ -11,18 +10,24 @@ class Bezeroa(models.Model):
     telefonoa = models.CharField(max_length=20)
     emaila = models.EmailField
     helbidea = models.CharField(max_length=100)
-    pk = models.CharField(max_length=10)
-    img = models.ImageField(upload_to='/static/media/user_img')
+    postakodea = models.CharField(max_length=10)
+    img = models.ImageField(upload_to='img/erabiltzaileak')
 
     def __unicode__(self):
         return self.NAN
 
 class Platerra(models.Model): 
+    motak = (
+        ('haragia', 'Haragia'), 
+        ('arraina', 'Arraina'), 
+        ('begetarianoa', 'Begetarianoa'), 
+        ('beganoa', 'Beganoa'), 
+    )
     izena = models.CharField(max_length=100)
     deskribapena = models.CharField(max_length=1000)
-    prezioa = models.FloatField
-    mota = models.CharField(max_length=20)
-    img = models.ImageField(upload_to='/static/media/bokatak_img/bokatak')
+    prezioa = models.FloatField(default=0)
+    mota = models.CharField(max_length=20, choices=motak, default='haragia')
+    img = models.ImageField(upload_to='img/bokatak')
 
     def __unicode__(self):
         return self.izena
@@ -43,7 +48,7 @@ class Platerra_Eskaera(models.Model):
 
 class Alergia(models.Model):
     izena = models.CharField(max_length=30)
-    img = models.ImageField(upload_to='static/media/bokatak_img/alergiak')
+    img = models.ImageField(upload_to='img/alergiak')
 
     def __unicode__(self):
         return self.izena
