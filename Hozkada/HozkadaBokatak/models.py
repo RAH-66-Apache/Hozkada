@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils import timezone
 
 # Create your models here.
 
@@ -8,7 +9,7 @@ class Bezeroa(models.Model):
     abizena = models.CharField(max_length=20)
     abizena2 = models.CharField(max_length=20)
     telefonoa = models.CharField(max_length=20)
-    emaila = models.EmailField()
+    emaila = models.EmailField(default='')
     helbidea = models.CharField(max_length=100)
     postakodea = models.CharField(max_length=10)
     img = models.ImageField(upload_to='img/erabiltzaileak')
@@ -35,18 +36,17 @@ class Platerra(models.Model):
 
 class Eskaera(models.Model):
     id_bezeroa = models.ForeignKey(Bezeroa, on_delete=models.CASCADE)
-    eskaera_data = models.DateField()
+    eskaera_data = models.DateField(null=True)
     egoera = models.BooleanField(default=True)
 
     def __unicode__(self):
-        return self.id
+        return self.id_bezeroa
 
 class Platerra_Eskaera(models.Model):
     eskaera_id = models.ForeignKey(Eskaera, on_delete=models.CASCADE)
     platerra_id = models.ForeignKey(Platerra, on_delete=models.CASCADE)
-    kantitatea = models.IntegerField()
+    kantitatea = models.IntegerField(default=0)
     
-
 
 class Alergia(models.Model):
     izena = models.CharField(max_length=30)
@@ -57,8 +57,8 @@ class Alergia(models.Model):
 
 class Deskontua(models.Model):
     izena = models.CharField(max_length=50)
-    ehunekoa = models.FloatField()
-    kantitatea = models.IntegerField()
+    ehunekoa = models.FloatField(default=0)
+    kantitatea = models.IntegerField(default=0)
 
     def __unicode__(self):
         return self.izena
