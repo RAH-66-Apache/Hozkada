@@ -63,101 +63,24 @@
     <div id="content">
         <div id="bokatacontent">
             {%for bokatak in bokatak%}
-            <div class="bokata">
+            <div class="bokata" data-mota="{{bokatak.mota}}">
                 <div class="bokataimg">
                     <img src="{{bokatak.img.url}}" alt="{{bokatak.izena}}">
                 </div>
                 <div class="bokatainfo">
                     <h2 class="bokatatitulo">{{bokatak.izena}} - <span class="prezioa">{{bokatak.prezioa}}€</span></h2>
                     <p>{{bokatak.deskribapena}}</p>
+
+                    <div class="alergiak">
+                        {% for alergia_platerrak in bokatak.alergia_set.all %}
+                        <img src="{{alergia_platerrak.img.url}}" alt="">
+                        {%endfor%}
+                    </div>
+
                     <input class="karritoragehituinp" type="button" value="karritora gehitu">
                 </div>
             </div>
             {%endfor%}
-            <div class="bokata">
-                <div class="bokataimg">
-                    <img src="../static/media/bokatak_img/bokatak/bokataBase.jpg" alt="">
-                </div>
-                <div class="bokatainfo">
-                    <h2 class="bokatatitulo">Hozkada bokata - <span class="prezioa">15,20€</span></h2>             
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae architecto ducimus fugit maiores modi culpa. Illo debitis, error assumenda quisquam minima esse nam minus eaque non quis neque at recusandae?</p>
-                    <div class="alergiak">
-                        <img src="../static/media/bokatak_img/alergiak/ico_arrainak.png" alt="">
-                        <img src="../static/media/bokatak_img/alergiak/ico_krustazeo.png" alt="">
-                    </div>
-                    <input class="karritoragehituinp" type="button" value="karritora gehitu">
-                </div>
-            </div>
-            <div class="bokata">
-                <div class="bokataimg">
-                    <img src="../static/media/bokatak_img/bokatak/bokataBase.jpg" alt="">
-                </div>
-                <div class="bokatainfo">
-                    <h2 class="bokatatitulo">Hozkada bokata - <span class="prezioa">15,20€</span></h2>             
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae architecto ducimus fugit maiores modi culpa. Illo debitis, error assumenda quisquam minima esse nam minus eaque non quis neque at recusandae?</p>
-                    <div class="alergiak">
-                        <img src="../static/media/bokatak_img/alergiak/ico_arrainak.png" alt="">
-                        <img src="../static/media/bokatak_img/alergiak/ico_krustazeo.png" alt="">
-                    </div>
-                    <input class="karritoragehituinp" type="button" value="karritora gehitu">
-                </div>
-            </div>
-            <div class="bokata">
-                <div class="bokataimg">
-                    <img src="../static/media/bokatak_img/bokatak/bokataBase.jpg" alt="">
-                </div>
-                <div class="bokatainfo">
-                    <h2 class="bokatatitulo">Hozkada bokata - <span class="prezioa">15,20€</span></h2>             
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae architecto ducimus fugit maiores modi culpa. Illo debitis, error assumenda quisquam minima esse nam minus eaque non quis neque at recusandae?</p>
-                    <div class="alergiak">
-                        <img src="../static/media/bokatak_img/alergiak/ico_arrainak.png" alt="">
-                        <img src="../static/media/bokatak_img/alergiak/ico_krustazeo.png" alt="">
-                    </div>
-                    <input class="karritoragehituinp" type="button" value="karritora gehitu">
-                </div>
-            </div>
-            <div class="bokata">
-                <div class="bokataimg">
-                    <img src="../static/media/bokatak_img/bokatak/bokataBase.jpg" alt="">
-                </div>
-                <div class="bokatainfo">
-                    <h2 class="bokatatitulo">Hozkada bokata - <span class="prezioa">15,20€</span></h2>             
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae architecto ducimus fugit maiores modi culpa. Illo debitis, error assumenda quisquam minima esse nam minus eaque non quis neque at recusandae?</p>
-                    <div class="alergiak">
-                        <img src="../static/media/bokatak_img/alergiak/ico_arrainak.png" alt="">
-                        <img src="../static/media/bokatak_img/alergiak/ico_krustazeo.png" alt="">
-                    </div>
-                    <input class="karritoragehituinp" type="button" value="karritora gehitu">
-                </div>
-            </div>
-            <div class="bokata">
-                <div class="bokataimg">
-                    <img src="../static/media/bokatak_img/bokatak/bokataBase.jpg" alt="">
-                </div>
-                <div class="bokatainfo">
-                    <h2 class="bokatatitulo">Hozkada bokata - <span class="prezioa">15,20€</span></h2>             
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae architecto ducimus fugit maiores modi culpa. Illo debitis, error assumenda quisquam minima esse nam minus eaque non quis neque at recusandae?</p>
-                    <div class="alergiak">
-                        <img src="../static/media/bokatak_img/alergiak/ico_arrainak.png" alt="">
-                        <img src="../static/media/bokatak_img/alergiak/ico_krustazeo.png" alt="">
-                    </div>
-                    <input class="karritoragehituinp" type="button" value="karritora gehitu">
-                </div>
-            </div>
-            <div class="bokata">
-                <div class="bokataimg">
-                    <img src="../static/media/bokatak_img/bokatak/bokataBase.jpg" alt="">
-                </div>
-                <div class="bokatainfo">
-                    <h2 class="bokatatitulo">Hozkada bokata - <span class="prezioa">15,20€</span></h2>             
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Recusandae architecto ducimus fugit maiores modi culpa. Illo debitis, error assumenda quisquam minima esse nam minus eaque non quis neque at recusandae?</p>
-                    <div class="alergiak">
-                        <img src="../static/media/bokatak_img/alergiak/ico_arrainak.png" alt="">
-                        <img src="../static/media/bokatak_img/alergiak/ico_krustazeo.png" alt="">
-                    </div>
-                    <input class="karritoragehituinp" type="button" value="karritora gehitu">
-                </div>
-            </div>
         </div>
 
 
@@ -246,9 +169,38 @@
             </div>
         </div>
     </div>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-
+        $(document).ready(function() {
+            // Escucha el evento de cambio en los checkboxes
+            $('input[type="checkbox"]').change(function() {
+                // Crear un array para almacenar las categorías seleccionadas
+                var categoriasSeleccionadas = [];
+                
+                // Recorrer todos los checkboxes para determinar cuáles están marcados
+                $('input[type="checkbox"]').each(function() {
+                    if ($(this).is(':checked')) {
+                        categoriasSeleccionadas.push($(this).attr('name'));
+                    }
+                });
+                
+                // Mostrar u ocultar los elementos bokata según las categorías seleccionadas
+                if (categoriasSeleccionadas.length === 0) {
+                    // Si no hay categorías seleccionadas, mostrar todos los elementos
+                    $('.bokata').show();
+                } else {
+                    // Mostrar solo los elementos que coinciden con las categorías seleccionadas
+                    $('.bokata').each(function() {
+                        var dataMota = $(this).data('mota');
+                        if (categoriasSeleccionadas.includes(dataMota)) {
+                            $(this).show();
+                        } else {
+                            $(this).hide();
+                        }
+                    });
+                }
+            });
+        });
     </script>
 </body>
 </html>
