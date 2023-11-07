@@ -15,43 +15,47 @@
             <div class="dropdown">
                 <p>Motak</p>
                 <div class="dropdown-content">
-                    <div>
-                        <label><input type="checkbox" name="haragia"><img src="../static/media/bokatak_img/motak/ico_haragia.png" class="ico_motak" alt=""> Haragia</label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="arraina"><img src="../static/media/bokatak_img/motak/ico_arraina.png" class="ico_motak" alt=""> Arraina</label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="begetarianoa"><img src="../static/media/bokatak_img/motak/ico_begetarianoa.png" class="ico_motak" alt=""> Begetarianoa</label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="beganoa"><img src="../static/media/bokatak_img/motak/ico_beganoa.png" class="ico_motak" alt=""> Beganoa</label>
+                    <div class="checkbox-motak">
+                        <div>
+                            <label><input type="checkbox" name="haragia"><img src="../static/media/bokatak_img/motak/ico_haragia.png" class="ico_motak" alt=""> Haragia</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="arraina"><img src="../static/media/bokatak_img/motak/ico_arraina.png" class="ico_motak" alt=""> Arraina</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="begetarianoa"><img src="../static/media/bokatak_img/motak/ico_begetarianoa.png" class="ico_motak" alt=""> Begetarianoa</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="beganoa"><img src="../static/media/bokatak_img/motak/ico_beganoa.png" class="ico_motak" alt=""> Beganoa</label>
+                        </div>
                     </div>
                 </div>
             </div>
             <div class="dropdown">
                 <p>Alergiak</p>
                 <div class="dropdown-content">
-                    <div>
-                        <label><input type="checkbox" name="gluten"> Glutena<img src="../static/media/bokatak_img/alergiak/ico_gluten.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="arrautza"> Arrautzak<img src="../static/media/bokatak_img/alergiak/ico_arrautzak.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="arraina"> Arrainak<img src="../static/media/bokatak_img/alergiak/ico_arrainak.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="krustazeoa"> Krustazeoak<img src="../static/media/bokatak_img/alergiak/ico_krustazeo.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="moluskoa"> Moluskoak<img src="../static/media/bokatak_img/alergiak/ico_gluten.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="frutu_lehorrak"> Frutu Lehorrak<img src="../static/media/bokatak_img/alergiak/ico_fruitulehorrak.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="soja"> Soja<img src="../static/media/bokatak_img/alergiak/ico_soja.png" class="ico_alergiak" alt=""></label>
+                    <div class="checkbox-alergiak">
+                        <div>
+                            <label><input type="checkbox" name="Glutena"> Glutena<img src="../static/media/bokatak_img/alergiak/ico_gluten.png" class="ico_alergiak" alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Arrautzak"> Arrautzak<img src="../static/media/bokatak_img/alergiak/ico_arrautzak.png" class="ico_alergiak" alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Arrainak"> Arrainak<img src="../static/media/bokatak_img/alergiak/ico_arrainak.png" class="ico_alergiak" alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Krustazeoak"> Krustazeoak<img src="../static/media/bokatak_img/alergiak/ico_krustazeo.png" class="ico_alergiak" alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Moluskoak"> Moluskoak<img src="../static/media/bokatak_img/alergiak/ico_gluten.png" class="ico_alergiak" alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Frutu lehorrak"> Frutu Lehorrak<img src="../static/media/bokatak_img/alergiak/ico_fruitulehorrak.png" class="ico_alergiak" alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Soja"> Soja<img src="../static/media/bokatak_img/alergiak/ico_soja.png" class="ico_alergiak" alt=""></label>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -70,13 +74,13 @@
                 <div class="bokatainfo">
                     <h2 class="bokatatitulo">{{ bokatak.izena }} - <span class="prezioa">{{ bokatak.prezioa }}€</span></h2>
                     <p>{{ bokatak.deskribapena }}</p>
-    
                     <div class="alergiak">
                         {% for alergia_platerrak in bokatak.alergia_platerra_set.all %}
-                            <img src="{{ alergia_platerrak.alergia_id.img.url }}" alt="{{ alergia_platerrak.alergia_id.izena }}" alergia-mota="">
+                            <div data-alergia="{{alergia_platerrak.alergia_id.izena}}">
+                                <img src="{{ alergia_platerrak.alergia_id.img.url }}" alt="{{alergia_platerrak.alergia_id.izena}}">
+                            </div>
                         {% endfor %}
                     </div>
-    
                     <input class="karritoragehituinp" type="button" value="karritora gehitu">
                 </div>
             </div>
@@ -171,95 +175,63 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function () {
-            // Crear objetos para rastrear los tipos de mota y alergiak seleccionados
-            var tiposMotaSeleccionados = {};
-            var alergiakSeleccionados = [];
+        function actualizarFiltros() {
+            const checkboxesMotak = Array.from($('.checkbox-motak input[type="checkbox"]:checked')).map(checkbox => $(checkbox).attr('name'));
+            const checkboxesAlergiak = Array.from($('.checkbox-alergiak input[type="checkbox"]:checked')).map(checkbox => $(checkbox).attr('name'));
+            const productos = Array.from($('.bokata'));
 
-            // Escucha el evento de cambio en los checkboxes de motak
-            $('input[type="checkbox"][name^="motak"]').change(function () {
-                filtrarBokatakPorMotak();
-            });
+            productos.forEach(producto => {
+                const mota = $(producto).data("mota");
+                const alergiasProducto = Array.from($(producto).find('.alergiak div')).map(alergia => $(alergia).data("alergia"));
+                let productoVisible = true;
 
-            // Escucha el evento de cambio en los checkboxes de alergiak
-            $('input[type="checkbox"][name^="alergiak"]').change(function () {
-                filtrarBokatakPorAlergiak();
-            });
+                if (checkboxesMotak.length > 0 && !checkboxesMotak.includes(mota)) {
+                    productoVisible = false;
+                }
 
-            // Función para filtrar bokatak por motak seleccionados
-            function filtrarBokatakPorMotak() {
-                tiposMotaSeleccionados = {};
-                $('input[type="checkbox"][name^="motak"]:checked').each(function () {
-                    tiposMotaSeleccionados[$(this).attr("name").replace("motak_", "")] = true;
-                });
-
-                // Mostrar solo los elementos que coinciden con los tipos de mota seleccionados o mostrar todo si no se ha seleccionado ninguno
-                $(".bokata").each(function () {
-                    var dataMota = $(this).data("mota");
-                    if (Object.keys(tiposMotaSeleccionados).length === 0 || tiposMotaSeleccionados[dataMota]) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
+                checkboxesAlergiak.forEach(function (alergia) {
+                    if (alergiasProducto.includes(alergia)) {
+                        productoVisible = false;
                     }
                 });
 
-                // Aplicar el filtrado por alergiak nuevamente
-                filtrarBokatakPorAlergiak();
-            }
-
-            function filtrarBokatakPorAlergiak() {
-                alergiakSeleccionados = [];
-                $('input[type="checkbox"][name^="alergiak"]:checked').each(function () {
-                    alergiakSeleccionados.push($(this).attr('name').replace("alergiak_", ""));
-                });
-
-                if (alergiakSeleccionados.length === 0) {
-                    // Si no hay alergiak seleccionados, mostrar todos los elementos que coinciden con los tipos de mota seleccionados
-                    $(".bokata").each(function () {
-                        var dataMota = $(this).data("mota");
-                        if (Object.keys(tiposMotaSeleccionados).length === 0 || tiposMotaSeleccionados[dataMota]) {
-                            $(this).show();
-                        }
-                    });
+                if (productoVisible) {
+                    $(producto).show();
                 } else {
-                    // Ocultar los elementos que contienen al menos una de las alergiak seleccionadas
-                    $('.bokata').each(function () {
-                        var bokataAlergiak = $(this).find('.alergiak img').map(function () {
-                            return $(this).attr('alt');
-                        }).get();
-
-                        // Comprobar si alguna de las alergiak seleccionadas está en el array de alergiak del bokata
-                        var alergiaEncontrada = false;
-                        for (var i = 0; i < alergiakSeleccionados.length; i++) {
-                            if (bokataAlergiak.includes(alergiakSeleccionados[i])) {
-                                alergiaEncontrada = true;
-                                break;
-                            }
-                        }
-
-                        if (alergiaEncontrada && (Object.keys(tiposMotaSeleccionados).length === 0 || tiposMotaSeleccionados[dataMota])) {
-                            $(this).hide();
-                        } else {
-                            $(this).show();
-                        }
-                    });
+                    $(producto).hide();
                 }
+            });
+        }
+
+        $(document).ready(function () {
+            $('.checkbox-motak input[type="checkbox"]').change(function () {
+                actualizarFiltros();
+            });
+
+            $('.checkbox-alergiak input[type="checkbox"]').change(function () {
+                actualizarFiltros();
+            });
+
+            actualizarFiltros();
+
+            var edariakcheckbox = $("#edariakcheckbox");
+            var karritoedariak = $("#karritoedariak");
+            
+            karritoedariak.hide();
+
+            // Agrega un controlador de eventos al cambio en la casilla de verificación
+            edariakcheckbox.change(function () {
+            // Verifica el estado actual de la casilla de verificación
+            if (edariakcheckbox.is(":checked")) {
+                // Si está marcada, muestra el div con una animación
+                karritoedariak.show();
+            } else {
+                // Si no está marcada, oculta el div con una animación
+                karritoedariak.hide();
             }
-
-            //hide show edariak
-            var edariakDiv = $("#karritoedariak");
-            var edariakCheckbox = $("#edariakcheckbox");
-
-            edariakDiv.hide()
-
-            edariakCheckbox.change(function() {
-                if (edariakCheckbox.is(":checked")){
-                    edariakDiv.show();
-                } else {
-                    edariakDiv.hide();
-                }
-            })
+            });
         });
+
     </script>
 </body>
 </html>
