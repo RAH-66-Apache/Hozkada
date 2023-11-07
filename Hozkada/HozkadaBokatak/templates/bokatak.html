@@ -1,252 +1,333 @@
-{%load static%}
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="../static/media/nav_ico.png" type="image/png">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Koulen">
-    <link rel="stylesheet" href="../static/bokatak.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="{% static 'media/nav_ico.png' %}" type="image/png" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Koulen"
+    />
+    <link rel="stylesheet" href="{% static 'bokatak.css' %}" />
     <title>Hozkada-Bokatak</title>
-</head>
-<body>
+  </head>
+  <body>
     <div id="filtromenu">
-        <div id="filtrocontent">
-            <div class="dropdown">
-                <p>Motak</p>
-                <div class="dropdown-content">
-                    <div>
-                        <label><input type="checkbox" name="haragia"><img src="../static/media/bokatak_img/motak/ico_haragia.png" class="ico_motak" alt=""> Haragia</label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="arraina"><img src="../static/media/bokatak_img/motak/ico_arraina.png" class="ico_motak" alt=""> Arraina</label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="begetarianoa"><img src="../static/media/bokatak_img/motak/ico_begetarianoa.png" class="ico_motak" alt=""> Begetarianoa</label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="beganoa"><img src="../static/media/bokatak_img/motak/ico_beganoa.png" class="ico_motak" alt=""> Beganoa</label>
-                    </div>
-                </div>
+      <div id="filtrocontent">
+        <div class="dropdown">
+          <p>Motak</p>
+          <div class="dropdown-content">
+            <div>
+              <label
+                ><input type="checkbox" name="motak_haragia" /><img
+                  src="{% static 'media/bokatak_img/motak/ico_haragia.png' %}"
+                  class="ico_motak"
+                  alt=""
+                />
+                Haragia</label
+              >
             </div>
-            <div class="dropdown">
-                <p>Alergiak</p>
-                <div class="dropdown-content">
-                    <div>
-                        <label><input type="checkbox" name="gluten"> Glutena<img src="../static/media/bokatak_img/alergiak/ico_gluten.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="arrautza"> Arrautzak<img src="../static/media/bokatak_img/alergiak/ico_arrautzak.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="arraina"> Arrainak<img src="../static/media/bokatak_img/alergiak/ico_arrainak.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="krustazeoa"> Krustazeoak<img src="../static/media/bokatak_img/alergiak/ico_krustazeo.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="moluskoa"> Moluskoak<img src="../static/media/bokatak_img/alergiak/ico_gluten.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="frutu_lehorrak"> Frutu Lehorrak<img src="../static/media/bokatak_img/alergiak/ico_fruitulehorrak.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                    <div>
-                        <label><input type="checkbox" name="soja"> Soja<img src="../static/media/bokatak_img/alergiak/ico_soja.png" class="ico_alergiak" alt=""></label>
-                    </div>
-                </div>
+            <div>
+              <label
+                ><input type="checkbox" name="motak_arraina" /><img
+                  src="{% static 'media/bokatak_img/motak/ico_arraina.png' %}"
+                  class="ico_motak"
+                  alt=""
+                />
+                Arraina</label
+              >
             </div>
-                <p>Deskontuak</p>
+            <div>
+              <label
+                ><input type="checkbox" name="motak_begetarianoa" /><img
+                  src="{% static 'media/bokatak_img/motak/ico_begetarianoa.png' %}"
+                  class="ico_motak"
+                  alt=""
+                />
+                Begetarianoa</label
+              >
             </div>
+            <div>
+              <label
+                ><input type="checkbox" name="motak_beganoa" /><img
+                  src="{% static 'media/bokatak_img/motak/ico_beganoa.png' %}"
+                  class="ico_motak"
+                  alt=""
+                />
+                Beganoa</label
+              >
+            </div>
+          </div>
         </div>
+        <div class="dropdown">
+          <p>Alergiak</p>
+          <div class="dropdown-content">
+            <div>
+              <label
+                ><input type="checkbox" name="Glutena" /> Glutena<img
+                  src="{% static 'media/bokatak_img/alergiak/ico_gluten.png' %}"
+                  class="ico_alergiak"
+                  alt=""
+              /></label>
+            </div>
+            <div>
+              <label
+                ><input type="checkbox" name="Arrautzak" />
+                Arrautzak<img
+                  src="{% static 'media/bokatak_img/alergiak/ico_arrautzak.png' %}"
+                  class="ico_alergiak"
+                  alt=""
+              /></label>
+            </div>
+            <div>
+              <label
+                ><input type="checkbox" name="Arrainak" /> Arrainak<img
+                  src="{% static 'media/bokatak_img/alergiak/ico_arrainak.png' %}"
+                  class="ico_alergiak"
+                  alt=""
+              /></label>
+            </div>
+            <div>
+              <label
+                ><input type="checkbox" name="Krustazeoak" />
+                Krustazeoak<img
+                  src="{% static 'media/bokatak_img/alergiak/ico_krustazeo.png' %}"
+                  class="ico_alergiak"
+                  alt=""
+              /></label>
+            </div>
+            <div>
+              <label
+                ><input type="checkbox" name="Moluskoak" />
+                Moluskoak<img
+                  src="{% static 'media/bokatak_img/alergiak/ico_moluskoa.png' %}"
+                  class="ico_alergiak"
+                  alt=""
+              /></label>
+            </div>
+            <div>
+              <label
+                ><input type="checkbox" name="Frutu lehorrak" /> Frutu
+                Lehorrak<img
+                  src="{% static 'media/bokatak_img/alergiak/ico_fruitulehorrak.png' %}"
+                  class="ico_alergiak"
+                  alt=""
+              /></label>
+            </div>
+            <div>
+              <label
+                ><input type="checkbox" name="Soja" /> Soja<img
+                  src="{% static 'media/bokatak_img/alergiak/ico_soja.png' %}"
+                  class="ico_alergiak"
+                  alt=""
+              /></label>
+            </div>
+          </div>
+        </div>
+        <p>Deskontuak</p>
+      </div>
     </div>
 
     <div id="content">
-        <div id="bokatacontent">
-            {% for bokatak in bokatak %}
-            <div class="bokata" data-mota="{{ bokatak.mota }}">
-                <div class="bokataimg">
-                    <img src="{{ bokatak.img.url }}" alt="{{ bokatak.izena }}">
-                </div>
-                <div class="bokatainfo">
-                    <h2 class="bokatatitulo">{{ bokatak.izena }} - <span class="prezioa">{{ bokatak.prezioa }}€</span></h2>
-                    <p>{{ bokatak.deskribapena }}</p>
-    
-                    <div class="alergiak">
-                        {% for alergia_platerrak in bokatak.alergia_platerra_set.all %}
-                            <img src="{{ alergia_platerrak.alergia_id.img.url }}" alt="{{ alergia_platerrak.alergia_id.izena }}">
-                        {% endfor %}
-                    </div>
-    
-                    <input class="karritoragehituinp" type="button" value="karritora gehitu">
-                </div>
+      <div id="bokatacontent">
+        {% for bokatak in bokatak %}
+        <div class="bokata" data-mota="{{ bokatak.mota }}">
+          <div class="bokataimg">
+            <img src="{{ bokatak.img.url }}" alt="{{ bokatak.izena }}" />
+          </div>
+          <div class="bokatainfo">
+            <h2 class="bokatatitulo">
+              {{ bokatak.izena }} -
+              <span class="prezioa">{{ bokatak.prezioa }}€</span>
+            </h2>
+            <p>{{ bokatak.deskribapena }}</p>
+
+            <div class="alergiak">
+              {% for alergia_platerrak in bokatak.alergia_platerra_set.all %}
+              <img
+                src="{{ alergia_platerrak.alergia_id.img.url }}"
+                alt="{{ alergia_platerrak.alergia_id.izena }}"
+              />
+              {% endfor %}
             </div>
-            {% endfor %}
+
+            <input
+              class="karritoragehituinp"
+              type="button"
+              value="karritora gehitu"
+            />
+          </div>
         </div>
+        {% endfor %}
+      </div>
 
-
-
-        <div id="karrito">
-            <div id="karritocontent">
-                <p class="karritotitulo">zure produktuak</p>
-                <div id="karritoerosketak">
-                    <div class="erosketatituloflex">
-                        <p>Produktua</p>
-                        <p class="kantitateap">Kantitatea</p>
-                        <p>Prezioa (€)</p>
-                    </div>
-                    <table>
-                        <tr>
-                            <td class="tdprod" align="left"><p>Bocata hozkada</p></td>
-                            <td align="left">
-                                <select name="" id="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                    <option value="">5</option>
-                                    <option value="">6</option>
-                                    <option value="">7</option>
-                                    <option value="">8</option>
-                                    <option value="">9</option>
-                                </select>
-                            </td>
-                            <td class="tdprez" align="right"><p>2</p></td>
-                        </tr>
-                        <tr>
-                            <td class="tdprod" align="left"><p>Bocata hozkada</p></td>
-                            <td align="left">
-                                <select name="" id="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                    <option value="">5</option>
-                                    <option value="">6</option>
-                                    <option value="">7</option>
-                                    <option value="">8</option>
-                                    <option value="">9</option>
-                                </select></td>
-                            <td align="right"><p>2</p></td>
-                        </tr>
-                    </table>
-                </div>
-                <input type="checkbox" style="float:left; margin-top: 13px; margin-right: 5px;">
-                <p class="karritotitulo"> Edariak</p>
-                <div id="karritoedariak">
-                    <div class="erosketatituloflex">
-                        <p>Produktua</p>
-                        <p class="kantitateap">Kantitatea</p>
-                        <p>Prezioa (€)</p>
-                    </div>
-                    <table>
-                        <tr>
-                            <td align="left" width="60%"><p>Ura 500ml</p></td>
-                            <td align="left"><input class="numberinp" type="number" min="0"></td>
-                            <td align="right"><p>2</p></td>
-                        </tr>
-                        <tr>
-                            <td align="left"><p>Fanta Naranja</p></td>
-                            <td align="left"><input class="numberinp" type="number" min="0"></td>
-                            <td align="right"><p>2</p></td>
-                        </tr>
-                        <tr>
-                            <td align="left"><p>Fanta Limon</p></td>
-                            <td align="left"><input class="numberinp" type="number" min="0"></td>
-                            <td align="right"><p>2</p></td>
-                        </tr>
-                        <tr>
-                            <td align="left"><p>Coca-cola</p></td>
-                            <td align="left"><input class="numberinp" type="number" min="0"></td>
-                            <td align="right"><p>2</p></td>
-                        </tr>
-                    </table>
-                </div>
-                <div id="total">
-                    <p class="karritototal">Total</p>
-                    <p class="karritototal">45,23</p>
-                </div>
-                <input id="eskatu" type="button" value="eskatu">
+      <div id="karrito">
+        <div id="karritocontent">
+          <p class="karritotitulo">zure produktuak</p>
+          <div id="karritoerosketak">
+            <div class="erosketatituloflex">
+              <p>Produktua</p>
+              <p class="kantitateap">Kantitatea</p>
+              <p>Prezioa (€)</p>
             </div>
+            <table>
+              <tr>
+                <td class="tdprod" align="left"><p>Bocata hozkada</p></td>
+                <td align="left">
+                  <select name="" id="">
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                    <option value="">4</option>
+                    <option value="">5</option>
+                    <option value="">6</option>
+                    <option value="">7</option>
+                    <option value="">8</option>
+                    <option value="">9</option>
+                  </select>
+                </td>
+                <td class="tdprez" align="right"><p>2</p></td>
+              </tr>
+              <tr>
+                <td class="tdprod" align="left"><p>Bocata hozkada</p></td>
+                <td align="left">
+                  <select name="" id="">
+                    <option value="">1</option>
+                    <option value="">2</option>
+                    <option value="">3</option>
+                    <option value="">4</option>
+                    <option value="">5</option>
+                    <option value="">6</option>
+                    <option value="">7</option>
+                    <option value="">8</option>
+                    <option value="">9</option>
+                  </select>
+                </td>
+                <td align="right"><p>2</p></td>
+              </tr>
+            </table>
+          </div>
+          <input
+            type="checkbox"
+            style="float: left; margin-top: 13px; margin-right: 5px"
+          />
+          <p class="karritotitulo">Edariak</p>
+          <div id="karritoedariak">
+            <div class="erosketatituloflex">
+              <p>Produktua</p>
+              <p class="kantitateap">Kantitatea</p>
+              <p>Prezioa (€)</p>
+            </div>
+            <table>
+              <tr>
+                <td align="left" width="60%"><p>Ura 500ml</p></td>
+                <td align="left">
+                  <input class="numberinp" type="number" min="0" />
+                </td>
+                <td align="right"><p>2</p></td>
+              </tr>
+              <tr>
+                <td align="left"><p>Fanta Naranja</p></td>
+                <td align="left">
+                  <input class="numberinp" type="number" min="0" />
+                </td>
+                <td align="right"><p>2</p></td>
+              </tr>
+              <tr>
+                <td align="left"><p>Fanta Limon</p></td>
+                <td align="left">
+                  <input class="numberinp" type="number" min="0" />
+                </td>
+                <td align="right"><p>2</p></td>
+              </tr>
+              <tr>
+                <td align="left"><p>Coca-cola</p></td>
+                <td align="left">
+                  <input class="numberinp" type="number" min="0" />
+                </td>
+                <td align="right"><p>2</p></td>
+              </tr>
+            </table>
+          </div>
+          <div id="total">
+            <p class="karritototal">Total</p>
+            <p class="karritototal">45,23</p>
+          </div>
+          <input id="eskatu" type="button" value="eskatu" />
         </div>
+      </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function () {
-            // Crear objetos para rastrear los tipos de mota y alergiak seleccionados
-            var tiposMotaSeleccionados = {};
-            var alergiakSeleccionados = [];
-
-            // Escucha el evento de cambio en los checkboxes de motak
-            $('input[type="checkbox"][name^="motak"]').change(function () {
-                filtrarBokatakPorMotak();
-            });
-
-            // Escucha el evento de cambio en los checkboxes de alergiak
-            $('input[type="checkbox"][name^="alergiak"]').change(function () {
-                filtrarBokatakPorAlergiak();
-            });
-
-            // Función para filtrar bokatak por motak seleccionados
-            function filtrarBokatakPorMotak() {
-                tiposMotaSeleccionados = {};
-                $('input[type="checkbox"][name^="motak"]:checked').each(function () {
-                    tiposMotaSeleccionados[$(this).attr("name").replace("motak_", "")] = true;
-                });
-
-                // Mostrar solo los elementos que coinciden con los tipos de mota seleccionados o mostrar todo si no se ha seleccionado ninguno
-                $(".bokata").each(function () {
-                    var dataMota = $(this).data("mota");
-                    if (Object.keys(tiposMotaSeleccionados).length === 0 || tiposMotaSeleccionados[dataMota]) {
-                        $(this).show();
-                    } else {
-                        $(this).hide();
-                    }
-                });
-
-                // Aplicar el filtrado por alergiak nuevamente
-                filtrarBokatakPorAlergiak();
-            }
-
-            function filtrarBokatakPorAlergiak() {
-                alergiakSeleccionados = [];
-                $('input[type="checkbox"][name^="alergiak"]:checked').each(function () {
-                    alergiakSeleccionados.push($(this).attr('name').replace("alergiak_", ""));
-                });
-
-                if (alergiakSeleccionados.length === 0) {
-                    // Si no hay alergiak seleccionados, mostrar todos los elementos que coinciden con los tipos de mota seleccionados
-                    $(".bokata").each(function () {
-                        var dataMota = $(this).data("mota");
-                        if (Object.keys(tiposMotaSeleccionados).length === 0 || tiposMotaSeleccionados[dataMota]) {
-                            $(this).show();
-                        }
-                    });
-                } else {
-                    // Ocultar los elementos que contienen al menos una de las alergiak seleccionadas
-                    $('.bokata').each(function () {
-                        var bokataAlergiak = $(this).find('.alergiak img').map(function () {
-                            return $(this).attr('alt');
-                        }).get();
-
-                        // Comprobar si alguna de las alergiak seleccionadas está en el array de alergiak del bokata
-                        var alergiaEncontrada = false;
-                        for (var i = 0; i < alergiakSeleccionados.length; i++) {
-                            if (bokataAlergiak.includes(alergiakSeleccionados[i])) {
-                                alergiaEncontrada = true;
-                                break;
-                            }
-                        }
-
-                        if (alergiaEncontrada && (Object.keys(tiposMotaSeleccionados).length === 0 || tiposMotaSeleccionados[dataMota])) {
-                            $(this).hide();
-                        } else {
-                            $(this).show();
-                        }
-                    });
-                }
-            }
+      $(document).ready(function () {
+        // Escucha el evento de cambio en los checkboxes de motak
+        $('input[type="checkbox"][name^="motak"]').change(function () {
+          filtrarBokatakPorMotak();
         });
+
+        // Escucha el evento de cambio en los checkboxes de alergiak
+        $('input[type="checkbox"][name^="alergiak"]').change(function () {
+          filtrarBokatakPorAlergiak();
+        });
+
+        // Función para filtrar bokatak por motak seleccionados
+        function filtrarBokatakPorMotak() {
+          var motakSeleccionados = [];
+          $('input[type="checkbox"][name^="motak"]:checked').each(function () {
+            motakSeleccionados.push($(this).attr("name").replace("motak_", ""));
+          });
+
+          if (motakSeleccionados.length === 0) {
+            // Si no hay motak seleccionados, mostrar todos los elementos
+            $(".bokata").show();
+          } else {
+            // Mostrar solo los elementos que coinciden con los motak seleccionados
+            $(".bokata").each(function () {
+              var dataMota = $(this).data("mota");
+              if (motakSeleccionados.includes(dataMota)) {
+                $(this).show();
+              } else {
+                $(this).hide();
+              }
+            });
+          }
+        }
+       
+
+        function filtrarBokatakPorAlergiak() {
+    var alergiakSeleccionados = [];
+    $('input[type="checkbox"][name^="alergiak"]:checked').each(function() {
+        alergiakSeleccionados.push($(this).attr('name'));
+    });
+
+    $('.bokata').each(function() {
+        var bokataAlergias = $(this).find('.alergiak label input').map(function() {
+            return $(this).attr('name');
+        }).get();
+
+        var mostrar = false;
+        for (var i = 0; i < alergiakSeleccionados.length; i++) {
+            if (bokataAlergias.includes(alergiakSeleccionados[i])) {
+                mostrar = true;
+                break;
+            }
+        }
+
+        if (mostrar) {
+            $(this).show();
+        } else {
+            $(this).hide();
+        }
+    });
+}
+
+
+
+
+     
+      });
     </script>
-</body>
+  </body>
 </html>
