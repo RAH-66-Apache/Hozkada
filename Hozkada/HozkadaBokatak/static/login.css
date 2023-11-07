@@ -1,0 +1,209 @@
+body {
+    font-family: Koulen;
+}
+.container {
+    width: 40%;
+    margin-top: 150px;
+}
+#navbar {
+    background-color: #333;
+    color: white;
+    height: 100px;
+    overflow: visible;
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;          
+    z-index: 999; /* Asegura que el navbar esté por encima de otros elementos */
+}
+
+#logo {
+    margin-top: 5px;
+    margin-left: 15px;
+    height: 150px;
+    width: 150px;
+    position: absolute;
+}
+#links {
+    font-size: xx-large;
+    margin-top: 25px;
+    margin-left: 160px;
+}
+
+.link {
+    color: white;
+}
+
+.sartu {
+    margin-left: auto;
+    text-decoration: none;
+    font-size: xx-large;
+    color: white;
+    background-color: #E2AD5C;
+    margin-top: 25px;
+    margin-right: 30px;
+    height: 55px;
+    width: 180px;
+    text-align: center;
+    border-radius: 20px;
+    transition: transform 0.3s;
+}
+
+.sartu:hover {
+    transform: scale(1.2);
+    text-decoration: none;
+}
+#links a {
+    text-decoration: none;
+    margin-left: 30px;
+}
+
+#links a:hover {
+    color: #E2AD5C;
+}
+
+label {
+    font-size: x-large;
+    border-bottom: 5px solid #E2AD5C;
+
+    width: 99%;
+}
+
+input {
+    border-top: 5px solid #E2AD5C;
+}
+button {
+    width: 40%;
+    height: 50px;
+}
+
+.btn-reset {
+    background-color: #333;
+}
+
+.btn-reset:hover {
+    background-color: #4b4b4b;
+}
+
+.custom-shadow {
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.1);
+}
+
+#subavatar {
+    height: 200px;
+    background-color:#E2AD5C;
+    width: 200px;
+    border-radius: 20px;
+    position: absolute;
+}
+
+#avatarimg {
+    height: 170px;
+    width: 170px;
+    border-radius: 20px;
+    margin: 15px;
+}
+
+#avatar {
+    width: 200px;
+    height: 200px;
+    background-color: #ECC995;
+    border-radius: 20px;
+    margin-top: 30px;
+    position: absolute;
+}
+
+#palo {
+    width: 600px;
+    height: 5px;
+    background: #E2AD5C;
+}
+
+#loginp {
+    font-size: x-large;
+    margin-top: 167px;
+    text-align: center;
+}
+
+#btnerregistratu {
+    background-color: #333;
+    color: white;
+}
+
+
+#footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    bottom: 0;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    border-top: 6px solid #E2AD5C;
+}
+
+
+#Linkak, #Kontaktua, #Sozialak, #Logo {
+    flex: 1;
+    padding: 0 15px; /* Espaciado horizontal entre elementos */
+}
+
+#Linkak ul, #Kontaktua ul, #Sozialak ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 30px;
+}
+
+#Linkak ul li, #Kontaktua ul li, #Sozialak ul li {
+    margin-bottom: 5px;
+}
+
+#Linkak h3, #Kontaktua h3, #Sozialak h3 {
+    position: relative;
+}
+
+#Linkak h3::after, #Kontaktua h3::after, #Sozialak h3::after{
+    content: '';
+    display: block;
+    width: 25%;
+    height: 4px;
+    background-color: #E2AD5C;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+#Logo img {
+    max-width: 35%;
+}
+
+
+.social-icon {
+    font-size: 24px; /* Tamaño del icono */
+    color: #0073e6; /* Color del icono, puedes personalizarlo */
+    margin-right: 10px; /* Espaciado horizontal entre los íconos */
+    margin-top: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    
+}
+
+ul li {
+    display: flex;
+    align-items: center; /* Alineación vertical al centro */
+    margin-bottom: 10px; /* Espaciado vertical entre los elementos de la lista */
+}
+
+ul li a {
+    text-decoration: none; /* Quita la subrayado de los enlaces */
+}
+
+a:visited {
+    color: inherit; /* Hereda el color del texto del padre */
+    text-decoration: none; /* Quita cualquier decoración de enlace visitado */
+}

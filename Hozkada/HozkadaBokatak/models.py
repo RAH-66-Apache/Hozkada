@@ -11,7 +11,7 @@ class Bezeroa(models.Model):
     emaila = models.EmailField(max_length=50, default='')
     helbidea = models.CharField(max_length=100)
     postakodea = models.CharField(max_length=10)
-    img = models.ImageField(upload_to='img/erabiltzaileak')
+    img = models.ImageField(upload_to='img/erabiltzaileak',default='img/erabiltzaileak/ico_arrainak.png')
 
     def __str__(self):
         return self.izena
