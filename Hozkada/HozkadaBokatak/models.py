@@ -1,8 +1,10 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 # Create your models here.
 
 class Bezeroa(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
     NAN = models.CharField(max_length=10)
     izena = models.CharField(max_length=20)
     abizena = models.CharField(max_length=20)
@@ -13,7 +15,7 @@ class Bezeroa(models.Model):
     postakodea = models.CharField(max_length=10)
     img = models.ImageField(upload_to='img/erabiltzaileak')
 
-    def __unicode__(self):
+    def __str__(self):
         return self.NAN
 
 class Platerra(models.Model): 
@@ -30,7 +32,7 @@ class Platerra(models.Model):
     img = models.ImageField(upload_to='img/bokatak')
     alergiak = models.ManyToManyField('Alergia', blank=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.izena
 
 class Eskaera(models.Model):
@@ -38,7 +40,7 @@ class Eskaera(models.Model):
     eskaera_data = models.DateField(default='2017-01-01')
     egoera = models.BooleanField(default=True)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.id
 
 class Platerra_Eskaera(models.Model):
@@ -46,13 +48,11 @@ class Platerra_Eskaera(models.Model):
     platerra_id = models.ForeignKey(Platerra, on_delete=models.CASCADE)
     kantitatea = models.IntegerField(default=0)
     
-
-
 class Alergia(models.Model):
     izena = models.CharField(max_length=30)
     img = models.ImageField()
 
-    def __unicode__(self):
+    def __str__(self):
         return self.izena
 
 class Deskontua(models.Model):
@@ -60,7 +60,7 @@ class Deskontua(models.Model):
     ehunekoa = models.FloatField(default=0)
     kantitatea = models.IntegerField( default=0)
 
-    def __unicode__(self):
+    def __str__(self):
         return self.izena
 
 
