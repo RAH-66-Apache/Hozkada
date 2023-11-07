@@ -29,14 +29,13 @@ class Platerra(models.Model):
     prezioa = models.FloatField(default=0)
     mota = models.CharField(max_length=20, choices=motak, default='haragia')
     img = models.ImageField(upload_to='img/bokatak')
-    alergiak = models.ManyToManyField('Alergia', blank=True)
 
     def __unicode__(self):
         return self.izena
 
 class Eskaera(models.Model):
     id_bezeroa = models.ForeignKey(Bezeroa, on_delete=models.CASCADE)
-    eskaera_data = models.DateField(null=True)
+    eskaera_data = models.DateField()
     egoera = models.BooleanField(default=True)
 
     def __unicode__(self):
@@ -62,7 +61,6 @@ class Deskontua(models.Model):
 
     def __unicode__(self):
         return self.izena
-
 
 class Deskontua_Platerra(models.Model):
     platerra_id = models.ForeignKey(Platerra, on_delete=models.CASCADE)
