@@ -1,0 +1,73 @@
+{
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "funding": "https://opencollective.com/turf",
+  "scripts": {
+    "lint": "npm-run-all lint:*",
+    "lint:eslint": "eslint packages",
+    "lint:prettier": "prettier --check .",
+    "lint:mrl": "mrl check",
+    "lint:escheck-require": "es-check es8 packages/*/dist/js/index.js packages/turf/turf.min.js",
+    "lint:escheck-esm": "es-check --module es8 packages/*/dist/es/index.js",
+    "lint:escheck-es5": "es-check es5 packages/turf/turf.min.js",
+    "postlint": "documentation lint packages/turf-*/index.js",
+    "prepare": "lerna run build && node ./scripts/add-import-extensions.js",
+    "pretest": "npm run lint",
+    "test": "lerna run test",
+    "posttest": "lerna run --scope @turf/turf last-checks",
+    "docs": "node ./scripts/generate-readmes"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "package.json": [
+      "mrl check --paths"
+    ],
+    "**/*.{js,ts}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "packages/*/index.{js,ts}": [
+      "./scripts/generate-readmes"
+    ],
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "devDependencies": {
+    "@types/geojson": "7946.0.8",
+    "@types/node": "18.11.9",
+    "@typescript-eslint/eslint-plugin": "^6.8.0",
+    "@typescript-eslint/parser": "^6.8.0",
+    "acorn": "^7.4.1",
+    "camelcase": "*",
+    "d3-queue": "*",
+    "decamelize": "*",
+    "dependency-tree": "^8.1.2",
+    "documentation": "^14.0.2",
+    "es-check": "^7.1.1",
+    "eslint": "^8.51.0",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-prettier": "^5.0.1",
+    "esm": "^3.2.25",
+    "fs-extra": "*",
+    "husky": "^4.2.3",
+    "lerna": "^7.3.0",
+    "lint-staged": "^10.0.8",
+    "load-json-file": "*",
+    "meow": "*",
+    "monorepolint": "^0.5.0-alpha.20",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^3.0.3",
+    "progress": "*",
+    "rollup": "^2.34.2",
+    "tape": "^5.7.0",
+    "ts-node": "^9.0.0",
+    "tsx": "^3.12.8",
+    "typescript": "^5.2.2",
+    "yamljs": "*"
+  }
+}

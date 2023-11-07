@@ -1,5 +1,4 @@
 from django.db import models
-from django.utils import timezone
 
 # Create your models here.
 
@@ -9,7 +8,7 @@ class Bezeroa(models.Model):
     abizena = models.CharField(max_length=20)
     abizena2 = models.CharField(max_length=20)
     telefonoa = models.CharField(max_length=20)
-    emaila = models.EmailField(default='')
+    emaila = models.EmailField()
     helbidea = models.CharField(max_length=100)
     postakodea = models.CharField(max_length=10)
     img = models.ImageField(upload_to='img/erabiltzaileak')
@@ -29,6 +28,7 @@ class Platerra(models.Model):
     prezioa = models.FloatField(default=0)
     mota = models.CharField(max_length=20, choices=motak, default='haragia')
     img = models.ImageField(upload_to='img/bokatak')
+    alergiak = models.ManyToManyField('Alergia', blank=True)
 
     def __unicode__(self):
         return self.izena
@@ -39,13 +39,14 @@ class Eskaera(models.Model):
     egoera = models.BooleanField(default=True)
 
     def __unicode__(self):
-        return self.id_bezeroa
+        return self.id
 
 class Platerra_Eskaera(models.Model):
     eskaera_id = models.ForeignKey(Eskaera, on_delete=models.CASCADE)
     platerra_id = models.ForeignKey(Platerra, on_delete=models.CASCADE)
-    kantitatea = models.IntegerField(default=0)
+    kantitatea = models.IntegerField()
     
+
 
 class Alergia(models.Model):
     izena = models.CharField(max_length=30)
@@ -56,11 +57,12 @@ class Alergia(models.Model):
 
 class Deskontua(models.Model):
     izena = models.CharField(max_length=50)
-    ehunekoa = models.FloatField(default=0)
-    kantitatea = models.IntegerField(default=0)
+    ehunekoa = models.FloatField()
+    kantitatea = models.IntegerField()
 
     def __unicode__(self):
         return self.izena
+
 
 class Deskontua_Platerra(models.Model):
     platerra_id = models.ForeignKey(Platerra, on_delete=models.CASCADE)
