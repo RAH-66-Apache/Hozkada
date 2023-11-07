@@ -172,35 +172,80 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
-        $(document).ready(function() {
-            // Escucha el evento de cambio en los checkboxes
-            $('input[type="checkbox"]').change(function() {
-                // Crear un array para almacenar las categorías seleccionadas
-                var categoriasSeleccionadas = [];
-                
-                // Recorrer todos los checkboxes para determinar cuáles están marcados
-                $('input[type="checkbox"]').each(function() {
-                    if ($(this).is(':checked')) {
-                        categoriasSeleccionadas.push($(this).attr('name'));
+        $(document).ready(function () {
+            // Crear objetos para rastrear los tipos de mota y alergiak seleccionados
+            var tiposMotaSeleccionados = {};
+            var alergiakSeleccionados = [];
+
+            // Escucha el evento de cambio en los checkboxes de motak
+            $('input[type="checkbox"][name^="motak"]').change(function () {
+                filtrarBokatakPorMotak();
+            });
+
+            // Escucha el evento de cambio en los checkboxes de alergiak
+            $('input[type="checkbox"][name^="alergiak"]').change(function () {
+                filtrarBokatakPorAlergiak();
+            });
+
+            // Función para filtrar bokatak por motak seleccionados
+            function filtrarBokatakPorMotak() {
+                tiposMotaSeleccionados = {};
+                $('input[type="checkbox"][name^="motak"]:checked').each(function () {
+                    tiposMotaSeleccionados[$(this).attr("name").replace("motak_", "")] = true;
+                });
+
+                // Mostrar solo los elementos que coinciden con los tipos de mota seleccionados o mostrar todo si no se ha seleccionado ninguno
+                $(".bokata").each(function () {
+                    var dataMota = $(this).data("mota");
+                    if (Object.keys(tiposMotaSeleccionados).length === 0 || tiposMotaSeleccionados[dataMota]) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
                     }
                 });
-                
-                // Mostrar u ocultar los elementos bokata según las categorías seleccionadas
-                if (categoriasSeleccionadas.length === 0) {
-                    // Si no hay categorías seleccionadas, mostrar todos los elementos
-                    $('.bokata').show();
-                } else {
-                    // Mostrar solo los elementos que coinciden con las categorías seleccionadas
-                    $('.bokata').each(function() {
-                        var dataMota = $(this).data('mota');
-                        if (categoriasSeleccionadas.includes(dataMota)) {
+
+                // Aplicar el filtrado por alergiak nuevamente
+                filtrarBokatakPorAlergiak();
+            }
+
+            function filtrarBokatakPorAlergiak() {
+                alergiakSeleccionados = [];
+                $('input[type="checkbox"][name^="alergiak"]:checked').each(function () {
+                    alergiakSeleccionados.push($(this).attr('name').replace("alergiak_", ""));
+                });
+
+                if (alergiakSeleccionados.length === 0) {
+                    // Si no hay alergiak seleccionados, mostrar todos los elementos que coinciden con los tipos de mota seleccionados
+                    $(".bokata").each(function () {
+                        var dataMota = $(this).data("mota");
+                        if (Object.keys(tiposMotaSeleccionados).length === 0 || tiposMotaSeleccionados[dataMota]) {
                             $(this).show();
-                        } else {
+                        }
+                    });
+                } else {
+                    // Ocultar los elementos que contienen al menos una de las alergiak seleccionadas
+                    $('.bokata').each(function () {
+                        var bokataAlergiak = $(this).find('.alergiak img').map(function () {
+                            return $(this).attr('alt');
+                        }).get();
+
+                        // Comprobar si alguna de las alergiak seleccionadas está en el array de alergiak del bokata
+                        var alergiaEncontrada = false;
+                        for (var i = 0; i < alergiakSeleccionados.length; i++) {
+                            if (bokataAlergiak.includes(alergiakSeleccionados[i])) {
+                                alergiaEncontrada = true;
+                                break;
+                            }
+                        }
+
+                        if (alergiaEncontrada && (Object.keys(tiposMotaSeleccionados).length === 0 || tiposMotaSeleccionados[dataMota])) {
                             $(this).hide();
+                        } else {
+                            $(this).show();
                         }
                     });
                 }
-            });
+            }
         });
     </script>
 </body>
