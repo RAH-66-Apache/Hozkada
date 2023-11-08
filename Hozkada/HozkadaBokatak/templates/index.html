@@ -13,13 +13,29 @@
 </head>
 <body>
     <div id="navbar">
-        <a href=""><img id="logo" src="../static/media/logo.png" alt=""></a>
+        <a href=""><img id="logo" src="./logo.png" alt=""></a>
         <div id="links">
             <a class="link" href="">Hasiera</a>
-            <a class="link" href="/bokatak">Bokatak</a>
+            <a class="link" href="">Bokatak</a>
             <a class="link" href="">Deskontuak</a>
         </div>
-        <a class="sartu" href="/login">Sartu</a>
+        {% if user.is_authenticated %}
+        <div id="username-txt" class="dropdown">
+            <p>@Username</p>
+            <div class="dropdown-content">
+                <a href="#">PERFILA</a>
+                <a href="#">ESKAERA</a>
+                <a href="{% url 'logout' %}">SESIOA ITXI</a>
+                <!-- Agrega más enlaces según tus necesidades -->
+            </div>
+        </div>
+        <div id="profile-picture">
+           <img  src="img/wander.png" alt="Foto de perfil">
+        </div>
+
+        {% else %}
+            <a class="sartu" href="{%url 'login'%}">Sartu</a>
+        {% endif %}
     </div>
 
     <div id="goiburua">

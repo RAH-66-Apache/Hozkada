@@ -1,7 +1,6 @@
 from django.shortcuts import render
 from .models import Platerra
-from .models import Alergia_Platerra, Bezeroa
-
+from .models import Alergia_Platerra
 
 # Create your views here.
 
@@ -12,10 +11,3 @@ def bokatak(request):
     platerra = Platerra.objects.all
     alergia_platerrak = Alergia_Platerra.objects.all
     return render(request, 'bokatak.html', {'bokatak':platerra,'alergia_platerrak':alergia_platerrak})
-
-def login(request):
-    return render(request, 'login.html')
-
-def register(request):
-    return render(request, 'register.html')
-

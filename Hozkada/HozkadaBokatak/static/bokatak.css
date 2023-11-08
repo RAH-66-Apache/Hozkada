@@ -206,12 +206,17 @@ p {
 }
 
 .alergiak {
-    float: right;
+    display: flex;
     margin-top: 5px;
+    justify-content: center; 
+    align-items: center; 
+    margin-bottom: 10px;
 }
+
 .alergiak img {
     height: 30px;
     margin-left: 5px;
+    margin-right: 5px;
 }
 
 input[type="button"] {
