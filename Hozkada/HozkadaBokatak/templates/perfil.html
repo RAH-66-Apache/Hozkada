@@ -52,13 +52,13 @@
           <div class="row mt-3">
             <div class="col">
                 <label for="">Izena:</label>
-                <input type="text" class="form-control custom-shadow" id="izena" placeholder="Sartu izena" name="izena" required>
+                <input type="text" class="form-control custom-shadow" id="izena" placeholder="Sartu izena" name="izena" value="{{ user.bezeroa.izena }}" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure izena jarri.</div>
             </div>
             <div class="col">
                 <label for="">Abizena:</label>
-                <input type="text" class="form-control custom-shadow" id="abizena" placeholder="Sartu abizena" name="abizena" required>
+                <input type="text" class="form-control custom-shadow" id="abizena" placeholder="Sartu abizena" name="abizena"  value="{{ user.bezeroa.abizena }}" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure abizena jarri.</div>
             </div>
@@ -66,13 +66,13 @@
           <div class="row mt-3">
             <div class="col">
                 <label for="">Abizena 2: </label>
-                <input type="text" class="form-control custom-shadow" id="abizena2" placeholder="Sartu bigarren abizena" name="abizena2" required>
+                <input type="text" class="form-control custom-shadow" id="abizena2" placeholder="Sartu bigarren abizena" name="abizena2" value="{{ user.bezeroa.abizena2 }}"required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure abizena jarri.</div>
             </div>
             <div class="col">
                 <label for="">DNI:</label>
-                <input type="text" class="form-control custom-shadow" id="nan" placeholder="Sartu NAN-a" name="nan" required>
+                <input type="text" class="form-control custom-shadow" id="nan" placeholder="Sartu NAN-a" name="nan" value="{{ user.bezeroa.NAN }}"required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure DNIa jarri.</div>
             </div>
@@ -80,7 +80,7 @@
           <div class="row mt-3">
             <div class="col">
                 <label for="">Telefonoa:</label>
-                <input type="text" class="form-control custom-shadow" id="telefonoa" placeholder="Sartu telefonoa" name="telefonoa" required>
+                <input type="text" class="form-control custom-shadow" id="telefonoa" placeholder="Sartu telefonoa" name="telefonoa" value="{{ user.bezeroa.telefonoa }}" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure telefonoa jarri.</div>
             </div>
@@ -91,7 +91,7 @@
           <div class="row mt-3">
             <div class="col">
                 <label for="">Email:</label>
-                <input type="text" class="form-control custom-shadow" id="email" placeholder="Sartu email-a" name="email" required>
+                <input type="text" class="form-control custom-shadow" id="email" placeholder="Sartu email-a" name="emaila" value="{{ user.bezeroa.emaila }}" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure emaila jarri.</div>
             </div>
@@ -99,13 +99,13 @@
           <div class="row mt-3">
             <div class="col">
                 <label for="">Pasahitza:</label>
-                <input type="password" class="form-control custom-shadow" id="pasahitza" placeholder="Sartu pasahitza" name="pasahitza" required>
+                <input type="password" class="form-control custom-shadow" id="pasahitza" placeholder="Sartu pasahitza" name="pasahitza" value="{{ user.bezeroa.pasahitza }}"required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, pasahitza jarri.</div>
             </div>
             <div class="col">
                 <label for="">Errepikatu pasahitza:</label>
-                <input type="password" class="form-control custom-shadow" id="pasahitza2" placeholder="Errepikatu pasahitza" name="pasahitza2" required>
+                <input type="password" class="form-control custom-shadow" id="pasahitza2" placeholder="Errepikatu pasahitza" name="pasahitza2" value="{{ user.bezeroa.pasahitza2 }}"required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, pasahitza jarri.</div>
             </div>
@@ -113,13 +113,13 @@
           <div class="row mt-3">
             <div class="col">
                 <label for="">Helbidea: </label>
-                <input type="text" class="form-control custom-shadow" id="helbidea" placeholder="Sartu helbidea" name="helbidea" required>
+                <input type="text" class="form-control custom-shadow" id="helbidea" placeholder="Sartu helbidea" name="helbidea" value="{{ user.bezeroa.helbidea }}" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure helbidea jarri.</div>
             </div>
             <div class="col">
                 <label for="">PK:</label>
-                <input type="text" class="form-control custom-shadow" id="pk" placeholder="Sartu posta kodea" name="pk" required>
+                <input type="text" class="form-control custom-shadow" id="pk" placeholder="Sartu posta kodea" name="pk" value="{{ user.bezeroa.postakodea }}" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure posta kodea jarri.</div>
             </div>
