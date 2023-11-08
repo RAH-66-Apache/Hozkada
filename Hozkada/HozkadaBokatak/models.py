@@ -16,7 +16,7 @@ class Bezeroa(models.Model):
     img = models.ImageField(upload_to='img/erabiltzaileak')
 
     def __str__(self):
-        return self.NAN
+        return self.izena + " " + self.abizena + " " + self.NAN
 
 class Platerra(models.Model): 
     motak = (

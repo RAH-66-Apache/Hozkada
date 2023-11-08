@@ -21,7 +21,7 @@
         </div>
         {% if user.is_authenticated %}
         <div id="username-txt" class="dropdown">
-            <p>@Username</p>
+            <p>@{{ user.username }}</p>
             <div class="dropdown-content">
                 <a href="#">PERFILA</a>
                 <a href="#">ESKAERA</a>
