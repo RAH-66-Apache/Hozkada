@@ -13,8 +13,7 @@ body {
     position: fixed;
     top: 0;
     width: 100%;          
-    z-index: 999; /* Asegura que el navbar esté por encima de otros elementos */
-        
+    z-index: 999; /* Asegura que el navbar esté por encima de otros elementos */    
 }
 
 #logo {
@@ -46,22 +45,28 @@ body {
 }
 
 .sartu {
+    display: flex;
     margin-left: auto;
     text-decoration: none;
     font-size: xx-large;
     color: white;
-    background-color: #E2AD5C;
     margin-top: 25px;
     margin-right: 30px;
     height: 55px;
-    width: 180px;
-    text-align: center;
     border-radius: 20px;
-    transition: transform 0.3s;
 }
 
-.sartu:hover {
+.sartuinp:hover {
     transform: scale(1.2);
+}
+
+.sartuinp {
+    text-decoration: none;
+    border-radius: 20px;
+    padding: 0 20px 0 20px;
+    background-color: #E2AD5C;
+    transition: transform 0.3s;
+    margin-left: 25px;
 }
 
 #links a {

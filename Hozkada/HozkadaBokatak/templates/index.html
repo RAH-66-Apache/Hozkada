@@ -34,8 +34,12 @@
         </div>
 
         {% else %}
-            <a class="sartu" href="{%url 'login'%}">Sartu</a>
+        <div class="sartu">
+            <a class="sartuinp" href="{%url 'login'%}">Sartu</a>
+            <a class="sartuinp" href="{%url 'register%'}">Erregistratu</a>
+        </div>
         {% endif %}
+        
     </div>
 
     <div id="goiburua">
