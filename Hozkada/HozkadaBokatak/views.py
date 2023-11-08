@@ -7,6 +7,9 @@ from .models import Bezeroa
 def index(request): 
     return render(request, 'index.html')
 
+def perfil(request): 
+    return render(request, 'perfil.html')
+
 def bokatak(request):
     platerra = Platerra.objects.all
     alergia_platerrak = Alergia_Platerra.objects.all
