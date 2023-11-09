@@ -17,7 +17,7 @@
     <div id="navbar">
         <a href=""><img id="logo" src="../static/media/logo.png" alt=""></a>
         <div id="links">
-            <a class="link" href="">Hasiera</a>
+            <a class="link" href="/">Hasiera</a>
             <a class="link" href="/bokatak">Bokatak</a>
             <a class="link" href="">Deskontuak</a>
         </div>
@@ -38,7 +38,6 @@
         {% else %}
         <div class="sartu">
             <a class="sartuinp" href="{%url 'login'%}">Sartu</a>
-            <a class="sartuinp" href="gehitubezeroa/">Erregistratu</a>
         </div>
         {% endif %}
         
@@ -53,7 +52,7 @@
             </div>
         </div>
     </div>
-    <br><br><br><br><br><br><br>
+    <br><br><br><br>
 
     <div class="container">
         <form action="gehitubezeroaerregistroa/" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
@@ -137,8 +136,8 @@
             </div>
         </div><br>
             <div class="col text-center"> <!-- Agrega la clase "text-center" para centrar horizontalmente -->
-                <button type="submit" class="btn btn-lg mt-3 btn-reset">Erregistratu</button>
-                <button type="reset" class="btn btn-dark btn-lg mt-3">Ezabatu</button>
+                <button type="submit" id="resetbutton" class="btn btn-lg mt-3 btn-reset">Erregistratu</button>
+                <button type="reset" class="btn btn-dark btn-lg mt-3" id="resetButton">Ezabatu</button>
             </div>
             <br>
         </form>
@@ -187,9 +186,10 @@
         $(document).ready(function() {
             // Selecciona el input de tipo archivo
             var inputFile = $('#avatarajax');
-        
-            // Selecciona la imagen
             var img = $('#avatarimg');
+        
+            // Almacena la URL de la imagen original
+            var initialImageUrl = img.attr('src');
         
             // Agrega un controlador de eventos al input de archivo
             inputFile.change(function() {
@@ -202,6 +202,12 @@
                     // Actualiza el src de la imagen con la URL del objeto creado
                     img.attr('src', objectURL);
                 }
+            });
+        
+            // Agrega un controlador de eventos al botón de reset
+            $('#resetButton').click(function() {
+                // Restablece la imagen al valor inicial
+                img.attr('src', initialImageUrl);
             });
         });
         </script>
