@@ -81,92 +81,24 @@
                             </div>
                         {% endfor %}
                     </div>
-                    <input class="karritoragehituinp" type="button" value="karritora gehitu">
+                    {% csrf_token %}
+                    <input class="karritoa-gehitu-inp" type="button" value="Karritoa gehitu" data-platerra-id="{{ bokatak.id }}">
+                    <div class="mesedez-ezabatu" style="display: none;"></div>
                 </div>
             </div>
             {% endfor %}
         </div>
+    </div>
 
 
         <div id="karrito">
             <div id="karritocontent">
                 <p class="karritotitulo">zure produktuak</p>
                 <div id="karritoerosketak">
-                    <div class="erosketatituloflex">
-                        <p>Produktua</p>
-                        <p class="kantitateap">Kantitatea</p>
-                        <p>Prezioa (€)</p>
+                    {% csrf_token %}
+                    <div id="lista-carrito">
+                        <!-- Los elementos del carrito se mostrarán aquí dinámicamente -->
                     </div>
-                    <table>
-                        <tr>
-                            <td class="tdprod" align="left"><p>Bocata hozkada</p></td>
-                            <td align="left">
-                                <select name="" id="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                    <option value="">5</option>
-                                    <option value="">6</option>
-                                    <option value="">7</option>
-                                    <option value="">8</option>
-                                    <option value="">9</option>
-                                </select>
-                            </td>
-                            <td class="tdprez" align="right"><p>2</p></td>
-                        </tr>
-                        <tr>
-                            <td class="tdprod" align="left"><p>Bocata hozkada</p></td>
-                            <td align="left">
-                                <select name="" id="">
-                                    <option value="">1</option>
-                                    <option value="">2</option>
-                                    <option value="">3</option>
-                                    <option value="">4</option>
-                                    <option value="">5</option>
-                                    <option value="">6</option>
-                                    <option value="">7</option>
-                                    <option value="">8</option>
-                                    <option value="">9</option>
-                                </select></td>
-                            <td align="right"><p>2</p></td>
-                        </tr>
-                    </table>
-                </div>
-                <input id="edariakcheckbox" type="checkbox" style="float:left; margin-top: 13px; margin-right: 5px;" >
-                <p class="karritotitulo"> Edariak</p>
-                <div id="karritoedariak">
-                    <div class="erosketatituloflex">
-                        <p>Produktua</p>
-                        <p class="kantitateap">Kantitatea</p>
-                        <p>Prezioa (€)</p>
-                    </div>
-                    <table>
-                        <tr>
-                            <td align="left" width="60%"><p>Ura 500ml</p></td>
-                            <td align="left"><input class="numberinp" type="number" min="0"></td>
-                            <td align="right"><p>2</p></td>
-                        </tr>
-                        <tr>
-                            <td align="left"><p>Fanta Naranja</p></td>
-                            <td align="left"><input class="numberinp" type="number" min="0"></td>
-                            <td align="right"><p>2</p></td>
-                        </tr>
-                        <tr>
-                            <td align="left"><p>Fanta Limon</p></td>
-                            <td align="left"><input class="numberinp" type="number" min="0"></td>
-                            <td align="right"><p>2</p></td>
-                        </tr>
-                        <tr>
-                            <td align="left"><p>Coca-cola</p></td>
-                            <td align="left"><input class="numberinp" type="number" min="0"></td>
-                            <td align="right"><p>2</p></td>
-                        </tr>
-                    </table>
-                </div>
-                <div id="total">
-                    <p class="karritototal">Total</p>
-                    <p class="karritototal">45,23</p>
                 </div>
                 <input id="eskatu" type="button" value="eskatu">
             </div>
@@ -231,6 +163,60 @@
             }
             });
         });
+
+       // Funcion ajax para agregar bocata al carrito
+       $(document).ready(function() {
+
+        
+    $(".karritoa-gehitu-inp").click(function() {
+        var platerra_id = $(this).data("platerra-id");
+        var bokataDiv = $(this).closest(".bokata");
+
+        $.ajax({
+            type: "POST",
+            url: "/bokatak/agregar_bocata_al_carrito/" + platerra_id + "/",  // Ruta correcta sin <int:platerra_id>
+            data: {
+                csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                platerra_id: platerra_id  // Pasar platerra_id como un parámetro POST
+            },
+            success: function(data) {
+                // Maneja la respuesta de la vista, p. ej., muestra un mensaje al usuario
+                if (data.success) {
+                    bokataDiv.find(".mesedez-ezabatu").text("Platera gehitu da zure karritora.");
+                      // Actualiza la lista de Platerra en el carrito, solo el carrito seleccionado
+        // Después de agregar un elemento, actualiza la lista completa del carrito
+        mostrarListaCarrito();
+                bokataDiv.find(".mesedez-ezabatu").show();
+            }
+        }
+    });
+        
+    
+// Actualiza la lista de Platerra en el carrito
+function mostrarListaCarrito() {
+    $.ajax({
+        type: "GET",
+        url: "/bokatak/lista_carrito/", // Ruta de la vista que obtiene la lista del carrito
+       
+        success: function (data) {
+            $("#lista-carrito").empty(); // Limpia el contenido actual del div
+            data.carrito_data.forEach(function (platerra_nombre) {
+                $("#lista-carrito").append("<li>" + platerra_nombre + "</li>"); // Agrega elementos al div
+            });
+        }
+    });
+}
+
+
+
+
+    });
+});
+
+
+
+
+    
 
     </script>
 </body>

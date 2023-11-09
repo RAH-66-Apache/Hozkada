@@ -8,9 +8,8 @@ urlpatterns = [
 
     path('bokatak/', views.bokatak, name = 'bokatak'),
 
-     path('bokatakErakutsi/', views.bokatak_erakutsi, name='bokatak_erakutsi'),
+   path('bokatak/agregar_bocata_al_carrito/<int:platerra_id>/', views.agregar_bocata_al_carrito, name='agregar_bocata_al_carrito'),
 
-    # Ruta para agregar un producto al carrito
-    path('bokatak_eskaera_gehitu/', views.bokatak_eskaera_gehitu, name='bokatak_eskaera_gehitu'),
+   path('bokatak/lista_carrito/', views.lista_carrito, name='lista_carrito'),
 
 ]
