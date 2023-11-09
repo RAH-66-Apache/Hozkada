@@ -43,14 +43,13 @@
         {% endif %}
         
     </div>
-
     <div class="container">
         <div class="container" id="container-avatar">
             <div id="avatar">
                 <p id="erregistratup">erregistratu</p>
             </div>
             <div id="subavatar">
-                <img id="avatarimg" src="" alt="">
+                <img id="avatarimg" src="../static/media/logo.png" alt="a">
             </div>
         </div>
     </div>
@@ -60,7 +59,7 @@
         <form action="gehitubezeroaerregistroa/" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
         {%csrf_token%}
         <div class="row mt-3">
-            <input type="file" name="argazkia" accept="image/*">
+            <input id="avatarajax" type="file" name="argazkia" accept="image/*">
         </div>
         <div class="row mt-3">
             <div class="col">
@@ -181,6 +180,31 @@
                 </li>
             </ul>
         </div>
-    </div>    
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Selecciona el input de tipo archivo
+            var inputFile = $('#avatarajax');
+        
+            // Selecciona la imagen
+            var img = $('#avatarimg');
+        
+            // Agrega un controlador de eventos al input de archivo
+            inputFile.change(function() {
+                var file = inputFile[0].files[0];
+        
+                // Verifica si se seleccionó un archivo
+                if (file) {
+                    var objectURL = URL.createObjectURL(file);
+        
+                    // Actualiza el src de la imagen con la URL del objeto creado
+                    img.attr('src', objectURL);
+                }
+            });
+        });
+        </script>
+
 </body>
 </html>
