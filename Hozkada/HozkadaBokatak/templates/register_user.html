@@ -38,7 +38,7 @@
         {% else %}
         <div class="sartu">
             <a class="sartuinp" href="{%url 'login'%}">Sartu</a>
-            <a class="sartuinp" href="{%url 'register'%}">Erregistratu</a>
+            <a class="sartuinp" href="gehitubezeroa/">Erregistratu</a>
         </div>
         {% endif %}
         
@@ -57,7 +57,11 @@
     <br><br><br><br><br><br><br>
 
     <div class="container">
-        <form action="#" class="needs-validation" novalidate>
+        <form action="gehitubezeroaerregistroa/" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+        {%csrf_token%}
+        <div class="row mt-3">
+            <input type="file" name="argazkia" accept="image/*">
+        </div>
         <div class="row mt-3">
             <div class="col">
                 <label for="">Izena:</label>
@@ -80,7 +84,7 @@
                 <div class="invalid-feedback">Mesedez, zure abizena jarri.</div>
             </div>
             <div class="col">
-                <label for="">DNI:</label>
+                <label for="">NAN:</label>
                 <input type="text" class="form-control custom-shadow" id="nan" placeholder="Sartu NAN-a" name="nan" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure DNIa jarri.</div>

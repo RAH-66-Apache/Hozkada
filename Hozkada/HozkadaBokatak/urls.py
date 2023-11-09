@@ -7,4 +7,7 @@ urlpatterns = [
     path('', views.index, name = 'index'), 
 
     path('bokatak/', views.bokatak, name = 'bokatak'),
+
+    path('gehitubezeroa/', views.register_bezeroa, name='register_user'),
+    path('gehitubezeroa/gehitubezeroaerregistroa/', views.register_bezeroa_erregistroa, name='registerbezeroaerregistroa'),
 ]

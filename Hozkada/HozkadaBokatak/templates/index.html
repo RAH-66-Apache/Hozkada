@@ -21,7 +21,7 @@
         </div>
         {% if user.is_authenticated %}
         <div id="username-txt" class="dropdown">
-            <p>@Username</p>
+            <p>{{user.username}}</p>
             <div class="dropdown-content">
                 <a href="#">PERFILA</a>
                 <a href="#">ESKAERA</a>
@@ -30,13 +30,13 @@
             </div>
         </div>
         <div id="profile-picture">
-           <img  src="img/wander.png" alt="Foto de perfil">
+           <img  src={{user.bezeroa.img.url}} alt="Foto de perfil">
         </div>
 
         {% else %}
         <div class="sartu">
             <a class="sartuinp" href="{%url 'login'%}">Sartu</a>
-            <a class="sartuinp" href="{%url 'register'%}">Erregistratu</a>
+            <a class="sartuinp" href="gehitubezeroa/">Erregistratu</a>
         </div>
         {% endif %}
         
