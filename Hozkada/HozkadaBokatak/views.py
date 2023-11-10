@@ -22,6 +22,7 @@ def register_bezeroa(request):
 
 def register_bezeroa_erregistroa(request):
     if request.method == 'POST':
+        username = request.POST['username']
         nan = request.POST['nan']
         izena = request.POST['izena']
         abizena = request.POST['abizena']
@@ -34,7 +35,7 @@ def register_bezeroa_erregistroa(request):
         argazkia = request.FILES['argazkia']
 
         # Create a User instance
-        user = User.objects.create_user(username=izena, password=pasahitza)
+        user = User.objects.create_user(username=username, password=pasahitza)
         
         # Create a Bezeroa instance linked to the user
         bezeroa = Bezeroa(
