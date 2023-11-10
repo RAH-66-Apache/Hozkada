@@ -48,7 +48,9 @@
     <br><br><br><br><br><br><br>
 
     <div class="container">
-        <form action="#" class="needs-validation" novalidate>
+        Bezero IDa: {{ user.bezeroa.id }}  ---- Bezero user_IDa: {{ user.bezeroa.user_id }} ------ eta User IDa:  {{ user.id }}
+        <form action="{% url 'updatebezeroa' id=user.bezeroa.id %}" method ="post" class="needs-validation" novalidate>
+            {% csrf_token %}
           <div class="row mt-3">
             <div class="col">
                 <label for="">Izena:</label>

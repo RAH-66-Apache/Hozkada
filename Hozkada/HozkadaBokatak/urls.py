@@ -10,4 +10,5 @@ urlpatterns = [
 
     path('bokatak/', views.bokatak, name = 'bokatak'),
 
+    path('perfil/update/<int:id>', views.updatebezeroa, name="updatebezeroa")
 ]
