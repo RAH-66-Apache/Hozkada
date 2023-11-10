@@ -1,8 +1,11 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,reverse
 from .models import Platerra
 from .models import Alergia_Platerra, Eskaera, Platerra_Eskaera
 from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 def index(request): 
@@ -36,10 +39,12 @@ def agregar_bocata_al_carrito(request,platerra_id):
     platerra_eskaera.kantitatea += 1
     platerra_eskaera.save()
 
+     # Guarda la información del carrito en la sesión del usuario
+    request.session['carrito'] = list(Platerra_Eskaera.objects.filter(eskaera_id=eskaera).values('platerra_id__izena', 'kantitatea'))
     # Devuelve una respuesta JSON
     response_data = {"success": True,"platerra_nombre": platerra.izena}  # Cambia a False si hay un error
     return JsonResponse(response_data)
-
+@login_required
 def lista_carrito(request):
     # Obtén los elementos del carrito
     elementos_carrito = Platerra_Eskaera.objects.filter(
@@ -48,11 +53,59 @@ def lista_carrito(request):
     )
 
     # Prepara los datos a mostrar en el div
-    carrito_data = [f"{elemento.platerra_id.izena}" for elemento in elementos_carrito]
+    carrito_data = [{"izena": elemento.platerra_id.izena, "kantitatea": elemento.kantitatea,"prezioa": elemento.platerra_id.prezioa} for elemento in elementos_carrito]
 
     # Crea una respuesta JSON con los datos del carrito
     response_data = {
         'carrito_data': carrito_data,
     }
+
+    return JsonResponse(response_data)
+
+
+@login_required
+def actualizar_cantidad(request):
+    if request.method == 'POST':
+        platerra_nombre = request.POST.get('platerra_nombre')
+        nueva_cantidad = request.POST.get('nueva_cantidad')
+
+        # Obtiene el precio unitario del Platerra
+        platerra = Platerra.objects.get(izena=platerra_nombre)
+        precio_unitario = platerra.prezioa
+
+        # Actualiza la cantidad en la base de datos según el nombre del platerra
+        Platerra_Eskaera.objects.filter(
+            eskaera_id__id_bezeroa=request.user.bezeroa,
+            eskaera_id__egoera=False,
+            platerra_id__izena=platerra_nombre
+        ).update(kantitatea=nueva_cantidad)
+
+        response_data = {
+            "success": True,
+            "precio_unitario": precio_unitario
+        }
+        return JsonResponse(response_data)
+    else:
+        response_data = {"success": False, "redirect": reverse('login')}
+        return JsonResponse(response_data)
+    
+
+@login_required
+def eliminar_del_carrito(request):
+    print("Entrando en eliminar_del_carrito")
+    platerra_eskaera_id = request.POST.get('platerra_eskaera_id', None)
+    print("Platerra Eskaera ID:", platerra_eskaera_id)
+
+    if platerra_eskaera_id is not None and platerra_eskaera_id != 'undefined':
+        # Utiliza directamente get_object_or_404 sin especificar id=id
+        platerra_eskaera = get_object_or_404(Platerra_Eskaera, id=platerra_eskaera_id)
+
+        # Elimina el platerra_eskaera
+        platerra_eskaera.delete()
+
+        # Devuelve una respuesta JSON
+        response_data = {"success": True}  # Cambia a False si hay un error
+    else:
+        response_data = {"success": False, "error": "platerra_eskaera_id no proporcionado en la solicitud"}
 
     return JsonResponse(response_data)
