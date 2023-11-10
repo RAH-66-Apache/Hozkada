@@ -21,22 +21,24 @@
         </div>
         {% if user.is_authenticated %}
         <div id="username-txt" class="dropdown">
-            <p>{{ user.username }}</p>
+            <p>{{user.username}}</p>
             <div class="dropdown-content">
-                <a href="/perfil">PERFILA</a>
+                <a href="#">PERFILA</a>
                 <a href="#">ESKAERA</a>
                 <a href="{% url 'logout' %}">SESIOA ITXI</a>
-                <!-- Agrega más enlaces según tus necesidades -->
             </div>
         </div>
         <div id="profile-picture">
-            <img src="{{ user.bezeroa.img.url }}" alt="">
+           <img  src={{user.bezeroa.img.url}} alt="Foto de perfil">
         </div>
 
-
         {% else %}
-            <a class="sartu" href="{%url 'login'%}">Sartu</a>
+        <div class="sartu">
+            <a class="sartuinp" href="{%url 'login'%}">Sartu</a>
+            <a class="sartuinp" href="gehitubezeroa/">Erregistratu</a>
+        </div>
         {% endif %}
+        
     </div>
 
     <div id="goiburua">
@@ -107,12 +109,8 @@
                 <li>
                     <a href="#"><i class="fab fa-instagram social-icon"></i></a>
                 </li>
-            </ul>
-            
-              
+            </ul>      
         </div>
     </div>    
-    
-
 </body>
 </html>

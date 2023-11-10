@@ -1,137 +1,148 @@
+{%load static%}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Koulen"> <!-- KoulenFont -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> <!-- bootstrap -->
+    <link rel="icon" href="../static/media/nav_ico.png" type="image/png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../static/perfil.css">
-    <title>Hozkada Perfil</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Koulen">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> <!-- bootstrap -->
+    <link rel="stylesheet" href="../../static/register_user.css">
+
+    <title>Hozkada</title>
 </head>
 <body>
     <div id="navbar">
         <a href=""><img id="logo" src="../static/media/logo.png" alt=""></a>
         <div id="links">
-            <a class="link" href="{% url 'index' %}">Hasiera</a>
+            <a class="link" href="/">Hasiera</a>
             <a class="link" href="/bokatak">Bokatak</a>
             <a class="link" href="">Deskontuak</a>
         </div>
         {% if user.is_authenticated %}
         <div id="username-txt" class="dropdown">
-            <p>{{ user.username }}</p>
+            <p>@Username</p>
             <div class="dropdown-content">
                 <a href="#">PERFILA</a>
                 <a href="#">ESKAERA</a>
                 <a href="{% url 'logout' %}">SESIOA ITXI</a>
                 <!-- Agrega más enlaces según tus necesidades -->
             </div>
-         </div>
-        <div id="profile-picture">
-           <img  src="{{ user.bezeroa.img.url }}" alt="">
         </div>
+        <div id="profile-picture">
+           <img  src="img/wander.png" alt="Foto de perfil">
+        </div>
+
         {% else %}
-            <a class="sartu" href="{%url 'login'%}">Sartu</a>
+        <div class="sartu">
+            <a class="sartuinp" href="{%url 'login'%}">Sartu</a>
+        </div>
         {% endif %}
+        
     </div>
-    
     <div class="container">
         <div class="container" id="container-avatar">
             <div id="avatar">
-                <p id="username">{{ user.username }}</p>
+                <p id="erregistratup">erregistratu</p>
             </div>
             <div id="subavatar">
-                <img id="avatarimg" src="{{ user.bezeroa.img.url }}" alt="">
+                <img id="avatarimg" src="../static/media/logo.png" alt="a">
             </div>
         </div>
     </div>
-    <br><br><br><br><br><br><br>
+    <br><br><br><br>
 
     <div class="container">
-        Bezero IDa: {{ user.bezeroa.id }}  ---- Bezero user_IDa: {{ user.bezeroa.user_id }} ------ eta User IDa:  {{ user.id }}
-        <form action="{% url 'updatebezeroa' id=user.bezeroa.id %}" method ="post" class="needs-validation" novalidate>
-            {% csrf_token %}
-          <div class="row mt-3">
+        <form action="gehitubezeroaerregistroa/" method="POST" class="needs-validation" enctype="multipart/form-data" novalidate>
+        {%csrf_token%}
+        <div class="row mt-3">
+            <input id="avatarajax" type="file" name="argazkia" accept="image/*">
+        </div>
+        <div class="row mt-3">
             <div class="col">
                 <label for="">Izena:</label>
-                <input type="text" class="form-control custom-shadow" id="izena" placeholder="Sartu izena" name="izena" value="{{ user.bezeroa.izena }}" required>
+                <input type="text" class="form-control custom-shadow" id="izena" placeholder="Sartu izena" name="izena" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure izena jarri.</div>
             </div>
             <div class="col">
                 <label for="">Abizena:</label>
-                <input type="text" class="form-control custom-shadow" id="abizena" placeholder="Sartu abizena" name="abizena"  value="{{ user.bezeroa.abizena }}" required>
+                <input type="text" class="form-control custom-shadow" id="abizena" placeholder="Sartu abizena" name="abizena" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure abizena jarri.</div>
             </div>
-          </div>
-          <div class="row mt-3">
+        </div>
+        <div class="row mt-3">
             <div class="col">
                 <label for="">Abizena 2: </label>
-                <input type="text" class="form-control custom-shadow" id="abizena2" placeholder="Sartu bigarren abizena" name="abizena2" value="{{ user.bezeroa.abizena2 }}"required>
+                <input type="text" class="form-control custom-shadow" id="abizena2" placeholder="Sartu bigarren abizena" name="abizena2" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure abizena jarri.</div>
             </div>
             <div class="col">
-                <label for="">DNI:</label>
-                <input type="text" class="form-control custom-shadow" id="nan" placeholder="Sartu NAN-a" name="nan" value="{{ user.bezeroa.NAN }}"required>
+                <label for="">NAN:</label>
+                <input type="text" class="form-control custom-shadow" id="nan" placeholder="Sartu NAN-a" name="nan" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure DNIa jarri.</div>
             </div>
-          </div>
-          <div class="row mt-3">
+        </div>
+        <div class="row mt-3">
             <div class="col">
                 <label for="">Telefonoa:</label>
-                <input type="text" class="form-control custom-shadow" id="telefonoa" placeholder="Sartu telefonoa" name="telefonoa" value="{{ user.bezeroa.telefonoa }}" required>
+                <input type="text" class="form-control custom-shadow" id="telefonoa" placeholder="Sartu telefonoa" name="telefonoa" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure telefonoa jarri.</div>
             </div>
             <div class="col">
 
             </div>
-          </div>
-          <div class="row mt-3">
+        </div>
+        <div class="row mt-3">
             <div class="col">
                 <label for="">Email:</label>
-                <input type="text" class="form-control custom-shadow" id="email" placeholder="Sartu email-a" name="emaila" value="{{ user.bezeroa.emaila }}" required>
+                <input type="text" class="form-control custom-shadow" id="email" placeholder="Sartu email-a" name="email" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure emaila jarri.</div>
             </div>
-          </div>
-          <div class="row mt-3">
+        </div>
+        <div class="row mt-3">
             <div class="col">
                 <label for="">Pasahitza:</label>
-                <input type="password" class="form-control custom-shadow" id="pasahitza" placeholder="Sartu pasahitza" name="pasahitza" value="{{ user.bezeroa.pasahitza }}"required>
+                <input type="password" class="form-control custom-shadow" id="pasahitza" placeholder="Sartu pasahitza" name="pasahitza" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, pasahitza jarri.</div>
             </div>
             <div class="col">
                 <label for="">Errepikatu pasahitza:</label>
-                <input type="password" class="form-control custom-shadow" id="pasahitza2" placeholder="Errepikatu pasahitza" name="pasahitza2" value="{{ user.bezeroa.pasahitza2 }}"required>
+                <input type="password" class="form-control custom-shadow" id="pasahitza2" placeholder="Errepikatu pasahitza" name="pasahitza2" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, pasahitza jarri.</div>
             </div>
-          </div>
-          <div class="row mt-3">
+        </div>
+        <div class="row mt-3">
             <div class="col">
                 <label for="">Helbidea: </label>
-                <input type="text" class="form-control custom-shadow" id="helbidea" placeholder="Sartu helbidea" name="helbidea" value="{{ user.bezeroa.helbidea }}" required>
+                <input type="text" class="form-control custom-shadow" id="helbidea" placeholder="Sartu helbidea" name="helbidea" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure helbidea jarri.</div>
             </div>
             <div class="col">
                 <label for="">PK:</label>
-                <input type="text" class="form-control custom-shadow" id="pk" placeholder="Sartu posta kodea" name="pk" value="{{ user.bezeroa.postakodea }}" required>
+                <input type="text" class="form-control custom-shadow" id="pk" placeholder="Sartu posta kodea" name="pk" required>
                 <div class="valid-feedback">Onartuta</div>
                 <div class="invalid-feedback">Mesedez, zure posta kodea jarri.</div>
             </div>
-          </div><br>
+        </div><br>
             <div class="col text-center"> <!-- Agrega la clase "text-center" para centrar horizontalmente -->
-                <button type="submit" class="btn btn-lg mt-3 btn-reset" style="color: white;">Gorde Aldaketak</button>
+                <button type="submit" id="resetbutton" class="btn btn-lg mt-3 btn-reset">Erregistratu</button>
+                <button type="reset" class="btn btn-dark btn-lg mt-3" id="resetButton">Ezabatu</button>
             </div>
             <br>
         </form>
     </div>
+
     <div id="footer">
         <div  id="Logo">
             <a href=""><img id="logofooter" src="../static/media/logo.png" alt=""></a>
@@ -167,9 +178,39 @@
                     <a href="#"><i class="fab fa-instagram social-icon"></i></a>
                 </li>
             </ul>
-            
-              
         </div>
-    </div>  
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Selecciona el input de tipo archivo
+            var inputFile = $('#avatarajax');
+            var img = $('#avatarimg');
+        
+            // Almacena la URL de la imagen original
+            var initialImageUrl = img.attr('src');
+        
+            // Agrega un controlador de eventos al input de archivo
+            inputFile.change(function() {
+                var file = inputFile[0].files[0];
+        
+                // Verifica si se seleccionó un archivo
+                if (file) {
+                    var objectURL = URL.createObjectURL(file);
+        
+                    // Actualiza el src de la imagen con la URL del objeto creado
+                    img.attr('src', objectURL);
+                }
+            });
+        
+            // Agrega un controlador de eventos al botón de reset
+            $('#resetButton').click(function() {
+                // Restablece la imagen al valor inicial
+                img.attr('src', initialImageUrl);
+            });
+        });
+        </script>
+
 </body>
 </html>

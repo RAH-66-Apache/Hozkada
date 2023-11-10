@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 
 class Bezeroa(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    NAN = models.CharField(max_length=10)
+    nan = models.CharField(max_length=10)
     izena = models.CharField(max_length=20)
     abizena = models.CharField(max_length=20)
     abizena2 = models.CharField(max_length=20)
@@ -16,7 +16,7 @@ class Bezeroa(models.Model):
     img = models.ImageField(upload_to='img/erabiltzaileak')
 
     def __str__(self):
-        return self.izena + " " + self.abizena + " " + self.NAN
+        return self.nan + ' ' + self.izena + ' ' + self.abizena
 
 class Platerra(models.Model): 
     motak = (
