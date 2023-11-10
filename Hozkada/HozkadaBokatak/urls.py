@@ -10,4 +10,7 @@ urlpatterns = [
 
     path('gehitubezeroa/', views.register_bezeroa, name='register_user'),
     path('gehitubezeroa/gehitubezeroaerregistroa/', views.register_bezeroa_erregistroa, name='registerbezeroaerregistroa'),
+
+    path('perfil/', views.perfil, name='perfil'),
+    path('perfil/update/', views.update_bezeroa, name="updatebezeroa")
 ]

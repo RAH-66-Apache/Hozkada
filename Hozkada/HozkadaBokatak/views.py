@@ -34,7 +34,7 @@ def register_bezeroa_erregistroa(request):
         argazkia = request.FILES['argazkia']
 
         # Create a User instance
-        user = User.objects.create_user(username=izena, password=pasahitza, email=emaila)
+        user = User.objects.create_user(username=izena, password=pasahitza)
         
         # Create a Bezeroa instance linked to the user
         bezeroa = Bezeroa(
@@ -44,11 +44,40 @@ def register_bezeroa_erregistroa(request):
             abizena=abizena,
             abizena2=abizena2,
             telefonoa=telefonoa,
+            emaila=emaila,
             helbidea=helbidea,
             postakodea=postakodea,
             img = argazkia
         )
 
         bezeroa.save()
-
         return HttpResponseRedirect(reverse('index'))
+    
+def perfil(request):
+    return render(request, 'perfil.html')
+    
+def update_bezeroa(request):
+    izena = request.POST['izena']
+    abizena = request.POST['abizena']
+    abizena2 = request.POST['abizena2']
+    nan = request.POST['nan']
+    telefonoa = request.POST['telefonoa']
+    emaila = request.POST['emaila']
+    helbidea = request.POST['helbidea']
+    postalkodea = request.POST['pk']
+
+    bezeroa = Bezeroa.objects.get(id = id)
+    bezeroauser = bezeroa.user
+    bezeroauser.id = bezeroa.user_id
+    bezeroauser.save()
+    bezeroa.izena = izena
+    bezeroa.abizena = abizena
+    bezeroa.abizena2 = abizena2
+    bezeroa.NAN = nan
+    bezeroa.telefonoa = telefonoa
+    bezeroa.emaila = emaila
+    bezeroa.helbidea = helbidea
+    bezeroa.pk = postalkodea
+
+    bezeroa.save()
+    return HttpResponseRedirect(reverse('index'))
