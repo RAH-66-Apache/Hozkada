@@ -56,28 +56,35 @@ def register_bezeroa_erregistroa(request):
 def perfil(request):
     return render(request, 'perfil.html')
     
-def update_bezeroa(request):
-    izena = request.POST['izena']
-    abizena = request.POST['abizena']
-    abizena2 = request.POST['abizena2']
-    nan = request.POST['nan']
-    telefonoa = request.POST['telefonoa']
-    emaila = request.POST['emaila']
-    helbidea = request.POST['helbidea']
-    postalkodea = request.POST['pk']
+def update_bezeroa(request, id):
+    if request.method == 'POST':
+        izena = request.POST['izena']
+        abizena = request.POST['abizena']
+        abizena2 = request.POST['abizena2']
+        nan = request.POST['nan']
+        telefonoa = request.POST['telefonoa']
+        emaila = request.POST['email']
+        helbidea = request.POST['helbidea']
+        postalkodea = request.POST['pk']
+        username = request.POST['username']
 
-    bezeroa = Bezeroa.objects.get(id = id)
-    bezeroauser = bezeroa.user
-    bezeroauser.id = bezeroa.user_id
-    bezeroauser.save()
-    bezeroa.izena = izena
-    bezeroa.abizena = abizena
-    bezeroa.abizena2 = abizena2
-    bezeroa.NAN = nan
-    bezeroa.telefonoa = telefonoa
-    bezeroa.emaila = emaila
-    bezeroa.helbidea = helbidea
-    bezeroa.pk = postalkodea
+        bezeroa = Bezeroa.objects.get(user_id=id)
 
-    bezeroa.save()
-    return HttpResponseRedirect(reverse('index'))
+        bezeroa.izena = izena
+        bezeroa.abizena = abizena
+        bezeroa.abizena2 = abizena2
+        bezeroa.nan = nan
+        bezeroa.telefonoa = telefonoa
+        bezeroa.emaila = emaila
+        bezeroa.helbidea = helbidea
+        bezeroa.postakodea = postalkodea
+        bezeroa.save()
+        # Guardar los cambios en la base de datos
+
+        user = User.objects.get(id=id)
+        user.username = username
+        user.save()
+
+        # Redireccionar a la página 'index'
+        return HttpResponseRedirect(reverse('index'))
+

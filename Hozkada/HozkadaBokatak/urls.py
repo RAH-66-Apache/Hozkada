@@ -12,5 +12,5 @@ urlpatterns = [
     path('gehitubezeroa/gehitubezeroaerregistroa/', views.register_bezeroa_erregistroa, name='registerbezeroaerregistroa'),
 
     path('perfil/', views.perfil, name='perfil'),
-    path('perfil/update/', views.update_bezeroa, name="updatebezeroa")
+    path('perfil/updatebezeroa/<id>', views.update_bezeroa, name="updatebezeroa")
 ]

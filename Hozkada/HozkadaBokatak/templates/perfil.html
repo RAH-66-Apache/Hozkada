@@ -18,7 +18,7 @@
             <a class="link" href="">Deskontuak</a>
         </div>
         <div id="username-txt" class="dropdown">
-            <p>{{user.bezeroa.izena}}</p>
+            <p>{{user.username}}</p>
             <div class="dropdown-content">
                 <a href="{% url 'perfil' %}">PERFILA</a>
                 <a href="#">ESKAERA</a>
@@ -34,7 +34,7 @@
     <div class="container">
         <div class="container" id="container-avatar">
             <div id="avatar">
-                <p id="username">{{user.bezeroa.izena}}</p>
+                <p id="username">{{user.username}}</p>
             </div>
             <div id="subavatar">
                 <img id="avatarimg" src="{{user.bezeroa.img.url}}" alt="">
@@ -44,14 +44,23 @@
     <br><br><br><br>
 
     <div class="container">
-        <form action="" class="needs-validation" novalidate>
+        <form action="updatebezeroa/{{user.id}}" method="POST" class="needs-validation" enctype="multipart/form-data">
+            {%csrf_token%}
             <div class="row mt-3">
-                <input id="avatarajax" type="file" name="argazkia" accept="image/*" value="user.bezeroa.img" required>
+                <input id="avatarajax" type="file" name="argazkia" accept="image/*" value="{{user.bezeroa.img.url}}">
+            </div><br>
+            <div class="row mt-3">
+                <div class="col">
+                    <label for="">Username:</label>
+                    <input type="text" class="form-control custom-shadow" id="izena" placeholder="Sartu izena" name="username" value="{{user.username}}" required>
+                </div>
+                <div class="col">  
+                </div>
             </div>
             <div class="row mt-3">
                 <div class="col">
                     <label for="">Izena:</label>
-                    <input type="text" class="form-control custom-shadow" id="izena" placeholder="Sartu izena" name="izena" value="{{user.bezeroa.izena}}" required readonly>
+                    <input type="text" class="form-control custom-shadow" id="izena" placeholder="Sartu izena" name="izena" value="{{user.bezeroa.izena}}" required>
                 </div>
                 <div class="col">
                     <label for="">Abizena:</label>
@@ -86,11 +95,11 @@
             <div class="row mt-3">
                 <div class="col">
                     <label for="">Pasahitza:</label>
-                    <input type="password" class="form-control custom-shadow" id="pasahitza" placeholder="Sartu pasahitza" name="pasahitza" required>
+                    <input type="password" class="form-control custom-shadow" id="pasahitza" placeholder="Sartu pasahitza" name="pasahitza" value="{{user.password}}">
                 </div>
                 <div class="col">
                     <label for="">Errepikatu pasahitza:</label>
-                    <input type="password" class="form-control custom-shadow" id="pasahitza2" placeholder="Errepikatu pasahitza" name="pasahitza2" required>
+                    <input type="password" class="form-control custom-shadow" id="pasahitza2" placeholder="Errepikatu pasahitza" name="pasahitza2" value="{{user.password}}">
                 </div>
             </div>
             <div class="row mt-3">

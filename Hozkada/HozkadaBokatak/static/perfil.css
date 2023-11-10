@@ -103,6 +103,11 @@ label {
 input {
     border-top: 5px solid #E2AD5C;
 }
+
+.usernamecol {
+    width: 50%;
+}
+
 button {
     width: 40%;
     height: 50px;
