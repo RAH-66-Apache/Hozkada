@@ -219,6 +219,10 @@ p {
     margin-right: 5px;
 }
 
+.deskontubokata {
+    background-color: #ffeccf;
+}
+
 input[type="button"] {
     cursor: pointer;
     border: none;

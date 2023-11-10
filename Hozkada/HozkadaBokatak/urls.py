@@ -8,17 +8,9 @@ urlpatterns = [
 
     path('bokatak/', views.bokatak, name = 'bokatak'),
 
-   path('bokatak/agregar_bocata_al_carrito/<int:platerra_id>/', views.agregar_bocata_al_carrito, name='agregar_bocata_al_carrito'),
+    path('gehitubezeroa/', views.register_bezeroa, name='register_user'),
+    path('gehitubezeroa/gehitubezeroaerregistroa/', views.register_bezeroa_erregistroa, name='registerbezeroaerregistroa'),
 
-   path('bokatak/lista_carrito/', views.lista_carrito, name='lista_carrito'),
-
-    path('bokatak/actualizar_cantidad/', views.actualizar_cantidad, name='actualizar_cantidad'),
-
-    path('bokatak/eliminar_del_carrito/', views.eliminar_del_carrito, name='eliminar_del_carrito'),
-
-
-
-
-
-
+    path('perfil/', views.perfil, name='perfil'),
+    path('perfil/updatebezeroa/<id>', views.update_bezeroa, name="updatebezeroa")
 ]
