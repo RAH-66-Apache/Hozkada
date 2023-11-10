@@ -12,5 +12,17 @@ urlpatterns = [
     path('gehitubezeroa/gehitubezeroaerregistroa/', views.register_bezeroa_erregistroa, name='registerbezeroaerregistroa'),
 
     path('perfil/', views.perfil, name='perfil'),
-    path('perfil/updatebezeroa/<id>', views.update_bezeroa, name="updatebezeroa")
+    path('perfil/updatebezeroa/<id>', views.update_bezeroa, name="updatebezeroa"),
+
+    path('bokatak/agregar_bocata_al_carrito/<int:platerra_id>/', views.agregar_bocata_al_carrito, name='agregar_bocata_al_carrito'),
+
+    path('bokatak/lista_carrito/', views.lista_carrito, name='lista_carrito'),
+
+    path('bokatak/actualizar_cantidad/', views.actualizar_cantidad, name='actualizar_cantidad'),
+
+    path('bokatak/eliminar_del_carrito/', views.eliminar_del_carrito, name='eliminar_del_carrito'),
+
+
+
+
 ]
