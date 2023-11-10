@@ -68,26 +68,36 @@
     <div id="content">
         <div id="bokatacontent">
             {% for bokatak in bokatak %}
-            <div class="bokata" data-mota="{{ bokatak.mota }}">
-                <div class="bokataimg">
-                    <img src="{{ bokatak.img.url }}" alt="{{ bokatak.izena }}">
-                </div>
-                <div class="bokatainfo">
-                    <h2 class="bokatatitulo">{{ bokatak.izena }} - <span class="prezioa">{{ bokatak.prezioa }}€</span></h2>
-                    <p>{{ bokatak.deskribapena }}</p>
-                    <div class="alergiak">
-                        {% for alergia_platerrak in bokatak.alergia_platerra_set.all %}
-                            <div data-alergia="{{alergia_platerrak.alergia_id.izena}}">
-                                <img src="{{ alergia_platerrak.alergia_id.img.url }}" alt="{{alergia_platerrak.alergia_id.izena}}">
+                {% with deskontua_platerra=bokatak.deskontua_platerra_set.first %}
+                    <div class="bokata{% if deskontua_platerra %} deskontubokata{% endif %}" data-mota="{{ bokatak.mota }}">
+                        <div class="bokataimg">
+                            <img src="{{ bokatak.img.url }}" alt="{{ bokatak.izena }}">
+                        </div>
+                        <div class="bokatainfo">
+                            <h2 class="bokatatitulo">{{ bokatak.izena }} - 
+                                <span class="prezioa {% if deskontua_platerra %}deskontubokata-text{% endif %}">
+                                    {% if bokatak.deskontua_platerra %}
+                                        {{ deskontua_platerra.deskontua_id.prezio_berria }}€ <span class="prezioa-antes"><strike>{{ bokatak.prezioa }}€</strike></span>
+                                    {% else %}
+                                        {{ bokatak.prezioa }}€
+                                    {% endif %}
+                                </span>
+                            </h2>
+                            <p>{{ bokatak.deskribapena }}</p>
+                            <div class="alergiak">
+                                {% for alergia_platerrak in bokatak.alergia_platerra_set.all %}
+                                    <div data-alergia="{{ alergia_platerrak.alergia_id.izena }}">
+                                        <img src="{{ alergia_platerrak.alergia_id.img.url }}" alt="{{ alergia_platerrak.alergia_id.izena }}">
+                                    </div>
+                                {% endfor %}
                             </div>
-                        {% endfor %}
+                            <input class="karritoragehituinp" type="button" value="karritora gehitu">
+                        </div>
                     </div>
-                    <input class="karritoragehituinp" type="button" value="karritora gehitu">
-                </div>
-            </div>
+                {% endwith %}
             {% endfor %}
         </div>
-
+             
 
         <div id="karrito">
             <div id="karritocontent">

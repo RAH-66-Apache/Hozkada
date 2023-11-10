@@ -68,6 +68,12 @@ class Deskontua_Platerra(models.Model):
     platerra_id = models.ForeignKey(Platerra, on_delete=models.CASCADE)
     deskontua_id = models.ForeignKey(Deskontua, on_delete=models.CASCADE)
 
+    def __str__(self):
+        return str(self.deskontua_id) + " - " + str(self.platerra_id)
+
 class Alergia_Platerra(models.Model): 
     platerra_id = models.ForeignKey(Platerra, on_delete=models.CASCADE )
     alergia_id = models.ForeignKey(Alergia, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return str(self.alergia_id) + " - " + str(self.platerra_id)
