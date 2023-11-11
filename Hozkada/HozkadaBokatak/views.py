@@ -132,7 +132,7 @@ def lista_carrito(request):
     )
 
     # Prepara los datos a mostrar en el div
-    carrito_data = [{"izena": elemento.platerra_id.izena, "kantitatea": elemento.kantitatea,"prezioa": elemento.platerra_id.prezioa} for elemento in elementos_carrito]
+    carrito_data = [{"id": elemento.id,"izena": elemento.platerra_id.izena, "kantitatea": elemento.kantitatea,"prezioa": elemento.platerra_id.prezioa} for elemento in elementos_carrito]
 
     # Crea una respuesta JSON con los datos del carrito
     response_data = {
@@ -171,13 +171,15 @@ def actualizar_cantidad(request):
 
 @login_required
 def eliminar_del_carrito(request):
-    print("Entrando en eliminar_del_carrito")
     platerra_eskaera_id = request.POST.get('platerra_eskaera_id', None)
+    print("Entrando en eliminar_del_carrito")
+    
     print("Platerra Eskaera ID:", platerra_eskaera_id)
 
     if platerra_eskaera_id is not None and platerra_eskaera_id != 'undefined':
         # Utiliza directamente get_object_or_404 sin especificar id=id
-        platerra_eskaera = get_object_or_404(Platerra_Eskaera, id=platerra_eskaera_id)
+        platerra_eskaera = Platerra_Eskaera.objects.get(id=platerra_eskaera_id)
+
 
         # Elimina el platerra_eskaera
         platerra_eskaera.delete()

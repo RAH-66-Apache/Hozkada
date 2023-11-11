@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 
 class Bezeroa(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    NAN = models.CharField(max_length=10)
+    nan = models.CharField(max_length=10)
     izena = models.CharField(max_length=20)
     abizena = models.CharField(max_length=20)
     abizena2 = models.CharField(max_length=20)
@@ -22,6 +22,7 @@ class Platerra(models.Model):
         ('arraina', 'Arraina'),
         ('begetarianoa', 'Begetarianoa'),
         ('beganoa', 'Beganoa'),
+         ('edaria', 'Edaria'),
     )
     izena = models.CharField(max_length=100)
     deskribapena = models.CharField(max_length=1000)
