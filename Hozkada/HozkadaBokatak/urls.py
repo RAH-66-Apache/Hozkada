@@ -22,7 +22,10 @@ urlpatterns = [
 
     path('bokatak/eliminar_del_carrito/', views.eliminar_del_carrito, name='eliminar_del_carrito'),
 
+    path('bokatak/marcar_eskaera_completada/', views.marcar_eskaera_completada, name='marcar_eskaera_completada'),
 
+    path('lista_pedidos/', views.lista_pedidos, name='lista_pedidos'),
 
+     path('eskaera/', views.eskaera, name='eskaera'),
 
 ]

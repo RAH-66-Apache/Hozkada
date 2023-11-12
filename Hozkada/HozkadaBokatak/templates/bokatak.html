@@ -148,9 +148,9 @@
                 <div id="lista-carrito">
                     <!-- Los elementos del carrito se mostrarán aquí dinámicamente -->
                 </div>
+                <!-- Agrega el botón "Eskatu" aquí -->
+                <button id="boton-eskatu">Eskatu</button>
             </div>
-          
-    
         </div>
     </div>
     </div>
@@ -215,21 +215,73 @@
             });
         });
         
-    
         function filtrarPorDescuento() {
             const productos = Array.from($('.bokata'));
             const mostrarSoloDescuento = $('#deskontoak-dropdown p').hasClass('active');
         
             productos.forEach(producto => {
                 const tieneDescuento = $(producto).hasClass('deskontubokata');
-                if (mostrarSoloDescuento && !tieneDescuento) {
-                    $(producto).hide();
+                const esEdaria = $(producto).data('mota').includes('edaria');
+        
+                if (mostrarSoloDescuento) {
+                    // Si se activa el filtro de descuento, ocultar todos los productos de tipo "Edaria"
+                    if (esEdaria) {
+                        $(producto).hide();
+                    } else if (!tieneDescuento) {
+                        // Si no es de tipo "Edaria" y no tiene descuento, también ocultar
+                        $(producto).hide();
+                    } else {
+                        // En cualquier otro caso, mostrar
+                        $(producto).show();
+                    }
                 } else {
-                    $(producto).show();
+                    // Si el filtro de descuento está desactivado, mostrar todos los productos excepto los de tipo "Edaria"
+                    if (esEdaria) {
+                        $(producto).hide();
+                    } else {
+                        $(producto).show();
+                    }
                 }
             });
         }
-
+        
+        
+        
+        $('#boton-eskatu').on('click', function() {
+            // Obtén la cantidad de elementos en la lista de la compra
+            var cantidadElementos = $("#lista-carrito li").length;
+        
+            // Verifica si hay elementos en la lista de la compra
+            if (cantidadElementos > 0) {
+                // Realiza la solicitud AJAX solo si hay elementos en la lista de la compra
+                $.ajax({
+                    type: 'POST',
+                    url: '/bokatak/marcar_eskaera_completada/',
+                    data: {
+                        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            alert('Eskaera marcada como completada');
+                            
+                            // Actualiza la lista de Platerra en el carrito después de marcar la eskaera
+                            mostrarListaCarrito();
+                            
+                            // Puedes realizar otras acciones necesarias aquí
+                        } else {
+                            alert('Error al intentar marcar la Eskaera como completada: ' + data.error);
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error de Ajax:', error);
+                    }
+                });
+            } else {
+                // Si no hay elementos en la lista de la compra, muestra un mensaje o realiza alguna acción
+                alert('No hay elementos en la lista de la compra. Agrega productos antes de hacer la eskaera.');
+            }
+        });
+        
 
 
 
@@ -266,6 +318,7 @@ function mostrarListaCarrito() {
 
             // Asigna el evento de click después de agregar todos los elementos al carrito
             asignarEventoEliminar();
+            actualizarEstadoBoton();
 
             // Muestra el total al final
             $("#lista-carrito").append(`
@@ -380,6 +433,8 @@ asignarEventoEliminar();
 // Llama a la función para mostrar la lista de carrito
 mostrarListaCarrito();
 
+actualizarEstadoBoton();
+
 function toggleDescripcion(element) {
     const contenedor = element.parentElement;
     const descripcion = contenedor.querySelector('.descripcion');
@@ -403,7 +458,19 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+// Deshabilitar el botón al cargar la página si no hay elementos en la lista
+$(document).ready(function() {
+    var cantidadElementos = $("#lista-carrito li").length;
+    if (cantidadElementos === 0) {
+        $('#boton-eskatu').prop('disabled', true);
+    }
+});
+function actualizarEstadoBoton() {
+    var cantidadElementos = $("#lista-carrito li").length;
 
+    // Habilitar o deshabilitar el botón según si hay elementos en la lista
+    $('#boton-eskatu').prop('disabled', cantidadElementos === 0);
+}
 
     </script>
 </body>

@@ -122,7 +122,32 @@ def agregar_bocata_al_carrito(request,platerra_id):
     request.session['carrito'] = list(Platerra_Eskaera.objects.filter(eskaera_id=eskaera).values('platerra_id__izena', 'kantitatea'))
     # Devuelve una respuesta JSON
     response_data = {"success": True,"platerra_nombre": platerra.izena}  # Cambia a False si hay un error
+    
     return JsonResponse(response_data)
+
+
+@login_required
+def marcar_eskaera_completada(request):
+    try:
+        user = request.user
+        eskaera = Eskaera.objects.filter(id_bezeroa=user.bezeroa, egoera=False).first()
+
+        if eskaera:
+            eskaera.egoera = True
+            eskaera.save()
+
+            response_data = {"success": True}
+        else:
+            response_data = {"success": False, "error": "No hay Eskaera activa"}
+
+        return JsonResponse(response_data)
+    except Exception as e:
+        print(e)
+        response_data = {"success": False, "error": str(e)}
+        return JsonResponse(response_data)
+
+
+
 @login_required
 def lista_carrito(request):
     # Obtén los elementos del carrito
@@ -193,3 +218,21 @@ def eliminar_del_carrito(request):
         response_data = {"success": False, "error": "platerra_eskaera_id no proporcionado en la solicitud"}
 
     return JsonResponse(response_data)
+
+@login_required
+def lista_pedidos(request):
+    # Recupera todos los pedidos del usuario actual
+    pedidos = Eskaera.objects.filter(id_bezeroa=request.user.bezeroa).order_by('-data')
+
+    for pedido in pedidos:
+        pedido.platerra_eskaera = Platerra_Eskaera.objects.filter(eskaera_id=pedido)
+
+    print("Pedidos:", pedidos)  # Añade esta línea
+
+    return render(request, 'eskaera.html', {'pedidos': pedidos})
+
+
+
+@login_required
+def eskaera(request):
+    return render(request, 'eskaera.html')

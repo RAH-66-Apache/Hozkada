@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.utils import timezone
 
 class Bezeroa(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -47,8 +48,9 @@ class Platerra(models.Model):
 
 class Eskaera(models.Model):
     id_bezeroa = models.ForeignKey(Bezeroa, on_delete=models.CASCADE)
-    eskaera_data = models.DateField(default='2017-01-01')
+    eskaera_data = models.DateField(default=timezone.now)
     egoera = models.BooleanField(default=True)
+    data = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return str(self.id)
