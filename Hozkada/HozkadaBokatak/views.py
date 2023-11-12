@@ -132,7 +132,7 @@ def lista_carrito(request):
     )
 
     # Prepara los datos a mostrar en el div
-    carrito_data = [{"id": elemento.id,"izena": elemento.platerra_id.izena, "kantitatea": elemento.kantitatea,"prezioa": elemento.platerra_id.prezioa} for elemento in elementos_carrito]
+    carrito_data = [{"id": elemento.id,"izena": elemento.platerra_id.izena, "kantitatea": elemento.kantitatea,"prezioa":elemento.platerra_id.precio_con_descuento()} for elemento in elementos_carrito]
 
     # Crea una respuesta JSON con los datos del carrito
     response_data = {
@@ -150,7 +150,10 @@ def actualizar_cantidad(request):
 
         # Obtiene el precio unitario del Platerra
         platerra = Platerra.objects.get(izena=platerra_nombre)
-        precio_unitario = platerra.prezioa
+        precio_unitario = platerra.precio_con_descuento()
+
+        print("Precio Unitario:", precio_unitario)
+
 
         # Actualiza la cantidad en la base de datos según el nombre del platerra
         Platerra_Eskaera.objects.filter(

@@ -31,6 +31,17 @@ class Platerra(models.Model):
     img = models.ImageField(upload_to='img/bokatak')
     alergiak = models.ManyToManyField('Alergia', blank=True)
 
+    def precio_con_descuento(self):
+        deskontua_set = self.deskontua_platerra_set.all()
+        print("Deskontua_Platerra instances:", deskontua_set)
+        deskontua = deskontua_set.first()  # Suponiendo que solo hay un descuento por plato
+        if deskontua:
+            descuento_porcentaje = deskontua.deskontua_id.ehunekoa
+            precio_descuento = self.prezioa - (self.prezioa * descuento_porcentaje / 100)
+            return round(precio_descuento, 2)
+        else:
+            return self.prezioa
+
     def __str__(self):
         return self.izena
 

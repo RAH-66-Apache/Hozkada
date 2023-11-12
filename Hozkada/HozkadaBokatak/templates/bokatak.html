@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="../static/media/nav_ico.png" type="image/png">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Koulen">
-    <link rel="stylesheet" href="../static/bokatak.css">
+    <link rel="stylesheet" href="{% static 'bokatak.css' %}">
     <title>Hozkada-Bokatak</title>
 </head>
 
@@ -37,6 +37,11 @@
                             <label><input type="checkbox" name="beganoa"><img
                                     src="../static/media/bokatak_img/motak/ico_beganoa.png" class="ico_motak" alt="">
                                 Beganoa</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="edaria"><img
+                                    src="../static/media/bokatak_img/motak/ico_botella.png" class="ico_motak" alt="">
+                                Edaria</label>
                         </div>
                     </div>
                 </div>
@@ -83,7 +88,13 @@
                     </div>
                 </div>
             </div>
-            <p>Deskontuak</p>
+            <div class="dropdown" id="deskontoak-dropdown">
+                <p onclick="filtrarPorDescuento()">Deskontuak</p>
+                
+            </div>
+            
+        </div>
+    </div>
         </div>
     </div>
     </div>
@@ -91,32 +102,43 @@
     <div id="content">
         <div id="bokatacontent">
             {% for bokatak in bokatak %}
-            <div class="bokata" data-mota="{{ bokatak.mota }}">
-                <div class="bokataimg">
-                    <img src="{{ bokatak.img.url }}" alt="{{ bokatak.izena }}">
-                </div>
-                <div class="bokatainfo">
-                    <h2 class="bokatatitulo">{{ bokatak.izena }} - <span class="prezioa">{{ bokatak.prezioa }}€</span>
-                    </h2>
-                    <p>{{ bokatak.deskribapena }}</p>
-                    <div class="alergiak">
-                        {% for alergia_platerrak in bokatak.alergia_platerra_set.all %}
-                        <div data-alergia="{{alergia_platerrak.alergia_id.izena}}">
-                            <img src="{{ alergia_platerrak.alergia_id.img.url }}"
-                                alt="{{alergia_platerrak.alergia_id.izena}}">
+                {% with deskontua_platerra=bokatak.deskontua_platerra_set.first %}
+                    <div class="bokata{% if deskontua_platerra %} deskontubokata{% endif %}" data-mota="{{ bokatak.mota }}">
+                        <div class="bokataimg">
+                            <img src="{{ bokatak.img.url }}" alt="{{ bokatak.izena }}">
                         </div>
-                        {% endfor %}
+                        <div class="bokatainfo">
+                            <h2 class="bokatatitulo">
+                                {{ bokatak.izena }} -
+                                <span class="prezioa {% if deskontua_platerra %}deskontubokata-text{% endif %} precio">
+                                    {% if deskontua_platerra %}
+                                        <span class="tachado">{{ bokatak.prezioa }}€</span>
+                                        {{ bokatak.precio_con_descuento }}€
+                                    {% else %}
+                                        {{ bokatak.prezioa }}€
+                                    {% endif %}
+                                </span>
+                            </h2>
+                            <p class="descripcion">{{ bokatak.deskribapena }}</p>
+                            {% comment %} <a href="#" class="leer-mas" onclick="toggleDescripcion(this)">Leer más</a> {% endcomment %}
+                            <div class="alergiak">
+                                {% for alergia_platerrak in bokatak.alergia_platerra_set.all %}
+                                <div data-alergia="{{alergia_platerrak.alergia_id.izena}}">
+                                    <img src="{{ alergia_platerrak.alergia_id.img.url }}"
+                                        alt="{{alergia_platerrak.alergia_id.izena}}">
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% csrf_token %}
+                            <input class="karritoa-gehitu-inp" type="button" value="Karritoa gehitu" data-platerra-id="{{ bokatak.id }}">
+                            <div class="mesedez-ezabatu" style="display: none;"></div>
+                        
+                        </div>
                     </div>
-                    {% csrf_token %}
-                    <input class="karritoa-gehitu-inp" type="button" value="Karritoa gehitu"
-                        data-platerra-id="{{ bokatak.id }}">
-                    <div class="mesedez-ezabatu" style="display: none;"></div>
-                </div>
-            </div>
+                {% endwith %}  
             {% endfor %}
         </div>
     </div>
-
 
     <div id="karrito">
         <div id="karritocontent">
@@ -126,15 +148,9 @@
                 <div id="lista-carrito">
                     <!-- Los elementos del carrito se mostrarán aquí dinámicamente -->
                 </div>
-                <!-- Agrega este checkbox para las bebidas que solo se pueda seleccionar cuando haya añadido un bocata al carrito -->
-                <label><input type="checkbox" id="check-edaria" disabled> Check Edaria</label>
-                <div id="bebidas-section" style="display: none;">
-                    <h2>Bebidas (Motak = Edaria)</h2>
-                    <!-- Aquí muestra las bebidas con sus precios y opciones de cantidad -->
-                    <!-- Puedes usar un formato similar al de la lista del carrito -->
-                </div>
             </div>
-            <input id="eskatu" type="button" value="eskatu">
+          
+    
         </div>
     </div>
     </div>
@@ -145,30 +161,36 @@
             const checkboxesMotak = Array.from($('.checkbox-motak input[type="checkbox"]:checked')).map(checkbox => $(checkbox).attr('name'));
             const checkboxesAlergiak = Array.from($('.checkbox-alergiak input[type="checkbox"]:checked')).map(checkbox => $(checkbox).attr('name'));
             const productos = Array.from($('.bokata'));
-    
+        
             productos.forEach(producto => {
                 const mota = $(producto).data("mota");
                 const alergiasProducto = Array.from($(producto).find('.alergiak div')).map(alergia => $(alergia).data("alergia"));
-                let productoVisible = true;
-    
-                if (mota.includes("edaria")) {
-                    productoVisible = false;
-                }
-    
-                checkboxesMotak.forEach(function (motak) {
-                    if (motak === "edaria" && mota.includes("edaria")) {
+                let productoVisible = false;
+        
+                if (checkboxesMotak.length === 0) {
+                    // Si no hay checkbox seleccionado en el filtro "Motak", oculta el producto solo si es de tipo "Edaria"
+                    if (mota.includes("edaria")) {
                         productoVisible = false;
-                    } else if (!checkboxesMotak.includes(mota)) {
-                        productoVisible = false;
+                    } else {
+                        productoVisible = true;
                     }
-                });
-    
+                } else {
+                    // Si hay algún checkbox seleccionado en el filtro "Motak"
+                    checkboxesMotak.forEach(function (motak) {
+                        // Si el producto coincide con algún checkbox seleccionado en "Motak", muestra el producto
+                        if (mota.includes(motak)) {
+                            productoVisible = true;
+                        }
+                    });
+                }
+        
                 checkboxesAlergiak.forEach(function (alergia) {
                     if (alergiasProducto.includes(alergia)) {
                         productoVisible = false;
                     }
                 });
-    
+                
+        
                 if (productoVisible) {
                     $(producto).show();
                 } else {
@@ -176,22 +198,37 @@
                 }
             });
         }
-    
+        
         $(document).ready(function () {
             $('.checkbox-motak input[type="checkbox"]').change(function () {
                 actualizarFiltros();
             });
-    
+        
             $('.checkbox-alergiak input[type="checkbox"]').change(function () {
                 actualizarFiltros();
             });
-    
+        
             actualizarFiltros();
+            $('#deskontoak-dropdown p').click(function () {
+                $(this).toggleClass('active');
+                filtrarPorDescuento();
+            });
         });
-
-
+        
     
-   
+        function filtrarPorDescuento() {
+            const productos = Array.from($('.bokata'));
+            const mostrarSoloDescuento = $('#deskontoak-dropdown p').hasClass('active');
+        
+            productos.forEach(producto => {
+                const tieneDescuento = $(producto).hasClass('deskontubokata');
+                if (mostrarSoloDescuento && !tieneDescuento) {
+                    $(producto).hide();
+                } else {
+                    $(producto).show();
+                }
+            });
+        }
 
 
 
@@ -216,7 +253,7 @@ function mostrarListaCarrito() {
         <span class="platerra-nombre">${platerra.izena}</span>
         <span class="cantidad-precio">
             <input type="number" class="cantidad-input" value="${platerra.kantitatea}" min="1">
-            x ${platerra.prezioa}€ = ${subtotal}€
+            x ${platerra.prezioa.toFixed(2)}€ = ${subtotal.toFixed(2)}€
             <button class="eliminar-del-carrito" data-platerra_eskaera_id="${platerra.id}">Eliminar</button>
             
 
@@ -233,7 +270,7 @@ function mostrarListaCarrito() {
             // Muestra el total al final
             $("#lista-carrito").append(`
                 <li>
-                    <span class="total">Total: ${totalPrecio}€</span>
+                    <span class="total">Total: ${totalPrecio.toFixed(2)}€</span>
                 </li>
             `);
 
@@ -267,15 +304,6 @@ function asignarEventoEliminar() {
                         // Actualiza la lista de Platerra en el carrito
                         mostrarListaCarrito();
 
-                        // Deshabilita el checkbox y oculta la sección de bebidas si no quedan elementos de tipo "edaria" en el carrito
-                        var edariaPresente = data.carrito_data.some(function(item) {
-                            return item.mota === "edaria";
-                        });
-
-                        if (!edariaPresente) {
-                            $('#check-edaria').prop('disabled', true);
-                            $('#bebidas-section').hide();
-                        }
                     } else {
                         console.error("Error al intentar eliminar el Platerra del carrito");
                     }
@@ -308,7 +336,7 @@ $(document).ready(function() {
                    
                     // Luego, actualiza la lista de Platerra en el carrito
                     mostrarListaCarrito();
-                    mostrarListaBebidasCarrito(data.bebidas_data);
+                    
                 }
             }
         });
@@ -340,25 +368,10 @@ $(document).on('change', '.cantidad-input', function() {
     });
 });
 
-function mostrarListaBebidasCarrito(bebidas) {
-    $("#lista-bebidas-carrito").empty();
 
-    bebidas.forEach(function(bebida) {
-        var subtotalBebida = bebida.kantitatea * bebida.prezioa;
-        $("#lista-bebidas-carrito").append(`
-            <li>
-                <span class="bebida-nombre">${bebida.izena}</span>
-                <span class="cantidad-precio">
-                    <input type="number" class="cantidad-bebida-input" value="0" min="0">
-                    x ${bebida.prezioa}€ = 0€ <!-- La cantidad inicial es cero -->
-                    <button class="eliminar-bebida-del-carrito" data-bebida_id="${bebida.id}">Eliminar</button>
-                </span>
-            </li>
-        `);
-    });
 
-    asignarEventoEliminarBebida();
-}
+    
+
 $(document).on('click', '.eliminar-del-carrito', asignarEventoEliminar);
     
 // Inicializa la asignación de eventos para los elementos existentes
@@ -366,6 +379,31 @@ asignarEventoEliminar();
 
 // Llama a la función para mostrar la lista de carrito
 mostrarListaCarrito();
+
+function toggleDescripcion(element) {
+    const contenedor = element.parentElement;
+    const descripcion = contenedor.querySelector('.descripcion');
+
+    if (contenedor.style.maxHeight) {
+        contenedor.style.maxHeight = null;
+        element.innerText = 'Leer más';
+    } else {
+        contenedor.style.maxHeight = contenedor.scrollHeight + 'px';
+        element.innerText = 'Leer menos';
+    }
+}
+document.addEventListener("DOMContentLoaded", function() {
+    var precios = document.querySelectorAll(".precio");
+
+    precios.forEach(function(precio) {
+        if (precio.classList.contains("tachado")) {
+            var precioSinTachar = precio.querySelector(".tachado > span");
+            console.log(precioSinTachar);
+            precioSinTachar.style.textDecoration = "line-through";
+        }
+    });
+});
+
 
     </script>
 </body>
