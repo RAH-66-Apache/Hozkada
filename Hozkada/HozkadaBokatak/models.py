@@ -53,7 +53,7 @@ class Eskaera(models.Model):
     data = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return str(self.id)
+       return f"{self.id} - {self.id_bezeroa}"
 
 class Platerra_Eskaera(models.Model):
     eskaera_id = models.ForeignKey(Eskaera, on_delete=models.CASCADE)

@@ -24,8 +24,8 @@ urlpatterns = [
 
     path('bokatak/marcar_eskaera_completada/', views.marcar_eskaera_completada, name='marcar_eskaera_completada'),
 
-    path('lista_pedidos/', views.lista_pedidos, name='lista_pedidos'),
+    
 
-     path('eskaera/', views.eskaera, name='eskaera'),
+    path('eskaera/', views.eskaera, name='eskaera'),
 
 ]

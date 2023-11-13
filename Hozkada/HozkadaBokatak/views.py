@@ -14,7 +14,11 @@ from.models import User
 from .models import Bezeroa
 from .models import Alergia_Platerra
 
+
+
 # Create your views here.
+
+
 
 def index(request): 
     return render(request, 'index.html')
@@ -75,7 +79,7 @@ def update_bezeroa(request, id):
         helbidea = request.POST['helbidea']
         postalkodea = request.POST['pk']
         username = request.POST['username']
-
+        argazkia = request.FILES['argazkia']
         bezeroa = Bezeroa.objects.get(user_id=id)
 
         bezeroa.izena = izena
@@ -86,6 +90,7 @@ def update_bezeroa(request, id):
         bezeroa.emaila = emaila
         bezeroa.helbidea = helbidea
         bezeroa.postakodea = postalkodea
+        bezeroa.img = argazkia
         bezeroa.save()
         # Guardar los cambios en la base de datos
 
@@ -219,20 +224,13 @@ def eliminar_del_carrito(request):
 
     return JsonResponse(response_data)
 
-@login_required
-def lista_pedidos(request):
-    # Recupera todos los pedidos del usuario actual
-    pedidos = Eskaera.objects.filter(id_bezeroa=request.user.bezeroa).order_by('-data')
-
-    for pedido in pedidos:
-        pedido.platerra_eskaera = Platerra_Eskaera.objects.filter(eskaera_id=pedido)
-
-    print("Pedidos:", pedidos)  # Añade esta línea
-
-    return render(request, 'eskaera.html', {'pedidos': pedidos})
-
 
 
 @login_required
 def eskaera(request):
-    return render(request, 'eskaera.html')
+    print("ENTRANDO EN ESKAERA")
+    eskaeras = Eskaera.objects.filter(id_bezeroa=request.user.bezeroa)
+    platerra_eskaeras = Platerra_Eskaera.objects.filter(eskaera_id__in=eskaeras)
+    print("Eskaeras:", eskaeras)
+    print("Platerra_Eskaeras:", platerra_eskaeras)
+    return render(request, 'eskaera.html', {'eskaeras': eskaeras, 'platerra_eskaeras': platerra_eskaeras})
