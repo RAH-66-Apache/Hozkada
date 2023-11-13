@@ -1,0 +1,62 @@
+{
+  "name": "@turf/midpoint",
+  "version": "7.0.0-alpha.2",
+  "description": "turf midpoint module",
+  "author": "Turf Authors",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Turfjs/turf/issues"
+  },
+  "homepage": "https://github.com/Turfjs/turf",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/Turfjs/turf.git"
+  },
+  "funding": "https://opencollective.com/turf",
+  "publishConfig": {
+    "access": "public"
+  },
+  "keywords": [
+    "turf",
+    "midpoint",
+    "bisect",
+    "geojson",
+    "line"
+  ],
+  "main": "dist/js/index.js",
+  "module": "dist/es/index.js",
+  "exports": {
+    "./package.json": "./package.json",
+    ".": {
+      "types": "./index.d.ts",
+      "import": "./dist/es/index.js",
+      "require": "./dist/js/index.js"
+    }
+  },
+  "types": "index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "index.d.ts"
+  ],
+  "scripts": {
+    "bench": "tsx bench.js",
+    "build": "rollup -c ../../rollup.config.js && echo '{\"type\":\"module\"}' > dist/es/package.json",
+    "docs": "tsx ../../scripts/generate-readmes",
+    "test": "npm-run-all --npm-path npm test:*",
+    "test:tape": "tsx test.js"
+  },
+  "devDependencies": {
+    "benchmark": "*",
+    "npm-run-all": "*",
+    "rollup": "*",
+    "tape": "*",
+    "tsx": "*"
+  },
+  "dependencies": {
+    "@turf/bearing": "^7.0.0-alpha.2",
+    "@turf/destination": "^7.0.0-alpha.2",
+    "@turf/distance": "^7.0.0-alpha.2",
+    "@turf/helpers": "^7.0.0-alpha.2"
+  }
+}
