@@ -1,0 +1,288 @@
+body {
+    font-family: Koulen;
+}
+.container {
+    width: 40%;
+    margin-top: 150px;
+}
+#navbar {
+    background-color: #333;
+    color: white;
+    height: 100px;
+    overflow: visible;
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;          
+    z-index: 999; /* Asegura que el navbar esté por encima de otros elementos */
+}
+
+#logo {
+    margin-top: 5px;
+    margin-left: 15px;
+    height: 150px;
+    width: 150px;
+    position: absolute;
+}
+#links {
+    font-size: xx-large;
+    margin-top: 25px;
+    margin-left: 160px;
+}
+
+.link {
+    color: white;
+}
+
+#links a {
+    text-decoration: none;
+    margin-left: 30px;
+}
+
+#links a:hover {
+    color: #E2AD5C;
+}
+
+#profile-picture {
+    
+    margin-top: 20px;
+    margin-right: 20px;
+}
+
+#profile-picture img {
+    border: 2px solid #E2AD5C; /* Aplica un borde naranja a la foto de perfil */
+    border-radius: 12%; /* Hace que la foto de perfil tenga forma circular */
+    width: 60px; /* Ajusta el ancho según tus preferencias */
+    height: 60px; /* Ajusta el alto según tus preferencias */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+#profile-picture img:hover {
+    transform: scale(1.2); /* Escala la imagen al 120% de su tamaño original */
+    box-shadow: 0 0 10px rgba(226, 173, 92, 0.5); /* Aplica una sombra cuando se pasa el mouse */
+}
+
+#username-txt {
+    margin-left: auto; /* Coloca la foto de perfil al final del "navbar" */
+    margin-top: 30px;
+    font-size: 30px;
+    margin-right: 20px;
+}
+#carrito {
+    transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
+
+#carrito:hover {
+    transform: scale(1.2); /* Escalar el icono al 120% del tamaño original */
+    color: #E2AD5C; /* Cambiar el color del icono cuando se pasa el mouse */
+    
+}
+
+#carrito-picture {
+    margin-left: auto; /* Coloca la foto de perfil al final del "navbar" */
+    margin-top: 20px;
+    margin-left: 900px;
+}
+
+#carrito-picture img {
+    width: 60px; /* Ajusta el ancho según tus preferencias */
+    height: 60px; /* Ajusta el alto según tus preferencias */
+}
+
+label {
+    font-size: x-large;
+    border-bottom: 5px solid #E2AD5C;
+    width: 99%;
+}
+
+#avatarajax {
+    border: 0;
+    margin: auto;
+}
+
+input {
+    border-top: 5px solid #E2AD5C;
+}
+
+.usernamecol {
+    width: 50%;
+}
+
+button {
+    width: 40%;
+    height: 50px;
+}
+
+.btn-reset {
+    background-color: #333;
+}
+
+.btn-reset:hover {
+    background-color: #4b4b4b;
+}
+
+.custom-shadow {
+    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.1);
+}
+
+#subavatar {
+    height: 200px;
+    background-color:#E2AD5C;
+    width: 200px;
+    border-radius: 20px;
+    position: absolute;
+}
+
+#avatarimg {
+    height: 170px;
+    width: 170px;
+    border-radius: 20px;
+    margin: 15px;
+}
+
+#avatar {
+    width: 200px;
+    height: 200px;
+    background-color: #ECC995;
+    border-radius: 20px;
+    margin-top: 30px;
+    position: absolute;
+}
+
+#palo {
+    width: 600px;
+    height: 5px;
+    background: #E2AD5C;
+}
+
+#username {
+    font-size: x-large;
+    margin-top: 167px;
+    text-align: center;
+}
+
+#btnerregistratu {
+    background-color: #333;
+    color: white;
+}
+
+
+#footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    bottom: 0;
+    width: 100%;
+    text-align: left;
+    padding: 10px;
+    border-top: 6px solid #E2AD5C;
+}
+
+
+#Linkak, #Kontaktua, #Sozialak, #Logo {
+    flex: 1;
+    padding: 0 15px; /* Espaciado horizontal entre elementos */
+}
+
+#Linkak ul, #Kontaktua ul, #Sozialak ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    margin-bottom: 30px;
+}
+
+#Linkak ul li, #Kontaktua ul li, #Sozialak ul li {
+    margin-bottom: 5px;
+}
+
+#Linkak h3, #Kontaktua h3, #Sozialak h3 {
+    position: relative;
+}
+
+#Linkak h3::after, #Kontaktua h3::after, #Sozialak h3::after{
+    content: '';
+    display: block;
+    width: 25%;
+    height: 4px;
+    background-color: #E2AD5C;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+#Logo img {
+    max-width: 35%;
+}
+
+
+.social-icon {
+    font-size: 24px; /* Tamaño del icono */
+    color: #0073e6; /* Color del icono, puedes personalizarlo */
+    margin-right: 10px; /* Espaciado horizontal entre los íconos */
+    margin-top: 10px;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    
+}
+
+ul li {
+    display: flex;
+    align-items: center; /* Alineación vertical al centro */
+    margin-bottom: 10px; /* Espaciado vertical entre los elementos de la lista */
+}
+
+ul li a {
+    text-decoration: none; /* Quita la subrayado de los enlaces */
+}
+
+a:visited {
+    color: inherit; /* Hereda el color del texto del padre */
+    text-decoration: none; /* Quita cualquier decoración de enlace visitado */
+}
+
+
+/* Estilo para el contenedor del menú desplegable */
+.dropdown {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+/* Estilo para el texto de username */
+#username-txt p {
+    margin: 0;
+}
+
+/* Estilo para el menú desplegable */
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #E2AD5C;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    border: #333 1px solid;
+}
+
+/* Estilo para los enlaces del menú desplegable */
+.dropdown-content a {
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+}
+
+/* Cambia el color al pasar el mouse sobre los enlaces del menú */
+.dropdown-content a:hover {
+    background-color: grey;
+}
+
+/* Muestra el menú desplegable al pasar el mouse sobre el contenedor */
+.dropdown:hover .dropdown-content {
+    display: block;
+}
