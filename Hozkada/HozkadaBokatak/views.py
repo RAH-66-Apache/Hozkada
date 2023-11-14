@@ -1,3 +1,4 @@
+from datetime import datetime, timezone
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
@@ -229,8 +230,40 @@ def eliminar_del_carrito(request):
 @login_required
 def eskaera(request):
     print("ENTRANDO EN ESKAERA")
-    eskaeras = Eskaera.objects.filter(id_bezeroa=request.user.bezeroa)
-    platerra_eskaeras = Platerra_Eskaera.objects.filter(eskaera_id__in=eskaeras)
-    print("Eskaeras:", eskaeras)
-    print("Platerra_Eskaeras:", platerra_eskaeras)
-    return render(request, 'eskaera.html', {'eskaeras': eskaeras, 'platerra_eskaeras': platerra_eskaeras})
+    eskaeras = Eskaera.objects.filter(id_bezeroa=request.user.bezeroa).order_by('-data')
+
+    # Calcula el total para cada Eskaera
+    for eskaera in eskaeras:
+        eskaera.total = sum(
+            platerra_eskaera.kantitatea * platerra_eskaera.platerra_id.precio_con_descuento()
+            for platerra_eskaera in Platerra_Eskaera.objects.filter(eskaera_id=eskaera)
+        )
+        eskaera.time_difference = calculate_time_difference(eskaera.data)
+
+    return render(request, 'eskaera.html', {'eskaeras': eskaeras})
+
+
+
+def calculate_time_difference(date):
+    # Asegúrate de que date sea un objeto datetime con información de zona horaria
+    if date.tzinfo is None:
+        date = date.replace(tzinfo=timezone.utc)
+
+    now = datetime.now(timezone.utc)
+    difference = now - date
+    days = difference.days
+    hours, remainder = divmod(difference.seconds, 3600)
+    minutes, _ = divmod(remainder, 60)
+
+    if days > 0:
+        if hours > 0:
+            return f"{days} {'Egun' if days == 1 else 'Egun'} {hours} {'Ordu' if hours == 1 else 'Ordu'}"
+        else:
+            return f"{days} {'Egun' if days == 1 else 'Egun'}"
+    elif hours > 0:
+        return f"{hours} {'Ordu' if hours == 1 else 'Ordu'}"
+    elif minutes > 0:
+        return f"{minutes} {'minutu' if minutes == 1 else 'minutu'}"
+    else:
+        return "Oraintxe bertan"
+

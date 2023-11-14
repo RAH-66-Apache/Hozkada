@@ -31,24 +31,32 @@
         </div>
     </div>
     <br><br><br><br><br><br>
-    <title>Lista de Eskeras</title>
+    <h1>Lista de Eskeras</h1>
     <div id="content">
-        <div id="eskaeracontent">
-            {% for eskaera in eskaeras %}
-                <div class="eskaera">
-                    <h2>Eskaera #{{ eskaera.id }} - Orain dela {{ eskaera.data|timesince }}</h2>
-                    <ul>
-                        {% for platerra_eskaera in eskaera.platerra_eskaera_set.all %}
-                            <li>{{ platerra_eskaera.platerra_id.izena }} - Cantidad: {{ platerra_eskaera.kantitatea }}</li>
-                        {% endfor %}
-                    </ul>
-                    {% if not eskaera.egoera %}
-                        <button class="marcar-completada" data-eskaera-id="{{ eskaera.id }}">Marcar como completada</button>
-                    {% endif %}
-                </div>
-            {% endfor %}
-        </div>
+    <div id="eskaeracontent">
+        {% for eskaera in eskaeras %}
+            <div class="eskaera">
+                <h2>Eskaera #{{ forloop.counter }} - Orain dela {{ eskaera.time_difference }}</h2>
+                <ul>
+                    {% for platerra_eskaera in eskaera.platerra_eskaera_set.all %}
+                    <li>
+                        {{ platerra_eskaera.platerra_id.izena }} - Cantidad: {{ platerra_eskaera.kantitatea }}
+                        - Precio: {{ platerra_eskaera.platerra_id.precio_con_descuento }}€
+                       
+                    </li>
+                {% endfor %}
+                </ul>
+                <p>Total de la Eskaera: {{ eskaera.total }}€</p>
+                {% if not eskaera.egoera %}
+                    <p>Tu próximo pedido sin pedir ;</p>
+                {% endif %}
+            </div>
+        {% endfor %}
     </div>
+</div>
+
+ 
+    
     
    <br><br>
         <div id="footer">
