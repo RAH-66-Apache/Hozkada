@@ -23,6 +23,10 @@ input[type="checkbox"] {
     background-color: #333;  Color de fondo personalizado cuando está seleccionado
 } */
 
+#listacarrito {
+    list-style-type: none;
+}
+
 #filtrocontent p {
     font-size: xx-large;
     margin-top: 15px;

@@ -138,21 +138,20 @@
                 {% endwith %}  
             {% endfor %}
         </div>
-    </div>
 
-    <div id="karrito">
-        <div id="karritocontent">
-            <p class="karritotitulo">zure produktuak</p>
-            <div id="karritoerosketak">
-                {% csrf_token %}
-                <div id="lista-carrito">
-                    <!-- Los elementos del carrito se mostrarán aquí dinámicamente -->
+
+        <div id="karrito">
+            <div id="karritocontent">
+                <p class="karritotitulo">zure produktuak</p>
+                <div id="karritoerosketak">
+                    {% csrf_token %}
+                    <div id="lista-carrito">
+                        <!-- Los elementos del carrito se mostrarán aquí dinámicamente -->
+                    </div>
+                    <button id="boton-eskatu">Eskatu</button>
                 </div>
-                <!-- Agrega el botón "Eskatu" aquí -->
-                <button id="boton-eskatu">Eskatu</button>
             </div>
         </div>
-    </div>
     </div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>

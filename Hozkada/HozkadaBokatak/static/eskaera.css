@@ -78,95 +78,11 @@ body {
     
 }
 
-#carrito-picture {
-    margin-left: auto; /* Coloca la foto de perfil al final del "navbar" */
-    margin-top: 20px;
-    margin-left: 900px;
-}
-
-#carrito-picture img {
-    width: 60px; /* Ajusta el ancho según tus preferencias */
-    height: 60px; /* Ajusta el alto según tus preferencias */
-}
-
-label {
-    font-size: x-large;
-    border-bottom: 5px solid #E2AD5C;
-    width: 99%;
-}
-
-#avatarajax {
-    border: 0;
-    margin: auto;
-}
-
-input {
-    border-top: 5px solid #E2AD5C;
-    font-family:Arial, sans-serif;
-}
-
-.usernamecol {
-    width: 50%;
-}
-
-button {
-    width: 40%;
-    height: 50px;
-}
-
-.btn-reset {
-    background-color: #333;
-}
-
-.btn-reset:hover {
-    background-color: #4b4b4b;
-}
-
-.custom-shadow {
-    box-shadow: 3px 3px 4px rgba(0, 0, 0, 0.1);
-}
-
-#subavatar {
-    height: 200px;
-    background-color:#E2AD5C;
-    width: 200px;
-    border-radius: 20px;
-    position: absolute;
-}
-
-#avatarimg {
-    height: 170px;
-    width: 170px;
-    border-radius: 20px;
-    margin: 15px;
-}
-
-#avatar {
-    width: 200px;
-    height: 200px;
-    background-color: #ECC995;
-    border-radius: 20px;
-    margin-top: 30px;
-    position: absolute;
-}
-
-#palo {
-    width: 600px;
-    height: 5px;
-    background: #E2AD5C;
-}
-
 #username {
     font-size: x-large;
     margin-top: 167px;
     text-align: center;
 }
-
-#btnerregistratu {
-    background-color: #333;
-    color: white;
-}
-
 
 #footer {
     display: flex;
@@ -286,4 +202,31 @@ a:visited {
 /* Muestra el menú desplegable al pasar el mouse sobre el contenedor */
 .dropdown:hover .dropdown-content {
     display: block;
+}
+
+#eskaeracontent {
+    margin-top: 50px;
+    width: 60%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.eskaera {
+    padding: 20px;
+    background-color: white;
+    border-radius: 20px 20px 0 0;
+    border-bottom: 5px solid #E2AD5C;
+    height: 100%;
+    width: 48%;
+    margin: auto;
+    margin-top: 20px;
+    transition: transform 0.5s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Agregar una sombra */
+}
+
+.eskaera:hover {
+    transform: scale(1.12);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9); /* Cambiar la sombra en el hover */
 }

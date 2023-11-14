@@ -44,15 +44,15 @@
     <br><br><br><br>
 
     <div class="container">
-        <form action="updatebezeroa/{{user.id}}" method="POST" class="needs-validation" enctype="multipart/form-data">
+        <form action="updatebezeroa/{{user.id}}" id="formulario" method="POST" class="needs-validation" enctype="multipart/form-data">
             {%csrf_token%}
             <div class="row mt-3">
-                <input id="avatarajax" type="file" name="argazkia" accept="image/*" value="{{user.bezeroa.img.url}}">
+                <input id="avatarajax" type="file" name="argazkia" accept="image/*" value="{{user.bezeroa.img.url}}" src="user.bezeroa.img.url">
             </div><br>
             <div class="row mt-3">
                 <div class="col">
                     <label for="">Username:</label>
-                    <input type="text" class="form-control custom-shadow" id="izena" placeholder="Sartu izena" name="username" value="{{user.username}}" required>
+                    <input type="text" class="form-control custom-shadow" id="usernamee" placeholder="Sartu izena" name="username" value="{{user.username}}" required>
                 </div>
                 <div class="col">  
                 </div>
@@ -158,27 +158,134 @@
             </div>
     </div>  
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            
-            var izena = document.getElementById('izena');
-            var abizena = document.getElementById('abizena');
-            var abizena2 = document.getElementById('abizena2');
-            var nan = document.getElementById('nan');
-            var telefonoa = document.getElementById('telefonoa');
-            var email = document.getElementById('email');
-            var pasahitza = document.getElementById('pasahitza');
-            var pasahitza2 = document.getElementById('pasahitza2');
-            var helbidea = document.getElementById('helbidea');
-            var pk = document.getElementById('pk');
+        formulario.addEventListener('submit', function(event) { 
 
-            //REGEX
-            var izenabizenFormat = /^[A-Za-z]{3,}$/;
-            var nanFormat = /^[0-9]{8}[A-Za-z]$/;
-            var emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; 
-            var pasahitzaFormat = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
-            var pkFormat = /^\d{5}[A-Z]?$|^(\d{4}[A-Z]{2}|\d{4}|\d{2}[A-Z]{2} \d{2})$/;
+        var username = document.getElementById("usernamee");
+        var izena = document.getElementById("izena");
+        var abizena = document.getElementById('abizena');
+        var abizena2 = document.getElementById('abizena2');
+        var nan =  document.getElementById('nan');
+        var telefonoa =  document.getElementById('telefonoa');
+        var email =  document.getElementById('email');
+        var pasahitza = document.getElementById('pasahitza');
+        var pasahtiza2 = document.getElementById('pasahitza2');
+        var helbidea = document.getElementById('helbidea');
+        var postakodea = document.getElementById('pk');
 
-            
+        //regex formats
+        const emailFormat = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/; 
+        const dniFormat = /^[0-9]{8}[A-Za-z]$/; //spanish dni regex code
+        const passwordFormat = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; //Minimum eight characters, at least one letter and one number:
+
+        //usernamea
+        if(username.value == "" || username.value == null) {
+            alert("Bete usernamea, mesedez.");
+            username.focus();
+            event.preventDefault();
+            return;
+        } else if(username.value.length <= 3 || username.value.length >= 20) {
+            alert("Usernameak 3 letra baino gehiago eta 20 baino gutxiago eduki behar ditu.");
+            event.preventDefault();
+            izena.focus();
+            return;
+        }
+
+        //izena
+        if(izena.value == null || izena.value == "") {
+            alert("Izena bete, mesedez.");
+            izena.focus();
+            event.preventDefault();
+            return;
+        } else if(izena.value.length <= 2) {
+            alert("Izenak 2 karaktere baino gehiago eduki behar ditu.");
+            izena.focus();
+            event.preventDefault();
+            return;
+        } else if(/\d/.test(izena.value)) {
+            alert("Izenak ezin du zenbakirik eduki.");
+            izena.focus();
+            event.preventDefault();
+            return;
+        }
+
+        //abizena
+        if(abizena.value == "" || abizena2.value == "") {
+            alert("Abizenak bete, mesedez.");
+            abizena.focus();
+            event.preventDefault();
+            return;
+        } else if(abizena.value.length <= 2 || abizena2.value.length <= 2) {
+            alert("Abizenek 2 karaktere baino gehiago eduki behar dute.");
+            abizena.focus();
+            event.preventDefault();
+            return;
+        } else if(/\d/.test(izena.value) || /\d/.test(izena.value)) {
+            alert("Abizenak ezin du zenbakirik eduki.");
+            abizena.focus();
+            event.preventDefault();
+            return;
+        }
+
+        //NANa
+        if(nan.value == "" || nan.value == null) {
+            alert("NANa bete, mesedez.");
+            nan.focus();
+            event.preventDefault();
+            return;
+        } else if(!dniFormat.test(nan.value)) {
+            alert("Nanak ez du formatu egokia, 8 zenbaki eta letra bat eduki behar du.");
+            nan.focus();
+            event.preventDefault();
+            return;
+        }
+
+        //telefonoa
+        if(telefonoa.value == "" || telefonoa.value == null) {
+            alert("Bete telefonoa, mesedez.");
+            telefonoa.focus();
+            event.preventDefault();
+            return;
+        } else if(telefonoa.value.length != 9) {
+            alert("Telefonoak 9 zenbaki eduki behar ditu.");
+            telefonoa.focus();
+            event.preventDefault();
+            return;
+        }else if (isNaN(telefonoa.value)) {
+            alert("Telefonoak zenbakiak izan behar dute.");
+            telefonoa.focus();
+            event.preventDefault();
+            return;
+        }
+
+        //emaila
+        if(email.value == "" || email.value == null) {
+            alert("Bete emaila, mesedez.");
+            email.focus();
+            event.preventDefault();
+            return;
+        } else if(!emailFormat.test(email.value)) {
+            alert("Emailak ez du formatu egokia, saiatu berriro.");
+            email.focus();
+            event.preventDefault();
+            return;
+        }
+
+        //helbidea
+        if(helbidea.value == "" || helbidea.value == null) {
+            alert("Bete helbidea mesedez.");
+            helbidea.focus();
+            event.preventDefault();
+            return;
+        }
+
+        //posta kodea
+        if(postakodea.value == "" || postakodea.value == null) {
+            alert("Bete posta kodea, mesedez.");
+            postakodea.focus();
+            event.preventDefault();
+            return;
+        }
+
         });
     </script>
 </body>
