@@ -1,13 +1,25 @@
+from datetime import datetime, timezone
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import HttpResponseRedirect
-
+from django.shortcuts import render,redirect,reverse
+from .models import Platerra
+from .models import Alergia_Platerra, Eskaera, Platerra_Eskaera
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import get_object_or_404
+from django.views.decorators.http import require_POST
+from django.views.decorators.csrf import csrf_exempt
 from .models import Platerra
 from.models import User
 from .models import Bezeroa
 from .models import Alergia_Platerra
 
+
+
 # Create your views here.
+
+
 
 def index(request): 
     return render(request, 'index.html')
@@ -68,7 +80,7 @@ def update_bezeroa(request, id):
         helbidea = request.POST['helbidea']
         postalkodea = request.POST['pk']
         username = request.POST['username']
-
+        argazkia = request.FILES['argazkia']
         bezeroa = Bezeroa.objects.get(user_id=id)
 
         bezeroa.izena = izena
@@ -79,6 +91,7 @@ def update_bezeroa(request, id):
         bezeroa.emaila = emaila
         bezeroa.helbidea = helbidea
         bezeroa.postakodea = postalkodea
+        bezeroa.img = argazkia
         bezeroa.save()
         # Guardar los cambios en la base de datos
 
@@ -88,4 +101,169 @@ def update_bezeroa(request, id):
 
         # Redireccionar a la página 'index'
         return HttpResponseRedirect(reverse('index'))
+
+#  Con esta funcion estoy tratando de crear una nueva escaera y al mismo tiempo crear un nuevo platerra_eskaera
+@login_required
+def agregar_bocata_al_carrito(request,platerra_id): 
+
+    # Obtén el usuario actual y verifica si ya tiene una Eskaera activa
+    user = request.user
+    eskaera = Eskaera.objects.filter(id_bezeroa=user.bezeroa, egoera=False).first()
+
+    # Si no existe una Eskaera activa, crea una nueva
+    if not eskaera:
+        eskaera = Eskaera(id_bezeroa=user.bezeroa, egoera=False)
+        eskaera.save()
+    # Obten el platerra seleccionado por su id
+    platerra = Platerra.objects.get(id=platerra_id)
+
+    # Ahora, crea o actualiza la relación Platerra_Eskaera
+    platerra_eskaera, created = Platerra_Eskaera.objects.get_or_create(eskaera_id=eskaera, platerra_id=platerra)
+
+    #Aumenta la cantidad en 1
+    platerra_eskaera.kantitatea += 1
+    platerra_eskaera.save()
+
+     # Guarda la información del carrito en la sesión del usuario
+    request.session['carrito'] = list(Platerra_Eskaera.objects.filter(eskaera_id=eskaera).values('platerra_id__izena', 'kantitatea'))
+    # Devuelve una respuesta JSON
+    response_data = {"success": True,"platerra_nombre": platerra.izena}  # Cambia a False si hay un error
+    
+    return JsonResponse(response_data)
+
+
+@login_required
+def marcar_eskaera_completada(request):
+    try:
+        user = request.user
+        eskaera = Eskaera.objects.filter(id_bezeroa=user.bezeroa, egoera=False).first()
+
+        if eskaera:
+            eskaera.egoera = True
+            eskaera.save()
+
+            response_data = {"success": True}
+        else:
+            response_data = {"success": False, "error": "No hay Eskaera activa"}
+
+        return JsonResponse(response_data)
+    except Exception as e:
+        print(e)
+        response_data = {"success": False, "error": str(e)}
+        return JsonResponse(response_data)
+
+
+
+@login_required
+def lista_carrito(request):
+    # Obtén los elementos del carrito
+    elementos_carrito = Platerra_Eskaera.objects.filter(
+        eskaera_id__id_bezeroa=request.user.bezeroa,
+        eskaera_id__egoera=False
+    )
+
+    # Prepara los datos a mostrar en el div
+    carrito_data = [{"id": elemento.id,"izena": elemento.platerra_id.izena, "kantitatea": elemento.kantitatea,"prezioa":elemento.platerra_id.precio_con_descuento()} for elemento in elementos_carrito]
+
+    # Crea una respuesta JSON con los datos del carrito
+    response_data = {
+        'carrito_data': carrito_data,
+    }
+
+    return JsonResponse(response_data)
+
+
+@login_required
+def actualizar_cantidad(request):
+    if request.method == 'POST':
+        platerra_nombre = request.POST.get('platerra_nombre')
+        nueva_cantidad = request.POST.get('nueva_cantidad')
+
+        # Obtiene el precio unitario del Platerra
+        platerra = Platerra.objects.get(izena=platerra_nombre)
+        precio_unitario = platerra.precio_con_descuento()
+
+        print("Precio Unitario:", precio_unitario)
+
+
+        # Actualiza la cantidad en la base de datos según el nombre del platerra
+        Platerra_Eskaera.objects.filter(
+            eskaera_id__id_bezeroa=request.user.bezeroa,
+            eskaera_id__egoera=False,
+            platerra_id__izena=platerra_nombre
+        ).update(kantitatea=nueva_cantidad)
+
+        response_data = {
+            "success": True,
+            "precio_unitario": precio_unitario
+        }
+        return JsonResponse(response_data)
+    else:
+        response_data = {"success": False, "redirect": reverse('login')}
+        return JsonResponse(response_data)
+    
+
+@login_required
+def eliminar_del_carrito(request):
+    platerra_eskaera_id = request.POST.get('platerra_eskaera_id', None)
+    print("Entrando en eliminar_del_carrito")
+    
+    print("Platerra Eskaera ID:", platerra_eskaera_id)
+
+    if platerra_eskaera_id is not None and platerra_eskaera_id != 'undefined':
+        # Utiliza directamente get_object_or_404 sin especificar id=id
+        platerra_eskaera = Platerra_Eskaera.objects.get(id=platerra_eskaera_id)
+
+
+        # Elimina el platerra_eskaera
+        platerra_eskaera.delete()
+
+        # Devuelve una respuesta JSON
+        response_data = {"success": True}  # Cambia a False si hay un error
+    else:
+        response_data = {"success": False, "error": "platerra_eskaera_id no proporcionado en la solicitud"}
+
+    return JsonResponse(response_data)
+
+
+
+@login_required
+def eskaera(request):
+    print("ENTRANDO EN ESKAERA")
+    eskaeras = Eskaera.objects.filter(id_bezeroa=request.user.bezeroa).order_by('-data')
+
+    # Calcula el total para cada Eskaera
+    for eskaera in eskaeras:
+        eskaera.total = sum(
+            platerra_eskaera.kantitatea * platerra_eskaera.platerra_id.precio_con_descuento()
+            for platerra_eskaera in Platerra_Eskaera.objects.filter(eskaera_id=eskaera)
+        )
+        eskaera.time_difference = calculate_time_difference(eskaera.data)
+
+    return render(request, 'eskaera.html', {'eskaeras': eskaeras})
+
+
+
+def calculate_time_difference(date):
+    # Asegúrate de que date sea un objeto datetime con información de zona horaria
+    if date.tzinfo is None:
+        date = date.replace(tzinfo=timezone.utc)
+
+    now = datetime.now(timezone.utc)
+    difference = now - date
+    days = difference.days
+    hours, remainder = divmod(difference.seconds, 3600)
+    minutes, _ = divmod(remainder, 60)
+
+    if days > 0:
+        if hours > 0:
+            return f"{days} {'Egun' if days == 1 else 'Egun'} {hours} {'Ordu' if hours == 1 else 'Ordu'}"
+        else:
+            return f"{days} {'Egun' if days == 1 else 'Egun'}"
+    elif hours > 0:
+        return f"{hours} {'Ordu' if hours == 1 else 'Ordu'}"
+    elif minutes > 0:
+        return f"{minutes} {'minutu' if minutes == 1 else 'minutu'}"
+    else:
+        return "Oraintxe bertan"
 

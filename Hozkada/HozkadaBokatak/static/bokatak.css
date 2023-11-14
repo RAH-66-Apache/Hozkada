@@ -23,6 +23,10 @@ input[type="checkbox"] {
     background-color: #333;  Color de fondo personalizado cuando está seleccionado
 } */
 
+#listacarrito {
+    list-style-type: none;
+}
+
 #filtrocontent p {
     font-size: xx-large;
     margin-top: 15px;
@@ -241,4 +245,30 @@ input[type="button"] {
 .karritoragehituinp:hover {
     background-color: #E2AD5C;
     transform: scale(1.05);
+}
+
+.descripcion-contenedor {
+    max-height: 4.8em; /* Ajusta según sea necesario */
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px; /* Otra opción: ajusta según sea necesario */
+    transition: max-height 0.3s ease;
+}
+
+.descripcion {
+    line-height: 1.6em; /* Ajusta según sea necesario */
+}
+
+.leer-mas {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #fff; /* Ajusta según sea necesario */
+    padding: 5px 10px;
+    text-decoration: none;
+    color: blue; /* Ajusta según sea necesario */
+    cursor: pointer;
+}
+.tachado {
+    text-decoration: line-through;
 }

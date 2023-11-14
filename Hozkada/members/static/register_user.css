@@ -6,6 +6,10 @@ body {
     margin-top: 150px;
 }
 
+input {
+    font-family:Arial, sans-serif;
+}
+
 #navbar {
     background-color: #333;
     color: white;
