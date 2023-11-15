@@ -1,0 +1,477 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="../static/media/nav_ico.png" type="image/png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Koulen">
+    <link rel="stylesheet" href="{% static 'bokatak.css' %}">
+    <title>Hozkada-Bokatak</title>
+</head>
+
+<body>
+    <div id="filtromenu">
+        <div id="filtrocontent">
+            <div class="dropdown">
+                <p>Motak</p>
+                <div class="dropdown-content">
+                    <div class="checkbox-motak">
+                        <div>
+                            <label><input type="checkbox" name="haragia"><img
+                                    src="../static/media/bokatak_img/motak/ico_haragia.png" class="ico_motak" alt="">
+                                Haragia</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="arraina"><img
+                                    src="../static/media/bokatak_img/motak/ico_arraina.png" class="ico_motak" alt="">
+                                Arraina</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="begetarianoa"><img
+                                    src="../static/media/bokatak_img/motak/ico_begetarianoa.png" class="ico_motak"
+                                    alt=""> Begetarianoa</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="beganoa"><img
+                                    src="../static/media/bokatak_img/motak/ico_beganoa.png" class="ico_motak" alt="">
+                                Beganoa</label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="edaria"><img
+                                    src="../static/media/bokatak_img/motak/ico_botella.png" class="ico_motak" alt="">
+                                Edaria</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown">
+                <p>Alergiak</p>
+                <div class="dropdown-content">
+                    <div class="checkbox-alergiak">
+                        <div>
+                            <label><input type="checkbox" name="Glutena"> Glutena<img
+                                    src="../static/media/bokatak_img/alergiak/ico_gluten.png" class="ico_alergiak"
+                                    alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Arrautzak"> Arrautzak<img
+                                    src="../static/media/bokatak_img/alergiak/ico_arrautzak.png" class="ico_alergiak"
+                                    alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Arrainak"> Arrainak<img
+                                    src="../static/media/bokatak_img/alergiak/ico_arrainak.png" class="ico_alergiak"
+                                    alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Krustazeoak"> Krustazeoak<img
+                                    src="../static/media/bokatak_img/alergiak/ico_krustazeo.png" class="ico_alergiak"
+                                    alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Moluskoak"> Moluskoak<img
+                                    src="../static/media/bokatak_img/alergiak/ico_gluten.png" class="ico_alergiak"
+                                    alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Frutu lehorrak"> Frutu Lehorrak<img
+                                    src="../static/media/bokatak_img/alergiak/ico_fruitulehorrak.png"
+                                    class="ico_alergiak" alt=""></label>
+                        </div>
+                        <div>
+                            <label><input type="checkbox" name="Soja"> Soja<img
+                                    src="../static/media/bokatak_img/alergiak/ico_soja.png" class="ico_alergiak"
+                                    alt=""></label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="dropdown" id="deskontoak-dropdown">
+                <p onclick="filtrarPorDescuento()">Deskontuak</p>
+                
+            </div>
+            
+        </div>
+    </div>
+        </div>
+    </div>
+    </div>
+
+    <div id="content">
+        <div id="bokatacontent">
+            {% for bokatak in bokatak %}
+                {% with deskontua_platerra=bokatak.deskontua_platerra_set.first %}
+                    <div class="bokata{% if deskontua_platerra %} deskontubokata{% endif %}" data-mota="{{ bokatak.mota }}">
+                        <div class="bokataimg">
+                            <img src="{{ bokatak.img.url }}" alt="{{ bokatak.izena }}">
+                        </div>
+                        <div class="bokatainfo">
+                            <h2 class="bokatatitulo">
+                                {{ bokatak.izena }} -
+                                <span class="prezioa {% if deskontua_platerra %}deskontubokata-text{% endif %} precio">
+                                    {% if deskontua_platerra %}
+                                        <span class="tachado">{{ bokatak.prezioa }}€</span>
+                                        {{ bokatak.precio_con_descuento }}€
+                                    {% else %}
+                                        {{ bokatak.prezioa }}€
+                                    {% endif %}
+                                </span>
+                            </h2>
+                            <p class="descripcion">{{ bokatak.deskribapena }}</p>
+                            {% comment %} <a href="#" class="leer-mas" onclick="toggleDescripcion(this)">Leer más</a> {% endcomment %}
+                            <div class="alergiak">
+                                {% for alergia_platerrak in bokatak.alergia_platerra_set.all %}
+                                <div data-alergia="{{alergia_platerrak.alergia_id.izena}}">
+                                    <img src="{{ alergia_platerrak.alergia_id.img.url }}"
+                                        alt="{{alergia_platerrak.alergia_id.izena}}">
+                                </div>
+                                {% endfor %}
+                            </div>
+                            {% csrf_token %}
+                            <input class="karritoa-gehitu-inp" type="button" value="Karritoa gehitu" data-platerra-id="{{ bokatak.id }}">
+                            <div class="mesedez-ezabatu" style="display: none;"></div>
+                        
+                        </div>
+                    </div>
+                {% endwith %}  
+            {% endfor %}
+        </div>
+
+
+        <div id="karrito">
+            <div id="karritocontent">
+                <p class="karritotitulo">zure produktuak</p>
+                <div id="karritoerosketak">
+                    {% csrf_token %}
+                    <div id="lista-carrito">
+                        <!-- Los elementos del carrito se mostrarán aquí dinámicamente -->
+                    </div>
+                    <button id="boton-eskatu">Eskatu</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script>
+        function actualizarFiltros() {
+            const checkboxesMotak = Array.from($('.checkbox-motak input[type="checkbox"]:checked')).map(checkbox => $(checkbox).attr('name'));
+            const checkboxesAlergiak = Array.from($('.checkbox-alergiak input[type="checkbox"]:checked')).map(checkbox => $(checkbox).attr('name'));
+            const productos = Array.from($('.bokata'));
+        
+            productos.forEach(producto => {
+                const mota = $(producto).data("mota");
+                const alergiasProducto = Array.from($(producto).find('.alergiak div')).map(alergia => $(alergia).data("alergia"));
+                let productoVisible = false;
+        
+                if (checkboxesMotak.length === 0) {
+                    // Si no hay checkbox seleccionado en el filtro "Motak", oculta el producto solo si es de tipo "Edaria"
+                    if (mota.includes("edaria")) {
+                        productoVisible = false;
+                    } else {
+                        productoVisible = true;
+                    }
+                } else {
+                    // Si hay algún checkbox seleccionado en el filtro "Motak"
+                    checkboxesMotak.forEach(function (motak) {
+                        // Si el producto coincide con algún checkbox seleccionado en "Motak", muestra el producto
+                        if (mota.includes(motak)) {
+                            productoVisible = true;
+                        }
+                    });
+                }
+        
+                checkboxesAlergiak.forEach(function (alergia) {
+                    if (alergiasProducto.includes(alergia)) {
+                        productoVisible = false;
+                    }
+                });
+                
+        
+                if (productoVisible) {
+                    $(producto).show();
+                } else {
+                    $(producto).hide();
+                }
+            });
+        }
+        
+        $(document).ready(function () {
+            $('.checkbox-motak input[type="checkbox"]').change(function () {
+                actualizarFiltros();
+            });
+        
+            $('.checkbox-alergiak input[type="checkbox"]').change(function () {
+                actualizarFiltros();
+            });
+        
+            actualizarFiltros();
+            $('#deskontoak-dropdown p').click(function () {
+                $(this).toggleClass('active');
+                filtrarPorDescuento();
+            });
+        });
+        
+        function filtrarPorDescuento() {
+            const productos = Array.from($('.bokata'));
+            const mostrarSoloDescuento = $('#deskontoak-dropdown p').hasClass('active');
+        
+            productos.forEach(producto => {
+                const tieneDescuento = $(producto).hasClass('deskontubokata');
+                const esEdaria = $(producto).data('mota').includes('edaria');
+        
+                if (mostrarSoloDescuento) {
+                    // Si se activa el filtro de descuento, ocultar todos los productos de tipo "Edaria"
+                    if (esEdaria) {
+                        $(producto).hide();
+                    } else if (!tieneDescuento) {
+                        // Si no es de tipo "Edaria" y no tiene descuento, también ocultar
+                        $(producto).hide();
+                    } else {
+                        // En cualquier otro caso, mostrar
+                        $(producto).show();
+                    }
+                } else {
+                    // Si el filtro de descuento está desactivado, mostrar todos los productos excepto los de tipo "Edaria"
+                    if (esEdaria) {
+                        $(producto).hide();
+                    } else {
+                        $(producto).show();
+                    }
+                }
+            });
+        }
+        
+        
+        
+        $('#boton-eskatu').on('click', function() {
+            // Obtén la cantidad de elementos en la lista de la compra
+            var cantidadElementos = $("#lista-carrito li").length;
+        
+            // Verifica si hay elementos en la lista de la compra
+            if (cantidadElementos > 0) {
+                // Realiza la solicitud AJAX solo si hay elementos en la lista de la compra
+                $.ajax({
+                    type: 'POST',
+                    url: '/bokatak/marcar_eskaera_completada/',
+                    data: {
+                        csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                    },
+                    success: function(data) {
+                        if (data.success) {
+                            alert('Eskaera marcada como completada');
+                            
+                            // Actualiza la lista de Platerra en el carrito después de marcar la eskaera
+                            mostrarListaCarrito();
+                            
+                            // Puedes realizar otras acciones necesarias aquí
+                        } else {
+                            alert('Error al intentar marcar la Eskaera como completada: ' + data.error);
+                        }
+                    },
+                    error: function(error) {
+                        console.error('Error de Ajax:', error);
+                    }
+                });
+            } else {
+                // Si no hay elementos en la lista de la compra, muestra un mensaje o realiza alguna acción
+                alert('No hay elementos en la lista de la compra. Agrega productos antes de hacer la eskaera.');
+            }
+        });
+        
+
+
+
+
+function mostrarListaCarrito() {
+    $.ajax({
+        type: "GET",
+        url: "/bokatak/lista_carrito/",
+        success: function(data) {
+            $("#lista-carrito").empty();
+            var totalPrecio = 0;
+
+            data.carrito_data.forEach(function(platerra) {
+                var subtotal = platerra.kantitatea * platerra.prezioa;
+                totalPrecio += subtotal;
+                console.log("platerra.id antes de append:", platerra.id);
+                // Actualiza el precio en tiempo real
+                var precioActualizado = platerra.kantitatea * platerra.prezioa;
+                $("#lista-carrito").append(`
+                <li>
+        <span class="platerra-nombre">${platerra.izena}</span>
+        <span class="cantidad-precio">
+            <input type="number" class="cantidad-input" value="${platerra.kantitatea}" min="1">
+            x ${platerra.prezioa.toFixed(2)}€ = ${subtotal.toFixed(2)}€
+            <button class="eliminar-del-carrito" data-platerra_eskaera_id="${platerra.id}">Eliminar</button>
+            
+
+          
+        </span>
+    </li>
+        `);
+       
+            });
+
+            // Asigna el evento de click después de agregar todos los elementos al carrito
+            asignarEventoEliminar();
+            actualizarEstadoBoton();
+
+            // Muestra el total al final
+            $("#lista-carrito").append(`
+                <li>
+                    <span class="total">Total: ${totalPrecio.toFixed(2)}€</span>
+                </li>
+            `);
+
+            console.log("Lista de carrito actualizada con éxito");
+        }
+    });
+}
+
+
+
+function asignarEventoEliminar() {
+    $(".eliminar-del-carrito").off('click').on('click', function() {
+        var platerra_eskaera_id = $(this).data("platerra_eskaera_id");
+        console.log("Platerra Eskaera ID:", platerra_eskaera_id);
+
+        // Añade este console.log para asegurarte de que el ID se está recuperando correctamente
+        console.log("Antes de la llamada AJAX, Platerra Eskaera ID:", platerra_eskaera_id);
+
+        // Verifica que el ID no sea 'undefined' antes de hacer la solicitud
+        if (platerra_eskaera_id !== 'undefined') {
+            $.ajax({
+                type: "POST",
+                url: "/bokatak/eliminar_del_carrito/",
+                data: {
+                    csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                    platerra_eskaera_id: platerra_eskaera_id
+                },
+                success: function(data) {
+                    console.log(data);
+                    if (data.success) {
+                        // Actualiza la lista de Platerra en el carrito
+                        mostrarListaCarrito();
+
+                    } else {
+                        console.error("Error al intentar eliminar el Platerra del carrito");
+                    }
+                }
+            });
+        } else {
+            console.error("ID de Platerra Eskaera no válido");
+        }
+    });
+}
+
+$(document).ready(function() {
+    console.log("Documento listo");
+    mostrarListaCarrito();
+    $(".karritoa-gehitu-inp").click(function() {
+        var platerra_id = $(this).data("platerra-id");
+        var bokataDiv = $(this).closest(".bokata");
+
+        $.ajax({
+            type: "POST",
+            url: "/bokatak/agregar_bocata_al_carrito/" + platerra_id + "/",
+            data: {
+                csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+                platerra_id: platerra_id
+            },
+            success: function(data) {
+                if (data.success) {
+                    bokataDiv.find(".mesedez-ezabatu").text("Platera gehitu da zure karritora.");
+                    bokataDiv.find(".mesedez-ezabatu").show();
+                   
+                    // Luego, actualiza la lista de Platerra en el carrito
+                    mostrarListaCarrito();
+                    
+                }
+            }
+        });
+    });
+});
+
+$(document).on('change', '.cantidad-input', function() {
+    var platerra_nombre = $(this).closest('li').find('.platerra-nombre').text().trim();
+    var nueva_cantidad = $(this).val();
+
+    $.ajax({
+        type: "POST",
+        url: "/bokatak/actualizar_cantidad/",
+        data: {
+            csrfmiddlewaretoken: $("input[name=csrfmiddlewaretoken]").val(),
+            platerra_nombre: platerra_nombre,
+            nueva_cantidad: nueva_cantidad
+        },
+        success: function(data) {
+            if (data.success) {
+                console.log("Cantidad actualizada con éxito");
+                // Actualiza la lista de Platerra en el carrito con el nuevo subtotal
+                mostrarListaCarrito();
+            } else if (data.redirect) {
+                // Redirect to the login page
+                window.location.href = data.redirect;
+            }
+        }
+    });
+});
+
+
+
+    
+
+$(document).on('click', '.eliminar-del-carrito', asignarEventoEliminar);
+    
+// Inicializa la asignación de eventos para los elementos existentes
+asignarEventoEliminar();
+
+// Llama a la función para mostrar la lista de carrito
+mostrarListaCarrito();
+
+actualizarEstadoBoton();
+
+function toggleDescripcion(element) {
+    const contenedor = element.parentElement;
+    const descripcion = contenedor.querySelector('.descripcion');
+
+    if (contenedor.style.maxHeight) {
+        contenedor.style.maxHeight = null;
+        element.innerText = 'Leer más';
+    } else {
+        contenedor.style.maxHeight = contenedor.scrollHeight + 'px';
+        element.innerText = 'Leer menos';
+    }
+}
+document.addEventListener("DOMContentLoaded", function() {
+    var precios = document.querySelectorAll(".precio");
+
+    precios.forEach(function(precio) {
+        if (precio.classList.contains("tachado")) {
+            var precioSinTachar = precio.querySelector(".tachado > span");
+            console.log(precioSinTachar);
+            precioSinTachar.style.textDecoration = "line-through";
+        }
+    });
+});
+// Deshabilitar el botón al cargar la página si no hay elementos en la lista
+$(document).ready(function() {
+    var cantidadElementos = $("#lista-carrito li").length;
+    if (cantidadElementos === 0) {
+        $('#boton-eskatu').prop('disabled', true);
+    }
+});
+function actualizarEstadoBoton() {
+    var cantidadElementos = $("#lista-carrito li").length;
+
+    // Habilitar o deshabilitar el botón según si hay elementos en la lista
+    $('#boton-eskatu').prop('disabled', cantidadElementos === 0);
+}
+
+    </script>
+</body>
+
+</html>
