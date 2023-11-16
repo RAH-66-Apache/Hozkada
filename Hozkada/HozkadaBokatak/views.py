@@ -53,9 +53,10 @@ def register_bezeroa_erregistroa(request):
         helbidea = request.POST['helbidea']
         postakodea = request.POST['pk']
         argazkia = request.FILES['argazkia']
+        bidalketaKostua = request.POST['bidalketaKostua']
 
         # Create a User instance
-        user = User.objects.create_user(username=username, password=pasahitza)
+        user = User.objects.create_user(username=username, email=emaila, password=pasahitza)
         
         # Create a Bezeroa instance linked to the user
         bezeroa = Bezeroa(
@@ -68,7 +69,8 @@ def register_bezeroa_erregistroa(request):
             emaila=emaila,
             helbidea=helbidea,
             postakodea=postakodea,
-            img = argazkia
+            img = argazkia,
+            bidalketaKostua = bidalketaKostua
         )
 
         bezeroa.save()
@@ -76,7 +78,8 @@ def register_bezeroa_erregistroa(request):
     
 def perfil(request):
     return render(request, 'perfil.html')
-    
+
+@login_required
 def update_bezeroa(request, id):
     if request.method == 'POST':
         izena = request.POST['izena']

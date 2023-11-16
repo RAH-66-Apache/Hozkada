@@ -23,7 +23,7 @@
         align-items: center;
         margin-left: 25%;
         border: 4px solid #E2AD5C;
-        margin-bottom: 1%;;
+        margin-bottom: 1%;
       }</style>
 </head>
 <body>
@@ -122,18 +122,18 @@
             <div class="row mt-3">
                 <div class="col">
                     <label for="">Helbidea: </label>
-                    <input type="text" class="form-control custom-shadow" id="helbidea" placeholder="Sartu helbidea" name="helbidea" value="{{user.bezeroa.helbidea}}" required>
+                    <input type="text" class="form-control custom-shadow" id="helbidea" placeholder="Sartu helbidea" name="helbidea" value="{{user.bezeroa.helbidea}}" readonly>
                 </div>
                 <div class="col">
                     <label for="">PK:</label>
                     <input type="text" class="form-control custom-shadow" id="pk" placeholder="Sartu posta kodea" name="pk" value="{{user.bezeroa.postakodea}}" required>
                 </div>
-                <div class="row mt-3">
+                
                     <div class="col">
                         <label for="">Bidalketa Kostua:</label>
-                        <input type="text" class="form-control custom-shadow" id="bidalketaKostua" name="bidalketaKostua" value="0" readonly>
+                        <input type="text" class="form-control custom-shadow" id="bidalketaKostua" name="bidalketaKostua" value="{{user.bezeroa.bidalketaKostua}}" readonly>
                     </div>
-                </div>
+                
             
             </div><br>
                 <div class="col text-center"> <!-- Agrega la clase "text-center" para centrar horizontalmente -->
