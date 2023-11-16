@@ -12,6 +12,35 @@
 </head>
 
 <body>
+    <div id="navbar">
+        <a href=""><img id="logo" src="../static/media/logo.png" alt=""></a>
+        <div id="links">
+            <a class="link" href="/">Hasiera</a>
+            <a class="link" href="/bokatak">Bokatak</a>
+        </div>
+        {% if user.is_authenticated %}
+        <div id="username-txt" class="dropdown-user">
+            <p>{{user.username}}</p>
+            <div class="dropdown-user-content">
+                <a href="{% url 'perfil' %}">PERFILA</a>
+                <a href="{% url 'eskaera' %}">ESKAERA</a>
+                <a href="{% url 'logout' %}">SESIOA ITXI</a>
+            </div>
+        </div>
+        <div id="profile-picture">
+           <img  src={{user.bezeroa.img.url}} alt="Foto de perfil">
+        </div>
+        {% else %}
+        <div class="sartu">
+            <a class="sartuinp" href="{%url 'login'%}">Sartu</a>
+            <a class="sartuinp" href="/gehitubezeroa/">Erregistratu</a>
+        </div>
+        {% endif %}
+    </div>
+    <div>
+        <img id="bokatagoiburua" src="../../static/media/bokatak_img/Cabecera_bokatak.png">
+    </div>
+    
     <div id="filtromenu">
         <div id="filtrocontent">
             <div class="dropdown">
