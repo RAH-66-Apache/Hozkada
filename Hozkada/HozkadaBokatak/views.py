@@ -89,6 +89,7 @@ def update_bezeroa(request, id):
         postalkodea = request.POST['pk']
         username = request.POST['username']
         argazkia = request.FILES['argazkia']
+        bidalketaKostua = request.POST['bidalketaKostua']
         bezeroa = Bezeroa.objects.get(user_id=id)
 
         bezeroa.izena = izena
@@ -100,6 +101,7 @@ def update_bezeroa(request, id):
         bezeroa.helbidea = helbidea
         bezeroa.postakodea = postalkodea
         bezeroa.img = argazkia
+        bezeroa.bidalketaKostua = bidalketaKostua
         bezeroa.save()
         # Guardar los cambios en la base de datos
 
