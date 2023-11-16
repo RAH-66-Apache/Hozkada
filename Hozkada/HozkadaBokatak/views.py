@@ -337,23 +337,24 @@ def crear_bezeroa(request):
         form = BezeroaForm(request.POST)
         if form.is_valid():
             form.save()
-            return redirect('ezarpenak')  # Cambiado a 'ezarpenak'
+            return redirect('ezarpenak')  # Redirige a la página de lista de Bezeroak
     else:
         form = BezeroaForm()
-    return render(request, 'crear_bezeroa.html', {'form': form})
+    
+    # Si la solicitud no es POST o el formulario no es válido, renderiza la plantilla con el formulario
+    return render(request, 'ezarpenak.html', {'form': form})
 
 def editar_bezeroa(request, id):
-    print("a entrado")
-    bezeroa = Bezeroa.objects.get(id=id)
+    bezeroa = get_object_or_404(Bezeroa, id=id)
 
     if request.method == 'POST':
         form = BezeroaForm(request.POST, instance=bezeroa)
         if form.is_valid():
             form.save()
-            # Redirigir a la página de inicio después de guardar los cambios
-            return redirect('ezarpenak')  # Reemplaza 'nombre_de_tu_index_html' con el nombre correcto de tu URL
+            # Obtener la URL de la página de edición
+            editar_bezeroa_url = reverse('editar_bezeroa', kwargs={'id': id})
+            return redirect(editar_bezeroa_url)
     else:
-        # Rellenar el formulario con los valores actuales del objeto Bezeroa
         form = BezeroaForm(instance=bezeroa)
 
     context = {
@@ -378,9 +379,12 @@ def obtener_datos_bezeroa(request, id):
     return JsonResponse({'form_fields_html': form_fields_html})
 
 def eliminar_bezeroa(request, id):
-    bezeroa = Bezeroa.objects.get(id=id)
-    bezeroa.delete()
-    return redirect('ezarpenak')  # Cambiado a 'ezarpenak'
+    if request.method == 'POST':
+        bezeroa = Bezeroa.objects.get(id=id)
+        bezeroa.delete()
+        return JsonResponse({'status': 'ok'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Método no permitido'}, status=405)
 
 def lista_platerrak(request):
     platerrak = Platerra.objects.all()
