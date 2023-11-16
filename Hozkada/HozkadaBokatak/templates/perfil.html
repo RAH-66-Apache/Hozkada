@@ -7,6 +7,7 @@
     <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
     <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
     <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
+    <link rel="icon" href="../static/media/nav_ico.png" type="image/png">
     <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/7.0.0-alpha.2/turf.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> <!-- bootstrap -->
@@ -15,7 +16,6 @@
     
     <title>Hozkada Perfil</title>
     <style>#map {
-       
         top: 50;
         bottom: 20;
         width: 50%;
@@ -24,7 +24,8 @@
         margin-left: 25%;
         border: 4px solid #E2AD5C;
         margin-bottom: 1%;;
-      }</style>
+      }
+    </style>
 </head>
 <body>
     <div id="navbar">
@@ -32,13 +33,12 @@
         <div id="links">
             <a class="link" href="{% url 'index'%}">Hasiera</a>
             <a class="link" href="{% url 'bokatak'%}">Bokatak</a>
-            <a class="link" href="">Deskontuak</a>
         </div>
         <div id="username-txt" class="dropdown">
             <p>{{user.username}}</p>
             <div class="dropdown-content">
                 <a href="{% url 'perfil' %}">PERFILA</a>
-                <a href="#">ESKAERA</a>
+                <a href="/eskaera/">ESKAERA</a>
                 <a href="{% url 'logout' %}">SESIOA ITXI</a>
                 <!-- Agrega más enlaces según tus necesidades -->
             </div>
@@ -54,7 +54,7 @@
                 <p id="username">{{user.username}}</p>
             </div>
             <div id="subavatar">
-                <img id="avatarimg" src="{{user.bezeroa.img.url}}" alt="{{user.bezeroa.img.url}}">
+                <img id="avatarimg" src="{{user.bezeroa.img.url}}" alt="">
             </div>
         </div>
     </div>
@@ -64,7 +64,7 @@
         <form action="updatebezeroa/{{user.id}}" id="formulario" method="POST" class="needs-validation" enctype="multipart/form-data">
             {%csrf_token%}
             <div class="row mt-3">
-                <input id="avatarajax" type="file" name="argazkia" accept="image/*" value="{{user.bezeroa.img}}" src="user.bezeroa.img">
+                <input id="avatarajax" type="file" name="argazkia" accept="image/*" value="{{bezeroa.img.url}}">
             </div><br>
             <div class="row mt-3">
                 <div class="col">
@@ -112,11 +112,11 @@
             <div class="row mt-3">
                 <div class="col">
                     <label for="">Pasahitza:</label>
-                    <input type="password" class="form-control custom-shadow" id="pasahitza" placeholder="Sartu pasahitza" name="pasahitza" value="{{user.password}}">
+                    <input type="password" class="form-control custom-shadow" id="pasahitza" placeholder="Sartu pasahitz berria" name="pasahitza" value="">
                 </div>
                 <div class="col">
                     <label for="">Errepikatu pasahitza:</label>
-                    <input type="password" class="form-control custom-shadow" id="pasahitza2" placeholder="Errepikatu pasahitza" name="pasahitza2" value="{{user.password}}">
+                    <input type="password" class="form-control custom-shadow" id="pasahitza2" placeholder="Errepikatu pasahitz berria" name="pasahitza2" value="">
                 </div>
             </div>
             <div class="row mt-3">
@@ -128,13 +128,11 @@
                     <label for="">PK:</label>
                     <input type="text" class="form-control custom-shadow" id="pk" placeholder="Sartu posta kodea" name="pk" value="{{user.bezeroa.postakodea}}" required>
                 </div>
-                <div class="row mt-3">
-                    <div class="col">
-                        <label for="">Bidalketa Kostua:</label>
-                        <input type="text" class="form-control custom-shadow" id="bidalketaKostua" name="bidalketaKostua" value="0" readonly>
-                    </div>
+
+                <div class="col">
+                    <label for="">Bidalketa Kostua:</label>
+                    <input type="text" class="form-control custom-shadow" id="bidalketaKostua" name="bidalketaKostua" value="0" readonly>
                 </div>
-            
             </div><br>
                 <div class="col text-center"> <!-- Agrega la clase "text-center" para centrar horizontalmente -->
                     <button type="submit" class="btn btn-lg mt-3 btn-reset" style="color: white;">Gorde Aldaketak</button>
@@ -185,8 +183,37 @@
                 
                 
             </div>
-    </div>  
+    </div> 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
     <script>
+        $(document).ready(function() {
+            // Selecciona el input de tipo archivo
+            var inputFile = $('#avatarajax');
+            var img = $('#avatarimg');
+    
+            // Almacena la URL de la imagen original
+            var initialImageUrl = img.attr('src');
+    
+            // Agrega un controlador de eventos al input de archivo
+            inputFile.change(function() {
+                var file = inputFile[0].files[0];
+    
+                // Verifica si se seleccionó un archivo
+                if (file) {
+                    var objectURL = URL.createObjectURL(file);
+    
+                    // Actualiza el src de la imagen con la URL del objeto creado
+                    img.attr('src', objectURL);
+                }
+            });
+    
+            // Agrega un controlador de eventos al botón de reset (si lo necesitas)
+            $('#resetButton').click(function() {
+                // Restablece la imagen al valor inicial
+                img.attr('src', initialImageUrl);
+            });
+        });
+
         formulario.addEventListener('submit', function(event) { 
 
         var username = document.getElementById("usernamee");
@@ -298,6 +325,8 @@
             event.preventDefault();
             return;
         }
+
+        //pasahitza
 
         //helbidea
         if(helbidea.value == "" || helbidea.value == null) {
