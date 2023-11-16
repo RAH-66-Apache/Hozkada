@@ -12,6 +12,7 @@ class Bezeroa(models.Model):
     emaila = models.EmailField(max_length=50, default='')
     helbidea = models.CharField(max_length=100)
     postakodea = models.CharField(max_length=10)
+    bidalketaKostua = models.FloatField(default=0)
     img = models.ImageField(upload_to='img/erabiltzaileak')
 
     def __str__(self):

@@ -230,3 +230,96 @@ a:visited {
     transform: scale(1.12);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9); /* Cambiar la sombra en el hover */
 }
+
+
+
+    /* Estilos para los botones de eskaera */
+    .eskaera-btn {
+        color: orange;
+        font-size: 36px;
+    }
+
+    .eskaera-btn.collapsed {
+        color: orange; /* Color cuando está colapsado */
+    }
+
+    .eskaera-btn:not(.collapsed):hover {
+        color: darkorange; /* Color cuando está expandido y se hace hover */
+    }
+
+    /* Estilos para el contenido de eskaera */
+    .eskaera-content {
+        border: none; /* Elimina el borde azul cuando se abre */
+    }
+
+    .eskaera-content ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .eskaera-content li {
+        color: #E2AD5C;
+        font-size: 20px;
+        
+    }
+
+    .eskaera-content p {
+        color: purple;
+        font-size: 28px;
+    }
+
+    .eskaera-content .total {
+        color: purple;
+        font-size: 28px;
+    }
+
+    .eskaera-content p:last-child {
+        color: #E2AD5C;
+        font-size: 24px;
+    }
+
+    /* Estilos adicionales proporcionados */
+
+    body {
+        font-family: Koulen;
+    }
+
+    .container {
+        width: 40%;
+        margin-top: 150px;
+    }
+
+    /* Estilos para el navbar */
+    #navbar {
+        background-color: #333;
+        color: white;
+        height: 100px;
+        overflow: visible;
+        display: flex;
+        position: fixed;
+        top: 0;
+        width: 100%;
+        z-index: 999;
+    }
+
+    /* Estilos para los enlaces del navbar */
+    #links {
+        font-size: xx-large;
+        margin-top: 25px;
+        margin-left: 160px;
+    }
+
+    .link {
+        color: white;
+    }
+
+    #links a {
+        text-decoration: none;
+        margin-left: 30px;
+    }
+
+    #links a:hover {
+        color: #E2AD5C;
+    }
+
+    /* Estilos para
