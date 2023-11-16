@@ -198,6 +198,14 @@ input[type="checkbox"] {
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9); /* Cambiar la sombra en el hover */
 }
 
+.karritoa-gehitu-inp {
+    margin-bottom: 20px;
+    background-color: #E2AD5C;
+    border-radius: 10px;
+    padding: 5px 20px 5px 20px;
+    color: #333;
+}
+
 #karrito {
     background-color: white;
     border-radius: 20px 20px 0 0;
