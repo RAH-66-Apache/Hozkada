@@ -305,40 +305,109 @@ def logout_user(request):
     logout(request)
     return redirect('index')
 
-# def register_user(request):
-#     if request.method == "POST":
-#         form = UserCreationForm(request.POST)
-#         if form.is_valid():
-#             form.save()
-#             username = form.cleaned_data["izena"]
-#             password = form.cleaned_data["pasahitza"]
-#             user = authenticate(username = username, password = password)
-#             login(request, user)
-#             return redirect('index')
-#     else:
-#         form = UserCreationForm()
-#     return render(request, 'authenticate/register_user.html', {'form':form})
 
-def register_bezeroa(request):
-    return render(request, 'register_user.html')
+# AJUSTES
+#---------------------------------------
+from .forms import BezeroaForm, PlaterraForm
 
-def register_bezeroa_erregistroa(request):
-    nan = request.POST['nan']
-    izena = request.POST['izena']
-    abizena = request.POST['abizena']
-    abizena2 = request.POST['abizena2']
-    telefonoa = request.POST['telefonoa']
-    emaila = request.POST['email']
-    helbidea = request.POST['helbidea']
-    postakodea = request.POST['pk']
+from django.shortcuts import render, redirect
+from .forms import BezeroaForm, PlaterraForm
+from .models import Bezeroa, Platerra
 
-    bezeroa = Bezeroa(nan=nan,
-                    izena=izena,
-                    abizena=abizena,
-                    abizena2=abizena2,
-                    telefonoa=telefonoa,
-                    emaila=emaila,
-                    helbidea=helbidea,
-                    postakodea=postakodea)
-    bezeroa.save()
-    return HttpResponseRedirect(reverse('index'))
+def ezarpenak(request):
+    print("hola")
+    bezeroa_form = BezeroaForm()
+    platerra_form = PlaterraForm()
+
+    context = {
+        'bezeroak': Bezeroa.objects.all(),
+        'platerrak': Platerra.objects.all(),
+        'bezeroa_form': bezeroa_form,
+        'platerra_form': platerra_form,
+    }
+
+    return render(request, 'ezarpenak.html', context)
+
+def lista_bezeroak(request):
+    bezeroak = Bezeroa.objects.all()
+    return render(request, 'lista_bezeroak.html', {'bezeroak': bezeroak})
+
+def crear_bezeroa(request):
+    if request.method == 'POST':
+        form = BezeroaForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('ezarpenak')  # Cambiado a 'ezarpenak'
+    else:
+        form = BezeroaForm()
+    return render(request, 'crear_bezeroa.html', {'form': form})
+
+def editar_bezeroa(request, id):
+    print("a entrado")
+    bezeroa = Bezeroa.objects.get(id=id)
+
+    if request.method == 'POST':
+        form = BezeroaForm(request.POST, instance=bezeroa)
+        if form.is_valid():
+            form.save()
+            # Redirigir a la página de inicio después de guardar los cambios
+            return redirect('ezarpenak')  # Reemplaza 'nombre_de_tu_index_html' con el nombre correcto de tu URL
+    else:
+        # Rellenar el formulario con los valores actuales del objeto Bezeroa
+        form = BezeroaForm(instance=bezeroa)
+
+    context = {
+        'bezeroak': Bezeroa.objects.all(),
+        'bezeroa_form': form.as_table(),
+    }
+
+    return render(request, 'ezarpenak.html', context)
+
+
+def obtener_datos_bezeroa(request, id):
+    # Obtener el objeto Bezeroa
+    bezeroa = get_object_or_404(Bezeroa, id=id)
+
+    # Rellenar el formulario con los valores actuales del objeto Bezeroa
+    form = BezeroaForm(instance=bezeroa)
+
+    # Obtener los campos del formulario como HTML
+    form_fields_html = form.as_table()
+
+    # Devolver la respuesta como JSON
+    return JsonResponse({'form_fields_html': form_fields_html})
+
+def eliminar_bezeroa(request, id):
+    bezeroa = Bezeroa.objects.get(id=id)
+    bezeroa.delete()
+    return redirect('ezarpenak')  # Cambiado a 'ezarpenak'
+
+def lista_platerrak(request):
+    platerrak = Platerra.objects.all()
+    return render(request, 'lista_platerrak.html', {'platerrak': platerrak})
+
+def crear_platerra(request):
+    if request.method == 'POST':
+        form = PlaterraForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('ezarpenak')  # Cambiado a 'ezarpenak'
+    else:
+        form = PlaterraForm()
+    return render(request, 'crear_platerra.html', {'form': form})
+
+def editar_platerra(request, id):
+    platerra = Platerra.objects.get(id=id)
+    if request.method == 'POST':
+        form = PlaterraForm(request.POST, instance=platerra)
+        if form.is_valid():
+            form.save()
+            return redirect('ezarpenak')  # Cambiado a 'ezarpenak'
+    else:
+        form = PlaterraForm(instance=platerra)
+    return render(request, 'editar_platerra.html', {'form': form, 'platerra': platerra})
+
+def eliminar_platerra(request, id):
+    platerra = Platerra.objects.get(id=id)
+    platerra.delete()
+    return redirect('ezarpenak')  # Cambiado a 'ezarpenak'

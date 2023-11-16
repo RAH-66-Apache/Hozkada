@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ezarpenak</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
+<body>
+
+    <div>
+        <h2>Lista de Bezeroak</h2>
+    
+        <!-- Selector de Bezeroak -->
+        <select id="selector-bezeroak">
+            <option value="">Aukeratu Bezeroa</option>
+            {% for bezeroa in bezeroak %}
+                <option value="{{ bezeroa.id }}">{{ bezeroa.izena }}</option>
+            {% endfor %}
+        </select>
+    
+        <!-- Formulario de edición de Bezeroa -->
+        <form method="post" enctype="multipart/form-data" id="form-editar-bezeroa">
+            {% csrf_token %}
+            <div id="form-static-content">
+                {{ bezeroa_form.as_p }} 
+                <button type="submit">Guardar cambios</button>
+            </div>
+            <div id="form-dynamic-content">
+                <!-- Aquí se actualizarán dinámicamente los campos del formulario -->
+            </div>
+        </form>
+    
+        <a href="{% url 'crear_bezeroa' %}">Crear Bezeroa</a>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            // Al cambiar el selector de Bezeroak
+            $('#selector-bezeroak').change(function () {
+                // Obtener el ID seleccionado
+                var selectedId = $(this).val();
+        
+                // Si se selecciona un Bezeroa, cargar sus datos en el formulario
+                if (selectedId) {
+                    // Obtener los datos del Bezeroa mediante AJAX
+                    $.ajax({
+                        url: `/obtener_datos_bezeroa/${selectedId}/`,
+                        type: 'GET',
+                        success: function (data) {
+                            // Actualizar dinámicamente los campos del formulario
+                            $('#form-dynamic-content').html(data.form_fields_html);
+                        },
+                        error: function (error) {
+                            console.error('Error al obtener datos del bezeroa', error);
+                        }
+                    });
+                } else {
+                    // Limpiar la parte dinámica del formulario si no se selecciona ningún Bezeroa
+                    $('#form-dynamic-content').empty();
+                }
+            });
+
+            // Al enviar el formulario
+            $('#form-editar-bezeroa').submit(function (event) {
+                event.preventDefault();
+
+                // Obtener los datos del formulario
+                var formData = $(this).serialize();
+
+                // Realizar una solicitud AJAX para guardar los datos
+                $.ajax({
+                    url: '/guardar_datos_bezeroa/',  // Cambia esto a la URL correcta en tu aplicación
+                    type: 'POST',
+                    data: formData,
+                    success: function (response) {
+                        // Manejar la respuesta después de guardar los datos
+                        console.log(response);
+
+                        // Puedes redirigir a la página de inicio u otra página si es necesario
+                        window.location.href = '/';  // Cambia esto a la URL deseada
+                    },
+                    error: function (error) {
+                        console.error('Error al guardar datos del bezeroa', error);
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

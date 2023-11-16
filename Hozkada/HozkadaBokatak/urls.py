@@ -31,4 +31,20 @@ urlpatterns = [
     path('login_user', views.login_user, name='login'),
     path('logout_user', views. logout_user, name='logout'),
 
+    #AJUSTES
+    path('ezarpenak/', views.ezarpenak, name='ezarpenak'),
+    path('lista_bezeroak/', views.lista_bezeroak, name='lista_bezeroak'),
+    path('crear_bezeroa/', views.crear_bezeroa, name='crear_bezeroa'),
+    path('editar_bezeroa/<int:id>/', views.editar_bezeroa, name='editar_bezeroa'),
+    path('eliminar_bezeroa/<int:id>/', views.eliminar_bezeroa, name='eliminar_bezeroa'),
+    path('obtener_datos_bezeroa/<int:id>/', views.obtener_datos_bezeroa, name='obtener_datos_bezeroa'),
+
+
+
+
+    path('lista_platerrak/', views.lista_platerrak, name='lista_platerrak'),
+    path('crear_platerra/', views.crear_platerra, name='crear_platerra'),
+    path('editar_platerra/<int:id>/', views.editar_platerra, name='editar_platerra'),
+    path('eliminar_platerra/<int:id>/', views.eliminar_platerra, name='eliminar_platerra'),
+
 ]
