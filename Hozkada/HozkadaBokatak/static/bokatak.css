@@ -1,0 +1,436 @@
+body {
+    font-family: Koulen;
+    margin: 0;
+}
+#navbar {
+    background-color: #333;
+    color: white;
+    height: 100px;
+    overflow: visible;
+    display: flex;
+    position: fixed;
+    top: 0;
+    width: 100%;          
+    z-index: 999; /* Asegura que el navbar esté por encima de otros elementos */    
+}
+#logo {
+    margin-top: 5px;
+    margin-left: 15px;
+    height: 150px;
+    width: 150px;
+    position: absolute;
+}
+#links {
+    font-size: xx-large;
+    margin-top: 25px;
+    margin-left: 160px;
+}
+.link {
+    color: white;
+}
+#links a {
+    text-decoration: none;
+    margin-left: 30px;
+}
+#links a:hover {
+    color: #E2AD5C;
+}
+.sartu {
+    display: flex;
+    margin-left: auto;
+    text-decoration: none;
+    font-size: xx-large;
+    color: white;
+    margin-top: 25px;
+    margin-right: 30px;
+    height: 55px;
+    border-radius: 20px;
+}
+.sartuinp:hover {
+    transform: scale(1.2);
+}
+.sartuinp {
+    text-decoration: none;
+    border-radius: 20px;
+    padding: 0 20px 0 20px;
+    background-color: #E2AD5C;
+    transition: transform 0.3s;
+    margin-left: 25px;
+}
+
+.total {
+    font-size: x-large;
+}
+#profile-picture {
+    margin-top: 20px;
+    margin-right: 20px;
+}
+#profile-picture img {
+    border: 2px solid #E2AD5C; /* Aplica un borde naranja a la foto de perfil */
+    border-radius: 12%; /* Hace que la foto de perfil tenga forma circular */
+    width: 60px; /* Ajusta el ancho según tus preferencias */
+    height: 60px; /* Ajusta el alto según tus preferencias */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+#profile-picture img:hover {
+    transform: scale(1.2); /* Escala la imagen al 120% de su tamaño original */
+    box-shadow: 0 0 10px rgba(226, 173, 92, 0.5); /* Aplica una sombra cuando se pasa el mouse */
+}
+#username-txt {
+    margin-left: auto; /* Coloca la foto de perfil al final del "navbar" */
+    margin-top: 30px;
+    font-size: 30px;
+    margin-right: 20px;
+    height: 85px;
+}
+#bokatagoiburua {
+    margin-top: 100px;
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+#filtromenu {
+    width: 100%;
+    background-color: #333;
+    height: 80px;
+}
+
+#filtrocontent {
+    display: flex;
+    margin-left: 150px;
+}
+
+input[type="checkbox"] {
+    width: 16px; /* Ancho personalizado */
+    height: 16px; /* Alto personalizado */
+}
+
+/* input[type="checkbox"]:checked {
+    background-color: #333;  Color de fondo personalizado cuando está seleccionado
+} */
+
+li {
+    list-style-type: none;
+}
+
+#filtrocontent p {
+    font-size: xx-large;
+    margin-top: 15px;
+    margin-left: 80px;
+    color: white;
+    cursor: default;
+}
+
+.ico_motak {
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+.ico_alergiak {
+    margin-left: 5px;
+    width: 30px;
+    height: 30px;
+}
+
+
+#filtrocontent p:hover {
+    color: #E2AD5C;
+    cursor: default;
+}
+
+.dropdown-content {
+    margin-left: 40px;
+    font-size: x-large;
+    flex-direction: column;
+    border: 1px solid black;
+    padding: 10px;
+    border-radius: 10px;
+    background-color: #E2AD5C;
+    display: none;
+    position: absolute; /* Establece una posición absoluta para evitar el desplazamiento de otros elementos */
+
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+#content {
+    width: 90%;
+    margin: auto;
+    display: flex;
+}
+
+#bokatacontent {
+    margin-top: 50px;
+    width: 60%;
+    display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+}
+
+.bokata {
+    background-color: white;
+    border-radius: 20px 20px 0 0;
+    border-bottom: 5px solid #E2AD5C;
+    height: 100%;
+    width: 48%;
+    margin: auto;
+    margin-top: 20px;
+    transition: transform 0.5s;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Agregar una sombra */
+}
+
+.karritoa-gehitu-inp {
+    background-color: #E2AD5C;
+    border-radius: 10px;
+    padding: 1% 5% 1% 5%;
+    transition: transform 0.3s;
+    margin-bottom: 15px;
+}
+
+.karritoa-gehitu-inp:hover {
+    transform: scale(1.2);
+}
+
+.eliminar-del-carrito {
+    background-color: white;
+    border: none;
+    color: red;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.eliminar-del-carrito:hover {
+    transform: scale(1.5);
+}
+
+#boton-eskatu {
+    background-color: #E2AD5C;
+    border-radius: 10px;
+    padding: 1% 5% 1% 5%;
+    transition: transform 0.3s;
+    margin-bottom: 15px;
+    border: none;
+    margin-top: 15px;
+    margin-left: 25px;
+    font-family: Koulen;
+    font-size: large;
+}
+
+#boton-eskatu:hover {
+    transform: scale(1.3);
+}
+
+
+.bokata:hover {
+    transform: scale(1.12);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9); /* Cambiar la sombra en el hover */
+}
+
+#karrito {
+    background-color: white;
+    border-radius: 20px 20px 0 0;
+    margin-left: 5%;
+    margin-top: 70px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Agregar una sombra */
+    border-bottom: 5px solid #E2AD5C;
+    width: 35%;
+    position: sticky;
+    top: 140px;
+    height: fit-content;
+}
+
+#karritocontent {
+    padding: 20px;
+}
+
+.karritotitulo {
+    font-size: x-large;
+    border-bottom: 3px dotted #E2AD5C;
+}
+
+.erosketatituloflex {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.erosketatituloflex p {
+    border-bottom: 3px solid #E2AD5C;
+}
+
+#erosketaflex {
+    padding: 0 0 20px 20px;
+    display: flex;
+    justify-content: space-between;
+    height: 20px;
+    color: #333;
+}
+
+.kantitateap {
+    margin-left: 140px;
+}
+
+table {
+    width: 100%;
+    padding: 0 20px 0 20px;
+}
+
+.tdprod{
+    width: 60%;
+}
+
+.numberinp {
+    width: 20%;
+}
+
+.karritototal {
+    font-size: x-large;
+    margin: 0;
+    padding: 0;
+}
+
+#total {
+    border-bottom: 3px  dotted #E2AD5C;
+    display: flex;
+    justify-content: space-between;
+}
+
+#eskatu {
+    border-radius: 10px;
+    margin-top: 10px;
+    width: 100%;
+    background-color: #E2AD5C;
+    font-size: xx-large;
+    text-align: center;
+}
+
+.bokataimg {
+    text-align: center;
+}
+
+.bokataimg img{
+    margin-top: 20px;
+    width: 90%;
+    border-radius: 10px 10px 0 0;
+    border-bottom: 5px  solid #E2AD5C;
+}
+
+.bokatainfo {
+    text-align: center;
+    padding: 0px 10px 0px 10px;
+}
+
+.prezioa {
+    color: rgb(52, 167, 96);
+}
+
+.bokatatitulo {
+    border-bottom: 2px solid #E2AD5C;
+    margin-bottom: 5px;
+    margin-top: 0;
+}
+
+p {
+    margin-top: 0; /* Elimina el margen superior del párrafo p */
+}
+
+.alergiak {
+    display: flex;
+    margin-top: 5px;
+    justify-content: center; 
+    align-items: center; 
+    margin-bottom: 10px;
+}
+
+.alergiak img {
+    height: 30px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.deskontubokata {
+    background-color: #ffeccf;
+}
+
+input[type="button"] {
+    cursor: pointer;
+    border: none;
+    font-family: Koulen;
+    font-size: large;
+}
+
+.karritoragehituinp {
+    padding: 1% 5% 1% 5%;
+    background-color: #E2AD5C;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    transition: transform 0.3s;
+}
+
+.karritoragehituinp:hover {
+    background-color: #E2AD5C;
+    transform: scale(1.05);
+}
+
+.descripcion-contenedor {
+    max-height: 4.8em; /* Ajusta según sea necesario */
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 20px; /* Otra opción: ajusta según sea necesario */
+    transition: max-height 0.3s ease;
+}
+
+.descripcion {
+    line-height: 1.6em; /* Ajusta según sea necesario */
+}
+
+.leer-mas {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    background-color: #fff; /* Ajusta según sea necesario */
+    padding: 5px 10px;
+    text-decoration: none;
+    color: blue; /* Ajusta según sea necesario */
+    cursor: pointer;
+}
+.tachado {
+    text-decoration: line-through;
+}
+
+.dropdown-user {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+/* Estilo para el menú desplegable */
+.dropdown-user-content {
+    border-radius: 10px;
+    display: none;
+    position: absolute;
+    background-color: #E2AD5C;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 2;
+    border: #333 1px solid;
+}
+/* Estilo para los enlaces del menú desplegable */
+.dropdown-user-content a {
+    padding: 12px 16px;
+    display: block;
+    text-decoration: none;
+    color: white;
+    font-size: 24px;
+}
+/* Cambia el color al pasar el mouse sobre los enlaces del menú */
+.dropdown-user-content a:hover {
+    background-color: #333;
+}
+/* Muestra el menú desplegable al pasar el mouse sobre el contenedor */
+.dropdown-user:hover .dropdown-user-content {
+    display: block;
+}

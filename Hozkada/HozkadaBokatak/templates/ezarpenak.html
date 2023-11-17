@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ezarpenak</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+    <!-- Agregar enlaces a los archivos de estilo de Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous">
+
+    <style>
+      body {
+        background-color: #F8F9FA; /* Color de fondo gris claro */
+      }
+
+      div {
+        margin: 20px auto; /* Margen exterior para centrar */
+        padding: 20px;
+        background-color: #f7f7f7; /* Color de fondo naranja */
+        border-radius: 10px; /* Bordes redondeados */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+        max-width: 600px; /* Ancho máximo del contenedor */
+      }
+
+      h2 {
+        color: #FFFFFF; /* Texto en color blanco */
+        background-color: #e2ad5c; /* Fondo del encabezado en rojo tomate */
+        padding: 10px;
+        border-radius: 5px;
+        margin-bottom: 20px;
+      }
+
+      /* Agregar cualquier regla de estilo adicional aquí */
+
+    </style>
+  </head>
+
+  <body>
+    <div>
+      <h2>Lista de Bezeroak</h2>
+
+      <!-- Selector de Bezeroak para edición -->
+      <select id="selector-bezeroak">
+        <option value="">Aukeratu Bezeroa</option>
+        {% for bezeroa in bezeroak %}
+        <option value="{{ bezeroa.id }}">{{ bezeroa.izena }}</option>
+        {% endfor %}
+      </select>
+
+      <!-- Formulario de edición de Bezeroa -->
+      <form
+        id="editar-bezeroa-form"
+        method="post"
+        enctype="multipart/form-data"
+      >
+        {% csrf_token %}
+
+        <div id="form-dynamic-content">
+          <!-- Aquí se actualizarán dinámicamente los campos del formulario -->
+        </div>
+
+        <!-- Botón "Guardar cambios" fuera del div dinámico -->
+        <button type="submit">Guardar cambios</button>
+      </form>
+
+      <!-- Selector de Bezeroak para eliminar -->
+      <select id="selector-eliminar-bezeroak">
+        <option value="">Seleccionar Bezeroa para eliminar</option>
+        {% for bezeroa in bezeroak %}
+        <option value="{{ bezeroa.id }}">{{ bezeroa.izena }}</option>
+        {% endfor %}
+      </select>
+
+      <!-- Botón "Eliminar Bezeroa" -->
+      <button id="eliminar-bezeroa-btn">Eliminar Bezeroa</button>
+
+      <h2>Crear Nuevo Bezeroa</h2>
+
+      <form
+        method="post"
+        enctype="multipart/form-data"
+        action="{% url 'crear_bezeroa' %}"
+      >
+        {% csrf_token %} {{ bezeroa_form.as_p }}
+
+        <button type="submit">Crear Bezeroa</button>
+      </form>
+    </div>
+
+
+    <div>
+      <h2>Lista de Platerrak</h2>
+  
+      <!-- Selector de Platerrak para edición -->
+      <select id="selector-platerrak">
+          <option value="">Aukeratu Platerra</option>
+          {% for platerra in platerrak %}
+              <option value="{{ platerra.id }}">{{ platerra.izena }}</option>
+          {% endfor %}
+      </select>
+  
+      <!-- Formulario de edición de Platerra -->
+      <form method="post" enctype="multipart/form-data" action="{% url 'crear_platerra' %}">
+          {% csrf_token %}
+  
+          <div id="form-dynamic-platerra-content">
+              <!-- Aquí se actualizarán dinámicamente los campos del formulario -->
+          </div>
+  
+          <!-- Botón "Guardar cambios" fuera del div dinámico -->
+          <button type="submit">Guardar cambios</button>
+      </form>
+  
+      <!-- Selector de Platerrak para eliminar -->
+      <select id="selector-eliminar-platerra">
+          <option value="">Seleccionar Platerra para eliminar</option>
+          {% for platerra in platerrak %}
+              <option value="{{ platerra.id }}">{{ platerra.izena }}</option>
+          {% endfor %}
+      </select>
+  
+      <!-- Botón "Eliminar Platerra" -->
+      <button id="eliminar-platerra-btn">Eliminar Platerra</button>
+  </div>
+
+
+    <script>
+      $(document).ready(function () {
+        var selectedId;
+
+        $("#selector-bezeroak").change(function () {
+          selectedId = $(this).val();
+
+          if (selectedId) {
+            $.ajax({
+              url: `/obtener_datos_bezeroa/${selectedId}/`,
+              type: "GET",
+              success: function (data) {
+                $("#form-dynamic-content").html(data.form_fields_html);
+              },
+              error: function (error) {
+                console.error("Error al obtener datos del bezeroa", error);
+              },
+            });
+          } else {
+            $("#form-dynamic-content").empty();
+          }
+        });
+
+        $("#editar-bezeroa-form").submit(function (event) {
+          event.preventDefault();
+          var formData = $(this).serialize();
+
+          if (selectedId) {
+            $.ajax({
+              url: `/editar_bezeroa/${selectedId}/`,
+              type: "POST",
+              data: formData,
+              dataType: "json",
+              success: function (data) {
+                console.log("Cambios guardados correctamente");
+                // Redirigir a la página de edición después de guardar los cambios
+                window.location.href = `/editar_bezeroa/${selectedId}/`;
+              },
+              error: function (error) {
+                console.error("Error al guardar cambios", error);
+              },
+            });
+          } else {
+            console.error("No se ha seleccionado ningún Bezeroa");
+          }
+        });
+        $(document).on("click", "#eliminar-bezeroa-btn", function () {
+          eliminarBezeroa();
+        });
+        function eliminarBezeroa() {
+          console.log("Función eliminarBezeroa llamada");
+          var selectedEliminarId = $("#selector-eliminar-bezeroak").val();
+
+          if (
+            selectedEliminarId &&
+            confirm("¿Estás seguro de que quieres eliminar este Bezeroa?")
+          ) {
+            // Hacer una solicitud Ajax para eliminar el Bezeroa
+            $.ajax({
+              url: `/eliminar_bezeroa/${selectedEliminarId}/`,
+              type: "POST",
+              data: { csrfmiddlewaretoken: "{{ csrf_token }}" },
+              dataType: "json",
+              success: function (data) {
+                console.log("Bezeroa eliminado correctamente");
+                // Recargar la página para reflejar los cambios
+                location.reload();
+              },
+              error: function (error) {
+                console.error("Error al eliminar el Bezeroa", error);
+              },
+            });
+          }
+        }
+      });
+
+      $(document).ready(function () {
+        var selectedPlaterraId;
+
+        $("#selector-platerra").change(function () {
+            selectedPlaterraId = $(this).val();
+
+            if (selectedPlaterraId) {
+                $.ajax({
+                    url: `/obtener_datos_platerra/${selectedPlaterraId}/`,
+                    type: "GET",
+                    success: function (data) {
+                        $("#form-dynamic-platerra-content").html(data.form_fields_html);
+                    },
+                    error: function (error) {
+                        console.error("Error al obtener datos del platerra", error);
+                    },
+                });
+            } else {
+                $("#form-dynamic-platerra-content").empty();
+            }
+        });
+
+        $("#editar-platerra-form").submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serialize();
+
+            if (selectedPlaterraId) {
+                $.ajax({
+                    url: `/editar_platerra/${selectedPlaterraId}/`,
+                    type: "POST",
+                    data: formData,
+                    dataType: "json",
+                    success: function (data) {
+                        console.log("Cambios guardados correctamente");
+                        // Redirigir a la página de edición después de guardar los cambios
+                        window.location.href = `/editar_platerra/${selectedPlaterraId}/`;
+                    },
+                    error: function (error) {
+                        console.error("Error al guardar cambios", error);
+                    },
+                });
+            } else {
+                console.error("No se ha seleccionado ningún Platerra");
+            }
+        });
+
+        $(document).on("click", "#eliminar-platerra-btn", function () {
+            eliminarPlaterra();
+        });
+
+        function eliminarPlaterra() {
+            console.log("Función eliminarPlaterra llamada");
+            var selectedEliminarPlaterraId = $("#selector-eliminar-platerra").val();
+
+            if (
+                selectedEliminarPlaterraId &&
+                confirm("¿Estás seguro de que quieres eliminar este Platerra?")
+            ) {
+                $.ajax({
+                    url: `/eliminar_platerra/${selectedEliminarPlaterraId}/`,
+                    type: "POST",
+                    data: { csrfmiddlewaretoken: "{{ csrf_token }}" },
+                    dataType: "json",
+                    success: function (data) {
+                        console.log("Platerra eliminado correctamente");
+                        // Recargar la página para reflejar los cambios
+                        location.reload();
+                    },
+                    error: function (error) {
+                        console.error("Error al eliminar el Platerra", error);
+                    },
+                });
+            }
+        }
+    });
+    </script>
+  </body>
+</html>
