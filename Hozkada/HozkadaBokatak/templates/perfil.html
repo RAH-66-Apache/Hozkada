@@ -1,486 +1,639 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Koulen"> <!-- KoulenFont -->
-    <script src='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js'></script>
-    <link href='https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css' rel='stylesheet' />
-    <script src='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js'></script>
-    <link rel="icon" href="../static/media/nav_ico.png" type="image/png">
-    <link rel='stylesheet' href='https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css' type='text/css' />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Koulen"
+    />
+    <!-- KoulenFont -->
+    <script src="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.js"></script>
+    <link
+      href="https://api.tiles.mapbox.com/mapbox-gl-js/v0.49.0/mapbox-gl.css"
+      rel="stylesheet"
+    />
+    <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.min.js"></script>
+    <link rel="icon" href="../static/media/nav_ico.png" type="image/png" />
+    <link
+      rel="stylesheet"
+      href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v2.3.0/mapbox-gl-geocoder.css"
+      type="text/css"
+    />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Turf.js/7.0.0-alpha.2/turf.min.js"></script>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> <!-- bootstrap -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link rel="stylesheet" href="../static/perfil.css">
-    
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
+    <!-- bootstrap -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <link rel="stylesheet" href="../static/perfil.css" />
+
     <title>Hozkada Perfil</title>
-    <style>#map {
-       
+    <style>
+      #map {
         top: 50;
         bottom: 20;
         width: 50%;
         height: 300px;
         align-items: center;
         margin-left: 25%;
-        border: 4px solid #E2AD5C;
+        border: 4px solid #e2ad5c;
         margin-bottom: 1%;
-      }</style>
-</head>
-<body>
+      }
+    </style>
+  </head>
+  <body>
     <div id="navbar">
-        <a href=""><img id="logo" src="../static/media/logo.png" alt=""></a>
-        <div id="links">
-            <a class="link" href="{% url 'index'%}">Hasiera</a>
-            <a class="link" href="{% url 'bokatak'%}">Bokatak</a>
+      <a href=""><img id="logo" src="../static/media/logo.png" alt="" /></a>
+      <div id="links">
+        <a class="link" href="{% url 'index'%}">Hasiera</a>
+        <a class="link" href="{% url 'bokatak'%}">Bokatak</a>
+      </div>
+      <div id="username-txt" class="dropdown">
+        <p>{{user.username}}</p>
+        <div class="dropdown-content">
+          <a href="{% url 'perfil' %}">PERFILA</a>
+          <a href="/eskaera/">ESKAERA</a>
+          <a href="{% url 'logout' %}">SESIOA ITXI</a>
+          <!-- Agrega más enlaces según tus necesidades -->
         </div>
-        <div id="username-txt" class="dropdown">
-            <p>{{user.username}}</p>
-            <div class="dropdown-content">
-                <a href="{% url 'perfil' %}">PERFILA</a>
-                <a href="/eskaera/">ESKAERA</a>
-                <a href="{% url 'logout' %}">SESIOA ITXI</a>
-                <!-- Agrega más enlaces según tus necesidades -->
-            </div>
-         </div>
-        <div id="profile-picture">
-           <img  src="{{user.bezeroa.img.url}}" alt="Foto de perfil">
-        </div>
+      </div>
+      <div id="profile-picture">
+        <img src="{{user.bezeroa.img.url}}" alt="Foto de perfil" />
+      </div>
     </div>
-    
-    <div class="container">
-        <div class="container" id="container-avatar">
-            <div id="avatar">
-                <p id="username">{{user.username}}</p>
-            </div>
-            <div id="subavatar">
-                <img id="avatarimg" src="{{user.bezeroa.img.url}}" alt="">
-            </div>
-        </div>
-    </div>
-    <br><br><br><br>
 
     <div class="container">
-        <form action="updatebezeroa/{{user.id}}" id="formulario" method="POST" class="needs-validation" enctype="multipart/form-data">
-            {%csrf_token%}
-            <div class="row mt-3">
-                <input id="avatarajax" type="file" name="argazkia" accept="image/*" value="{{bezeroa.img.url}}" src="user.bezeroa.img">
-            </div><br>
-            <div class="row mt-3">
-                <div class="col">
-                    <label for="">Username:</label>
-                    <input type="text" class="form-control custom-shadow" id="usernamee" placeholder="Sartu izena" name="username" value="{{user.username}}" required>
-                </div>
-                <div class="col">  
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <label for="">Izena:</label>
-                    <input type="text" class="form-control custom-shadow" id="izena" placeholder="Sartu izena" name="izena" value="{{user.bezeroa.izena}}" required>
-                </div>
-                <div class="col">
-                    <label for="">Abizena:</label>
-                    <input type="text" class="form-control custom-shadow" id="abizena" placeholder="Sartu abizena" name="abizena" value="{{user.bezeroa.abizena}}" required>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <label for="">Abizena 2: </label>
-                    <input type="text" class="form-control custom-shadow" id="abizena2" placeholder="Sartu bigarren abizena" name="abizena2" value="{{user.bezeroa.abizena2}}" required>
-                </div>
-                <div class="col">
-                    <label for="">DNI:</label>
-                    <input type="text" class="form-control custom-shadow" id="nan" placeholder="Sartu NAN-a" name="nan" value="{{user.bezeroa.nan}}" required>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <label for="">Telefonoa:</label>
-                    <input type="text" class="form-control custom-shadow" id="telefonoa" placeholder="Sartu telefonoa" name="telefonoa" value="{{user.bezeroa.telefonoa}}" required>
-                </div>
-                <div class="col">
-
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <label for="">Email:</label>
-                    <input type="text" class="form-control custom-shadow" id="email" placeholder="Sartu email-a" name="email" value="{{user.bezeroa.emaila}}" required>
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <label for="">Pasahitza:</label>
-                    <input type="password" class="form-control custom-shadow" id="pasahitza" placeholder="Sartu pasahitz berria" name="pasahitza" value="{{user.password}}">
-                </div>
-                <div class="col">
-                    <label for="">Errepikatu pasahitza:</label>
-                    <input type="password" class="form-control custom-shadow" id="pasahitza2" placeholder="Errepikatu pasahitz berria" name="pasahitza2" value="{{user.password}}">
-                </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col">
-                    <label for="">Helbidea: </label>
-                    <input type="text" class="form-control custom-shadow" id="helbidea" placeholder="Sartu helbidea" name="helbidea" value="{{user.bezeroa.helbidea}}" readonly>
-                </div>
-                <div class="col">
-                    <label for="">PK:</label>
-                    <input type="text" class="form-control custom-shadow" id="pk" placeholder="Sartu posta kodea" name="pk" value="{{user.bezeroa.postakodea}}" required>
-                </div>
-                <div class="col">
-                    <label for="">Bidalketa Kostua:</label>
-                    <input type="text" class="form-control custom-shadow" id="bidalketaKostua" name="bidalketaKostua" value="{{user.bezeroa.bidalketaKostua}}" readonly>
-                </div>
-            </div><br>
-                <div class="col text-center"> <!-- Agrega la clase "text-center" para centrar horizontalmente -->
-                    <button type="submit" class="btn btn-lg mt-3 btn-reset" style="color: white;">Gorde Aldaketak</button>
-                </div>
-                <br>
-            </form>
+      <div class="container" id="container-avatar">
+        <div id="avatar">
+          <p id="username">{{user.username}}</p>
         </div>
+        <div id="subavatar">
+          <img id="avatarimg" src="{{user.bezeroa.img.url}}" alt="" />
+        </div>
+      </div>
+    </div>
+    <br /><br /><br /><br />
 
-        <p style=' margin-left: 25%; align-items: center;'>Mesedez bilatu hemen zure helbidea</p>
+    <div class="container">
+      <form
+        action="updatebezeroa/{{user.id}}"
+        id="formulario"
+        method="POST"
+        class="needs-validation"
+        enctype="multipart/form-data"
+      >
+        {%csrf_token%}
+        <div class="row mt-3">
+          <input
+            id="avatarajax"
+            type="file"
+            name="argazkia"
+            accept="image/*"
+            value="{{bezeroa.img.url}}"
+            src="user.bezeroa.img"
+          />
+        </div>
+        <br />
+        <div class="row mt-3">
+          <div class="col">
+            <label for="">Username:</label>
+            <input
+              type="text"
+              class="form-control custom-shadow"
+              id="usernamee"
+              placeholder="Sartu izena"
+              name="username"
+              value="{{user.username}}"
+              required
+            />
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <label for="">Izena:</label>
+            <input
+              type="text"
+              class="form-control custom-shadow"
+              id="izena"
+              placeholder="Sartu izena"
+              name="izena"
+              value="{{user.bezeroa.izena}}"
+              required
+            />
+          </div>
+          <div class="col">
+            <label for="">Abizena:</label>
+            <input
+              type="text"
+              class="form-control custom-shadow"
+              id="abizena"
+              placeholder="Sartu abizena"
+              name="abizena"
+              value="{{user.bezeroa.abizena}}"
+              required
+            />
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <label for="">Abizena 2: </label>
+            <input
+              type="text"
+              class="form-control custom-shadow"
+              id="abizena2"
+              placeholder="Sartu bigarren abizena"
+              name="abizena2"
+              value="{{user.bezeroa.abizena2}}"
+              required
+            />
+          </div>
+          <div class="col">
+            <label for="">DNI:</label>
+            <input
+              type="text"
+              class="form-control custom-shadow"
+              id="nan"
+              placeholder="Sartu NAN-a"
+              name="nan"
+              value="{{user.bezeroa.nan}}"
+              required
+            />
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <label for="">Telefonoa:</label>
+            <input
+              type="text"
+              class="form-control custom-shadow"
+              id="telefonoa"
+              placeholder="Sartu telefonoa"
+              name="telefonoa"
+              value="{{user.bezeroa.telefonoa}}"
+              required
+            />
+          </div>
+          <div class="col"></div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <label for="">Email:</label>
+            <input
+              type="text"
+              class="form-control custom-shadow"
+              id="email"
+              placeholder="Sartu email-a"
+              name="email"
+              value="{{user.bezeroa.emaila}}"
+              required
+            />
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <label for="">Pasahitza:</label>
+            <input
+              type="password"
+              class="form-control custom-shadow"
+              id="pasahitza"
+              placeholder="Sartu pasahitz berria"
+              name="pasahitza"
+              value="{{user.password}}"
+            />
+          </div>
+          <div class="col">
+            <label for="">Errepikatu pasahitza:</label>
+            <input
+              type="password"
+              class="form-control custom-shadow"
+              id="pasahitza2"
+              placeholder="Errepikatu pasahitz berria"
+              name="pasahitza2"
+              value="{{user.password}}"
+            />
+          </div>
+        </div>
+        <div class="row mt-3">
+          <div class="col">
+            <label for="">Helbidea: </label>
+            <input
+              type="text"
+              class="form-control custom-shadow"
+              id="helbidea"
+              placeholder="Sartu helbidea"
+              name="helbidea"
+              value="{{user.bezeroa.helbidea}}"
+              readonly
+            />
+          </div>
+          <div class="col">
+            <label for="">PK:</label>
+            <input
+              type="text"
+              class="form-control custom-shadow"
+              id="pk"
+              placeholder="Sartu posta kodea"
+              name="pk"
+              value="{{user.bezeroa.postakodea}}"
+              required
+            />
+          </div>
+          <div class="col">
+            <label for="">Bidalketa Kostua:</label>
+            <input
+              type="text"
+              class="form-control custom-shadow"
+              id="bidalketaKostua"
+              name="bidalketaKostua"
+              value="{{user.bezeroa.bidalketaKostua}}"
+              readonly
+            />
+          </div>
+        </div>
+        <br />
+        <div class="col text-center">
+          <!-- Agrega la clase "text-center" para centrar horizontalmente -->
+          <button
+            type="submit"
+            class="btn btn-lg mt-3 btn-reset"
+            style="color: white"
+          >
+            Gorde Aldaketak
+          </button>
+        </div>
+        <br />
+      </form>
+    </div>
 
-        <div id="map"></div>
+    <p style="margin-left: 25%; align-items: center">
+      Mesedez bilatu hemen zure helbidea
+    </p>
 
-        <div id="footer">
-            <div  id="Logo">
-                <a href=""><img id="logofooter" src="../static/media/logo.png" alt=""></a>
-            </div>
-            <div  id="Linkak">
-                <h3>Linkak</h3>
-                <ul>
-                    <li><a href="#">Faq</a></li>
-                    <li><a href="#">Estilo Gida</a></li>
-                    <li><a href="#">Laguntza</a></li>
-                    <li><a href="#">Bidaltze Politikak</a></li>
-                </ul>
-            </div>
-            <div  id="Kontaktua">
-                <h3>Kontaktua</h3>
-                <ul>
-                    <li><a>Eibar, Azpizuri Kalea 24, 20600</a></li>
-                    <li><a>HozkadaDenda@gmail.com</a></li>
-                    <li><a>+34 634 95 74 16</a></li>
-                    <li><a>+34 634 49 96 55</a></li>
-                </ul>
-            </div>
-            <div  id="Sozialak">
-                <h3>Sare Sozialak</h3>
-                <ul>
-                    <li>
-                        <a href="#"><i class="fab fa-facebook social-icon"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fab fa-twitter social-icon"></i></a>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fab fa-instagram social-icon"></i></a>
-                    </li>
-                </ul>
-                
-                
-            </div>
-    </div>  
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script> 
+    <div id="map"></div>
+
+    <div id="footer">
+      <div id="Logo">
+        <a href=""
+          ><img id="logofooter" src="../static/media/logo.png" alt=""
+        /></a>
+      </div>
+      <div id="Linkak">
+        <h3>Linkak</h3>
+        <ul>
+          <li><a href="#">Faq</a></li>
+          <li><a href="#">Estilo Gida</a></li>
+          <li><a href="#">Laguntza</a></li>
+          <li><a href="#">Bidaltze Politikak</a></li>
+        </ul>
+      </div>
+      <div id="Kontaktua">
+        <h3>Kontaktua</h3>
+        <ul>
+          <li><a>Eibar, Azpizuri Kalea 24, 20600</a></li>
+          <li><a>HozkadaDenda@gmail.com</a></li>
+          <li><a>+34 634 95 74 16</a></li>
+          <li><a>+34 634 49 96 55</a></li>
+        </ul>
+      </div>
+      <div id="Sozialak">
+        <h3>Sare Sozialak</h3>
+        <ul>
+          <li>
+            <a href="#"><i class="fab fa-facebook social-icon"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="fab fa-twitter social-icon"></i></a>
+          </li>
+          <li>
+            <a href="#"><i class="fab fa-instagram social-icon"></i></a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script>
+      $(document).ready(function () {
+        // Selecciona el input de tipo archivo
+        var inputFile = $("#avatarajax");
+        var img = $("#avatarimg");
 
-        $(document).ready(function() {
-            // Selecciona el input de tipo archivo
-            var inputFile = $('#avatarajax');
-            var img = $('#avatarimg');
-    
-            // Almacena la URL de la imagen original
-            var initialImageUrl = img.attr('src');
-    
-            // Agrega un controlador de eventos al input de archivo
-            inputFile.change(function() {
-                var file = inputFile[0].files[0];
-    
-                // Verifica si se seleccionó un archivo
-                if (file) {
-                    var objectURL = URL.createObjectURL(file);
-    
-                    // Actualiza el src de la imagen con la URL del objeto creado
-                    img.attr('src', objectURL);
-                }
-            });
-    
-            // Agrega un controlador de eventos al botón de reset (si lo necesitas)
-            $('#resetButton').click(function() {
-                // Restablece la imagen al valor inicial
-                img.attr('src', initialImageUrl);
-            });
+        // Almacena la URL de la imagen original
+        var initialImageUrl = img.attr("src");
+
+        // Agrega un controlador de eventos al input de archivo
+        inputFile.change(function () {
+          var file = inputFile[0].files[0];
+
+          // Verifica si se seleccionó un archivo
+          if (file) {
+            var objectURL = URL.createObjectURL(file);
+
+            // Actualiza el src de la imagen con la URL del objeto creado
+            img.attr("src", objectURL);
+          }
         });
 
-        formulario.addEventListener('submit', function(event) { 
+        // Agrega un controlador de eventos al botón de reset (si lo necesitas)
+        $("#resetButton").click(function () {
+          // Restablece la imagen al valor inicial
+          img.attr("src", initialImageUrl);
+        });
+      });
 
+      formulario.addEventListener("submit", function (event) {
         var username = document.getElementById("usernamee");
         var izena = document.getElementById("izena");
-        var abizena = document.getElementById('abizena');
-        var abizena2 = document.getElementById('abizena2');
-        var nan =  document.getElementById('nan');
-        var telefonoa =  document.getElementById('telefonoa');
-        var email =  document.getElementById('email');
-        var pasahitza = document.getElementById('pasahitza');
-        var pasahtiza2 = document.getElementById('pasahitza2');
-        var helbidea = document.getElementById('helbidea');
-        var postakodea = document.getElementById('pk');
+        var abizena = document.getElementById("abizena");
+        var abizena2 = document.getElementById("abizena2");
+        var nan = document.getElementById("nan");
+        var telefonoa = document.getElementById("telefonoa");
+        var email = document.getElementById("email");
+        var pasahitza = document.getElementById("pasahitza");
+        var pasahtiza2 = document.getElementById("pasahitza2");
+        var helbidea = document.getElementById("helbidea");
+        var postakodea = document.getElementById("pk");
 
         //regex formats
-        const emailFormat = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/; 
+        const emailFormat = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,3}$/;
         const dniFormat = /^[0-9]{8}[A-Za-z]$/; //spanish dni regex code
         const passwordFormat = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/; //Minimum eight characters, at least one letter and one number:
 
         //usernamea
-        if(username.value == "" || username.value == null) {
-            alert("Bete usernamea, mesedez.");
-            username.focus();
-            event.preventDefault();
-            return;
-        } else if(username.value.length <= 3 || username.value.length >= 20) {
-            alert("Usernameak 3 letra baino gehiago eta 20 baino gutxiago eduki behar ditu.");
-            event.preventDefault();
-            izena.focus();
-            return;
+        if (username.value == "" || username.value == null) {
+          alert("Bete usernamea, mesedez.");
+          username.focus();
+          event.preventDefault();
+          return;
+        } else if (username.value.length <= 3 || username.value.length >= 20) {
+          alert(
+            "Usernameak 3 letra baino gehiago eta 20 baino gutxiago eduki behar ditu."
+          );
+          event.preventDefault();
+          izena.focus();
+          return;
         }
 
         //izena
-        if(izena.value == null || izena.value == "") {
-            alert("Izena bete, mesedez.");
-            izena.focus();
-            event.preventDefault();
-            return;
-        } else if(izena.value.length <= 2) {
-            alert("Izenak 2 karaktere baino gehiago eduki behar ditu.");
-            izena.focus();
-            event.preventDefault();
-            return;
-        } else if(/\d/.test(izena.value)) {
-            alert("Izenak ezin du zenbakirik eduki.");
-            izena.focus();
-            event.preventDefault();
-            return;
+        if (izena.value == null || izena.value == "") {
+          alert("Izena bete, mesedez.");
+          izena.focus();
+          event.preventDefault();
+          return;
+        } else if (izena.value.length <= 2) {
+          alert("Izenak 2 karaktere baino gehiago eduki behar ditu.");
+          izena.focus();
+          event.preventDefault();
+          return;
+        } else if (/\d/.test(izena.value)) {
+          alert("Izenak ezin du zenbakirik eduki.");
+          izena.focus();
+          event.preventDefault();
+          return;
         }
 
         //abizena
-        if(abizena.value == "" || abizena2.value == "") {
-            alert("Abizenak bete, mesedez.");
-            abizena.focus();
-            event.preventDefault();
-            return;
-        } else if(abizena.value.length <= 2 || abizena2.value.length <= 2) {
-            alert("Abizenek 2 karaktere baino gehiago eduki behar dute.");
-            abizena.focus();
-            event.preventDefault();
-            return;
-        } else if(/\d/.test(izena.value) || /\d/.test(izena.value)) {
-            alert("Abizenak ezin du zenbakirik eduki.");
-            abizena.focus();
-            event.preventDefault();
-            return;
+        if (abizena.value == "" || abizena2.value == "") {
+          alert("Abizenak bete, mesedez.");
+          abizena.focus();
+          event.preventDefault();
+          return;
+        } else if (abizena.value.length <= 2 || abizena2.value.length <= 2) {
+          alert("Abizenek 2 karaktere baino gehiago eduki behar dute.");
+          abizena.focus();
+          event.preventDefault();
+          return;
+        } else if (/\d/.test(izena.value) || /\d/.test(izena.value)) {
+          alert("Abizenak ezin du zenbakirik eduki.");
+          abizena.focus();
+          event.preventDefault();
+          return;
         }
 
         //NANa
-        if(nan.value == "" || nan.value == null) {
-            alert("NANa bete, mesedez.");
-            nan.focus();
-            event.preventDefault();
-            return;
-        } else if(!dniFormat.test(nan.value)) {
-            alert("Nanak ez du formatu egokia, 8 zenbaki eta letra bat eduki behar du.");
-            nan.focus();
-            event.preventDefault();
-            return;
+        if (nan.value == "" || nan.value == null) {
+          alert("NANa bete, mesedez.");
+          nan.focus();
+          event.preventDefault();
+          return;
+        } else if (!dniFormat.test(nan.value)) {
+          alert(
+            "Nanak ez du formatu egokia, 8 zenbaki eta letra bat eduki behar du."
+          );
+          nan.focus();
+          event.preventDefault();
+          return;
         }
 
         //telefonoa
-        if(telefonoa.value == "" || telefonoa.value == null) {
-            alert("Bete telefonoa, mesedez.");
-            telefonoa.focus();
-            event.preventDefault();
-            return;
-        } else if(telefonoa.value.length != 9) {
-            alert("Telefonoak 9 zenbaki eduki behar ditu.");
-            telefonoa.focus();
-            event.preventDefault();
-            return;
-        }else if (isNaN(telefonoa.value)) {
-            alert("Telefonoak zenbakiak izan behar dute.");
-            telefonoa.focus();
-            event.preventDefault();
-            return;
+        if (telefonoa.value == "" || telefonoa.value == null) {
+          alert("Bete telefonoa, mesedez.");
+          telefonoa.focus();
+          event.preventDefault();
+          return;
+        } else if (telefonoa.value.length != 9) {
+          alert("Telefonoak 9 zenbaki eduki behar ditu.");
+          telefonoa.focus();
+          event.preventDefault();
+          return;
+        } else if (isNaN(telefonoa.value)) {
+          alert("Telefonoak zenbakiak izan behar dute.");
+          telefonoa.focus();
+          event.preventDefault();
+          return;
         }
 
         //emaila
-        if(email.value == "" || email.value == null) {
-            alert("Bete emaila, mesedez.");
-            email.focus();
-            event.preventDefault();
-            return;
-        } else if(!emailFormat.test(email.value)) {
-            alert("Emailak ez du formatu egokia, saiatu berriro.");
-            email.focus();
-            event.preventDefault();
-            return;
+        if (email.value == "" || email.value == null) {
+          alert("Bete emaila, mesedez.");
+          email.focus();
+          event.preventDefault();
+          return;
+        } else if (!emailFormat.test(email.value)) {
+          alert("Emailak ez du formatu egokia, saiatu berriro.");
+          email.focus();
+          event.preventDefault();
+          return;
         }
 
         //helbidea
-        if(helbidea.value == "" || helbidea.value == null) {
-            alert("Bete helbidea mesedez.");
-            helbidea.focus();
-            event.preventDefault();
-            return;
+        if (helbidea.value == "" || helbidea.value == null) {
+          alert("Bete helbidea mesedez.");
+          helbidea.focus();
+          event.preventDefault();
+          return;
         }
 
         //posta kodea
-        if(postakodea.value == "" || postakodea.value == null) {
-            alert("Bete posta kodea, mesedez.");
-            postakodea.focus();
-            event.preventDefault();
-            return;
+        if (postakodea.value == "" || postakodea.value == null) {
+          alert("Bete posta kodea, mesedez.");
+          postakodea.focus();
+          event.preventDefault();
+          return;
         }
+      });
 
+      mapboxgl.accessToken =
+        "pk.eyJ1IjoiaG9saXZhcyIsImEiOiJjbG9jcWExcTQwMGxxMmtvMnByZ2U4N2N2In0.XZU3vF3p4o9FV4fTTy0axQ";
+
+      var map = new mapboxgl.Map({
+        container: "map",
+        style: "mapbox://styles/mapbox/streets-v9",
+        center: [-2.4896172047014593, 43.17922897798198],
+        zoom: 8,
+      });
+
+      var markers = [];
+
+      // Crea círculos adicionales en el mapa
+      var circleRadius0 = 10; // Radio en metros para la segunda área
+      var circle0 = turf.circle(
+        [-2.4896172047014593, 43.17922897798198],
+        circleRadius0,
+        { steps: 64 }
+      );
+
+      var circleRadius1 = 30; // Radio en metros para la primera área
+      var circle1 = turf.circle(
+        [-2.4896172047014593, 43.17922897798198],
+        circleRadius1,
+        { steps: 64 }
+      );
+
+      var circleRadius2 = 50; // Radio en metros para la segunda área
+      var circle2 = turf.circle(
+        [-2.4896172047014593, 43.17922897798198],
+        circleRadius2,
+        { steps: 64 }
+      );
+
+      map.on("load", function () {
+        // Agrega la capa para la primera área
+        map.addLayer({
+          id: "circle-area-0",
+          type: "fill",
+          source: {
+            type: "geojson",
+            data: circle0,
+          },
+          paint: {
+            "fill-color": "#FC5621",
+            "fill-opacity": 0.5,
+          },
         });
 
-        mapboxgl.accessToken = 'pk.eyJ1IjoiaG9saXZhcyIsImEiOiJjbG9jcWExcTQwMGxxMmtvMnByZ2U4N2N2In0.XZU3vF3p4o9FV4fTTy0axQ';
-
-        var map = new mapboxgl.Map({
-          container: 'map',
-          style: 'mapbox://styles/mapbox/streets-v9',
-          center: [-2.4896172047014593, 43.17922897798198],
-          zoom: 8,
+        // Agrega la capa para la segunda área
+        map.addLayer({
+          id: "circle-area-1",
+          type: "fill",
+          source: {
+            type: "geojson",
+            data: circle1,
+          },
+          paint: {
+            "fill-color": "#FC7A21",
+            "fill-opacity": 0.3,
+          },
         });
-        
-        var markers = [];
-        
-        // Crea círculos adicionales en el mapa
-        var circleRadius0 = 10; // Radio en metros para la segunda área
-        var circle0 = turf.circle([-2.4896172047014593, 43.17922897798198], circleRadius0, { steps: 64 });
-        
-        var circleRadius1 = 30; // Radio en metros para la primera área
-        var circle1 = turf.circle([-2.4896172047014593, 43.17922897798198], circleRadius1, { steps: 64 });
-        
-        var circleRadius2 = 50; // Radio en metros para la segunda área
-        var circle2 = turf.circle([-2.4896172047014593, 43.17922897798198], circleRadius2, { steps: 64 });
-        
-        map.on('load', function () {
-          // Agrega la capa para la primera área
-          map.addLayer({
-            id: 'circle-area-0',
-            type: 'fill',
-            source: {
-              type: 'geojson',
-              data: circle0,
-            },
-            paint: {
-              'fill-color': '#FC5621',
-              'fill-opacity': 0.5,
-            },
-          });
-        
-          // Agrega la capa para la segunda área
-          map.addLayer({
-            id: 'circle-area-1',
-            type: 'fill',
-            source: {
-              type: 'geojson',
-              data: circle1,
-            },
-            paint: {
-              'fill-color': '#FC7A21',
-              'fill-opacity': 0.3,
-            },
-          });
-        
-          // Agrega la capa para la tercera área
-          map.addLayer({
-            id: 'circle-area-2',
-            type: 'fill',
-            source: {
-              type: 'geojson',
-              data: circle2,
-            },
-            paint: {
-              'fill-color': '#FFAF1A',
-              'fill-opacity': 0.2,
-            },
-          });
-        
-          // Configura el geocodificador
-          var geocoder = new MapboxGeocoder({
-            accessToken: mapboxgl.accessToken,
-            mapboxgl: mapboxgl,
-          });
-        
-          // Agrega el geocodificador al mapa como un control
-          map.addControl(geocoder);
-        
-          // Evento al seleccionar una ubicación con el geocodificador
-          geocoder.on('result', function (event) {
-            // Obtiene la ubicación seleccionada por el usuario
-            var location = event.result;
-            var lng = location.center[0];
-            var lat = location.center[1];
-        
-            // Resto del código para verificar en qué área está y cambiar el color del círculo
-            var isInsideCircle0 = turf.booleanPointInPolygon([lng, lat], circle0);
-            var isInsideCircle1 = turf.booleanPointInPolygon([lng, lat], circle1);
-            var isInsideCircle2 = turf.booleanPointInPolygon([lng, lat], circle2);
-        
-            // Restablece los colores predeterminados
-            map.setPaintProperty('circle-area-0', 'fill-color', '#FC5621');
-            map.setPaintProperty('circle-area-1', 'fill-color', '#FC7A21');
-            map.setPaintProperty('circle-area-2', 'fill-color', '#FFAF1A');
-        
-            var location = event.result;
-            var selectedLngLat = [location.center[0], location.center[1]];
-            var fixedCenterLngLat = [-2.4896172047014593, 43.17922897798198];
-            var distance = turf.distance(turf.point(selectedLngLat), turf.point(fixedCenterLngLat), { units: 'kilometers' });
-            var bidalketaKostuaValue = Math.round(distance * 0.8); 
 
-    if (isInsideCircle0) {
-        // Cambia a otro color si está en la primera área
-        map.setPaintProperty('circle-area-0', 'fill-color', 'green');
-        bidalketaKostuaValue = 5; // Actualiza el valor para el área 0
-    } else if (isInsideCircle1) {
-        // Cambia a otro color si está en la segunda área
-        map.setPaintProperty('circle-area-1', 'fill-color', 'green');
-        bidalketaKostuaValue = 10; // Actualiza el valor para el área 1
-    } else if (isInsideCircle2) {
-        // Cambia a otro color si está en la tercera área
-        map.setPaintProperty('circle-area-2', 'fill-color', 'green');
-        bidalketaKostuaValue = 20; // Actualiza el valor para el área 2
-    }
-
-    // Añade un nuevo marcador en la ubicación ingresada
-    var newMarker = new mapboxgl.Marker().setLngLat([lng, lat]).addTo(map);
-    markers.push(newMarker);
-
-    // Elimina los marcadores anteriores (excepto el último)
-    if (markers.length > 1) {
-        var previousMarkers = markers.slice(0, markers.length - 1);
-        previousMarkers.forEach(function (marker) {
-            marker.remove();
+        // Agrega la capa para la tercera área
+        map.addLayer({
+          id: "circle-area-2",
+          type: "fill",
+          source: {
+            type: "geojson",
+            data: circle2,
+          },
+          paint: {
+            "fill-color": "#FFAF1A",
+            "fill-opacity": 0.2,
+          },
         });
-    }
 
-    // Actualiza el valor del campo "Helbidea" con la nueva ubicación
-    var helbideaInput = document.getElementById('helbidea');
-    if (helbideaInput) {
-        helbideaInput.value = location.place_name;
-    }
-
-    // Actualiza el valor del campo "bidalketaKostua" en el formulario
-    var bidalketaKostuaInput = document.getElementById('bidalketaKostua');
-    if (bidalketaKostuaInput) {
-        bidalketaKostuaInput.value = bidalketaKostuaValue;
-    }
-});
+        // Configura el geocodificador
+        var geocoder = new MapboxGeocoder({
+          accessToken: mapboxgl.accessToken,
+          mapboxgl: mapboxgl,
         });
-        
-       
+
+        // Agrega el geocodificador al mapa como un control
+        map.addControl(geocoder);
+
+        // Evento al seleccionar una ubicación con el geocodificador
+        geocoder.on("result", function (event) {
+          // Obtiene la ubicación seleccionada por el usuario
+          var location = event.result;
+          var lng = location.center[0];
+          var lat = location.center[1];
+
+          // Resto del código para verificar en qué área está y cambiar el color del círculo
+          var isInsideCircle0 = turf.booleanPointInPolygon([lng, lat], circle0);
+          var isInsideCircle1 = turf.booleanPointInPolygon([lng, lat], circle1);
+          var isInsideCircle2 = turf.booleanPointInPolygon([lng, lat], circle2);
+
+          // Restablece los colores predeterminados
+          map.setPaintProperty("circle-area-0", "fill-color", "#FC5621");
+          map.setPaintProperty("circle-area-1", "fill-color", "#FC7A21");
+          map.setPaintProperty("circle-area-2", "fill-color", "#FFAF1A");
+
+          var location = event.result;
+          var selectedLngLat = [location.center[0], location.center[1]];
+          var fixedCenterLngLat = [-2.4896172047014593, 43.17922897798198];
+          var distance = turf.distance(
+            turf.point(selectedLngLat),
+            turf.point(fixedCenterLngLat),
+            { units: "kilometers" }
+          );
+          var bidalketaKostuaValue = Math.round(distance * 0.8);
+
+          if (isInsideCircle0) {
+            // Cambia a otro color si está en la primera área
+            map.setPaintProperty("circle-area-0", "fill-color", "green");
+            bidalketaKostuaValue = 5; // Actualiza el valor para el área 0
+          } else if (isInsideCircle1) {
+            // Cambia a otro color si está en la segunda área
+            map.setPaintProperty("circle-area-1", "fill-color", "green");
+            bidalketaKostuaValue = 10; // Actualiza el valor para el área 1
+          } else if (isInsideCircle2) {
+            // Cambia a otro color si está en la tercera área
+            map.setPaintProperty("circle-area-2", "fill-color", "green");
+            bidalketaKostuaValue = 20; // Actualiza el valor para el área 2
+          }
+
+          // Añade un nuevo marcador en la ubicación ingresada
+          var newMarker = new mapboxgl.Marker()
+            .setLngLat([lng, lat])
+            .addTo(map);
+          markers.push(newMarker);
+
+          // Elimina los marcadores anteriores (excepto el último)
+          if (markers.length > 1) {
+            var previousMarkers = markers.slice(0, markers.length - 1);
+            previousMarkers.forEach(function (marker) {
+              marker.remove();
+            });
+          }
+
+          // Actualiza el valor del campo "Helbidea" con la nueva ubicación
+          var helbideaInput = document.getElementById("helbidea");
+          if (helbideaInput) {
+            helbideaInput.value = location.place_name;
+          }
+
+          // Actualiza el valor del campo "bidalketaKostua" en el formulario
+          var bidalketaKostuaInput = document.getElementById("bidalketaKostua");
+          if (bidalketaKostuaInput) {
+            bidalketaKostuaInput.value = bidalketaKostuaValue;
+          }
+        });
+      });
     </script>
-</body>
+  </body>
 </html>

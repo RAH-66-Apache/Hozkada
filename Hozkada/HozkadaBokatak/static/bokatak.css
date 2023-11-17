@@ -57,6 +57,10 @@ body {
     transition: transform 0.3s;
     margin-left: 25px;
 }
+
+.total {
+    font-size: x-large;
+}
 #profile-picture {
     margin-top: 20px;
     margin-right: 20px;
@@ -106,7 +110,7 @@ input[type="checkbox"] {
     background-color: #333;  Color de fondo personalizado cuando está seleccionado
 } */
 
-#listacarrito {
+li {
     list-style-type: none;
 }
 
@@ -179,6 +183,48 @@ input[type="checkbox"] {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); /* Agregar una sombra */
 }
 
+.karritoa-gehitu-inp {
+    background-color: #E2AD5C;
+    border-radius: 10px;
+    padding: 1% 5% 1% 5%;
+    transition: transform 0.3s;
+    margin-bottom: 15px;
+}
+
+.karritoa-gehitu-inp:hover {
+    transform: scale(1.2);
+}
+
+.eliminar-del-carrito {
+    background-color: white;
+    border: none;
+    color: red;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.eliminar-del-carrito:hover {
+    transform: scale(1.5);
+}
+
+#boton-eskatu {
+    background-color: #E2AD5C;
+    border-radius: 10px;
+    padding: 1% 5% 1% 5%;
+    transition: transform 0.3s;
+    margin-bottom: 15px;
+    border: none;
+    margin-top: 15px;
+    margin-left: 25px;
+    font-family: Koulen;
+    font-size: large;
+}
+
+#boton-eskatu:hover {
+    transform: scale(1.3);
+}
+
+
 .bokata:hover {
     transform: scale(1.12);
     box-shadow: 0 8px 16px rgba(0, 0, 0, 0.9); /* Cambiar la sombra en el hover */
@@ -193,7 +239,7 @@ input[type="checkbox"] {
     border-bottom: 5px solid #E2AD5C;
     width: 35%;
     position: sticky;
-    top: 40px;
+    top: 140px;
     height: fit-content;
 }
 

@@ -46,5 +46,5 @@ urlpatterns = [
     path('crear_platerra/', views.crear_platerra, name='crear_platerra'),
     path('editar_platerra/<int:id>/', views.editar_platerra, name='editar_platerra'),
     path('eliminar_platerra/<int:id>/', views.eliminar_platerra, name='eliminar_platerra'),
-
+    path('obtener_datos_platerra/<int:id>/', views.obtener_datos_platerra, name='obtener_datos_platerra'),
 ]

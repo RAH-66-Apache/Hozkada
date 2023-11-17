@@ -319,6 +319,8 @@ def ezarpenak(request):
     bezeroa_form = BezeroaForm()
     platerra_form = PlaterraForm()
 
+    print("Bezeroa Form:", bezeroa_form)
+    print("Platerra Form:", platerra_form)
     context = {
         'bezeroak': Bezeroa.objects.all(),
         'platerrak': Platerra.objects.all(),
@@ -398,18 +400,40 @@ def crear_platerra(request):
             return redirect('ezarpenak')  # Cambiado a 'ezarpenak'
     else:
         form = PlaterraForm()
-    return render(request, 'crear_platerra.html', {'form': form})
+    return render(request, 'ezarpenak.html', {'form': form})
+
+def obtener_datos_platerra(request, id):
+    # Obtener el objeto Platerra
+    platerra = get_object_or_404(Platerra, id=id)
+
+    # Rellenar el formulario con los valores actuales del objeto Platerra
+    form = PlaterraForm(instance=platerra)
+
+    # Obtener los campos del formulario como HTML
+    form_fields_html = form.as_table()
+
+    # Devolver la respuesta como JSON
+    return JsonResponse({'form_fields_html': form_fields_html})
 
 def editar_platerra(request, id):
-    platerra = Platerra.objects.get(id=id)
+    platerra = get_object_or_404(Platerra, id=id)
+
     if request.method == 'POST':
         form = PlaterraForm(request.POST, instance=platerra)
         if form.is_valid():
             form.save()
-            return redirect('ezarpenak')  # Cambiado a 'ezarpenak'
+            # Obtener la URL de la página de edición
+            editar_platerra_url = reverse('editar_platerra', kwargs={'id': id})
+            return redirect(editar_platerra_url)
     else:
         form = PlaterraForm(instance=platerra)
-    return render(request, 'editar_platerra.html', {'form': form, 'platerra': platerra})
+
+    context = {
+        'platerrak': Platerra.objects.all(),
+        'platerra_form': form.as_table(),
+    }
+
+    return render(request, 'ezarpenak.html', context)
 
 def eliminar_platerra(request, id):
     platerra = Platerra.objects.get(id=id)

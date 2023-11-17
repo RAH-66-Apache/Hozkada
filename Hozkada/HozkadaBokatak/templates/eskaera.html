@@ -26,44 +26,43 @@
     <title>Eskaerak</title>
 
     <style>
-        .eskaera-btn {
-            color: orange;
-            font-size: 36px;
-        }
+      .eskaera-btn {
+        color: orange;
+        font-size: 36px;
+      }
 
-        .eskaera-btn.collapsed {
-            color: orange; /* Color cuando está colapsado */
-        }
+      .eskaera-btn.collapsed {
+        color: orange; /* Color cuando está colapsado */
+      }
 
-        .eskaera-btn:not(.collapsed):hover {
-            color: darkorange; /* Color cuando está expandido y se hace hover */
-        }
+      .eskaera-btn:not(.collapsed):hover {
+        color: darkorange; /* Color cuando está expandido y se hace hover */
+      }
 
-        .eskaera-content {
-            border: none; /* Elimina el borde azul cuando se abre */
-        }
+      .eskaera-content {
+        border: none; /* Elimina el borde azul cuando se abre */
+      }
 
-        .eskaera-content ul {
-            list-style: none;
-            padding: 0;
-        }
+      .eskaera-content ul {
+        list-style: none;
+        padding: 0;
+      }
 
-        .eskaera-content li {
-            color: #E2AD5C;
-            font-size: 20px;
-        }
+      .eskaera-content li {
+        color: #e2ad5c;
+        font-size: 20px;
+      }
 
-        .eskaera-content p {
-            color: purple;
-            font-size: 28px;
-        }
+      .eskaera-content p {
+        color: purple;
+        font-size: 28px;
+      }
 
-        .eskaera-content p:last-child {
-            color: #E2AD5C;
-            font-size: 24px;
-        }
+      .eskaera-content p:last-child {
+        color: #e2ad5c;
+        font-size: 24px;
+      }
     </style>
-
   </head>
   <body>
     <div id="navbar">
@@ -86,33 +85,53 @@
       </div>
     </div>
     <br /><br /><br /><br /><br /><br />
-    <h1 style="text-align: center; color: black; font-size: 36px;">Zure eskaerak</h1>
+    <h1 style="text-align: center; color: black; font-size: 36px">
+      Zure eskaerak
+    </h1>
     <div id="content">
-        <div id="eskaeracontent">
-            {% for eskaera in eskaeras %}
-            <div class="eskaera">
-                <button
-                    class="btn btn-link eskaera-btn"
-                    data-toggle="collapse"
-                    data-target="#eskaera{{ forloop.counter }}"
+      <div id="eskaeracontent">
+        {% for eskaera in eskaeras %}
+        <div class="eskaera">
+          <button
+            class="btn btn-link eskaera-btn"
+            data-toggle="collapse"
+            data-target="#eskaera{{ forloop.counter }}"
+          >
+            <h2 style="font-size: 36px">
+              Eskaera #{{ forloop.counter }} -
+              <span style="font-size: 25px"
+                >Orain dela {{ eskaera.time_difference }}</span
+              >
+            </h2>
+          </button>
+          <div
+            id="eskaera{{ forloop.counter }}"
+            class="collapse eskaera-content"
+          >
+            <ul>
+              {% for platerra_eskaera in eskaera.platerra_eskaera_set.all %}
+              <li>
+                {{ platerra_eskaera.platerra_id.izena }} - Kantitatea:
+                <span style="color: blue"
+                  >{{ platerra_eskaera.kantitatea }}</span
                 >
-                <h2 style=" font-size: 36px;">Eskaera #{{ forloop.counter }} - <span style="font-size: 25px;">Orain dela {{ eskaera.time_difference }}</span></h2>
-
-                </button>
-                <div id="eskaera{{ forloop.counter }}" class="collapse eskaera-content">
-                    <ul>
-                        {% for platerra_eskaera in eskaera.platerra_eskaera_set.all %}
-                        <li>{{ platerra_eskaera.platerra_id.izena }} - Kantitatea: <span style="color: blue;">{{ platerra_eskaera.kantitatea }}</span> - Prezioa: <span style="color: green;">{{ platerra_eskaera.platerra_id.precio_con_descuento }}€</span></li>
-                        {% endfor %}
-                    </ul>
-                    <p class="total">Guztira: {{ eskaera.total }}€</p>
-                    {% if not eskaera.egoera %}
-                    <p style="color: #E2AD5C; font-size: 24px;">Oraindik ez duzu eskatu eskaera hau ;D </p>
-                    {% endif %}
-                </div>
-            </div>
-            {% endfor %}
+                - Prezioa:
+                <span style="color: green"
+                  >{{ platerra_eskaera.platerra_id.precio_con_descuento}}€</span
+                >
+              </li>
+              {% endfor %}
+            </ul>
+            <p class="total">Guztira: {{ eskaera.total }}€</p>
+            {% if not eskaera.egoera %}
+            <p style="color: #e2ad5c; font-size: 24px">
+              Oraindik ez duzu eskatu eskaera hau ;D
+            </p>
+            {% endif %}
+          </div>
         </div>
+        {% endfor %}
+      </div>
     </div>
 
     <br /><br />
