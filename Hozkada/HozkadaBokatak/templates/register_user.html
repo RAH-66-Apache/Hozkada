@@ -55,8 +55,8 @@
     <div id="navbar">
       <a href=""><img id="logo" src="../static/media/logo.png" alt="" /></a>
       <div id="links">
-        <a class="link" href="/">Hasiera</a>
-        <a class="link" href="/bokatak">Bokatak</a>
+        <a class="link" href="{% url 'index'%}">Hasiera</a>
+        <a class="link" href="{% url 'bokatak'%}">Bokatak</a>
       </div>
       {% if user.is_authenticated %}
       <div id="username-txt" class="dropdown">
